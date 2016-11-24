@@ -81,6 +81,23 @@ function SetupForPool(logger, poolOptions, setupFinished){
             }, true);
         },
         function(callback){
+            daemon.cmd('z_validateaddress', [poolOptions.zaddress], function(result) {  //For sending coins to the zadder, then back
+                if (result.error){
+                    logger.error(logSystem, logComponent, 'Error with payment processing daemon ' + JSON.stringify(result.error));
+                    callback(true);
+                }
+                else if (!result.response || !result.response.ismine) {
+                    logger.error(logSystem, logComponent,
+                            'Daemon does not own pool address - payment processing can not be done with this daemon, '
+                            + JSON.stringify(result.response));
+                    callback(true);
+                }
+                else{
+                    callback()
+                }
+            }, true);
+        },
+        function(callback){
             daemon.cmd('getbalance', [], function(result){
                 if (result.error){
                     callback(true);
