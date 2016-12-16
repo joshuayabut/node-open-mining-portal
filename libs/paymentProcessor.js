@@ -509,7 +509,7 @@ function SetupForPool(logger, poolOptions, setupFinished){
                         return;
                     }
 
-                    daemon.cmd('sendmany', ['' , addressAmounts], function (result) {
+                    daemon.cmd('sendmany', ['' , addressAmounts, 0], function (result) {
                         //Check if payments failed because wallet doesn't have enough coins to pay for tx fees
                         if (result.error && result.error.code === -6) {
                             var higherPercent = withholdPercent + 0.01;
