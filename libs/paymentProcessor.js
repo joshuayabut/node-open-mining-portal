@@ -149,7 +149,7 @@ function SetupForPool(logger, poolOptions, setupFinished){
         setupFinished(true);
     }
 
-    async.parallel([validateAddress, getBalance], asyncComplete);
+    async.parallel([validateAddress, validateTAddress, validateZAddress, getBalance], asyncComplete);
 
     //get t_address coinbalance
     function listUnspent (addr, minConf, callback) {
@@ -509,7 +509,7 @@ function SetupForPool(logger, poolOptions, setupFinished){
                         return;
                     }
 
-                    daemon.cmd('sendmany', [addressAccount, addressAmounts], function (result) {
+                    daemon.cmd('sendmany', [poolOptions.tAddress, addressAmounts], function (result) {
                         //Check if payments failed because wallet doesn't have enough coins to pay for tx fees
                         if (result.error && result.error.code === -6) {
                             var higherPercent = withholdPercent + 0.01;
