@@ -1,3 +1,4 @@
+
 {
     "enabled": false,
     "coin": "zcash_testnet.json",
@@ -21,7 +22,7 @@
     "paymentProcessing": {
         "enabled": false,
         "paymentInterval": 20,
-        "minimumPayment": 70,
+        "minimumPayment": 0.1,
         "daemon": {
             "host": "127.0.0.1",
             "port": 19332,
@@ -46,7 +47,7 @@
     "daemons": [
         {
             "host": "127.0.0.1",
-            "port": 12177,
+            "port": 18232,
             "user": "rpcuser",
             "password": "rpcpassword"
         }
