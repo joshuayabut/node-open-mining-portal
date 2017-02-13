@@ -21,12 +21,12 @@
     "paymentProcessing": {
         "enabled": true,
         "paymentInterval": 20,
-        "minimumPayment": 70,
+        "minimumPayment": 0.1,
         "daemon": {
             "host": "127.0.0.1",
-            "port": 8001,
-            "user": "rpcusuer",
-            "password": "rpcpassword"
+            "port": 8232,
+            "user": "testuser",
+            "password": "testpass"
         }
     },
 
@@ -46,7 +46,7 @@
     "daemons": [
         {
             "host": "127.0.0.1",
-            "port": 8001,
+            "port": 8232,
             "user": "rpcuser",
             "password": "rpcpassword"
         }

@@ -1,5 +1,6 @@
-# Z-NOMP
-#### Zclassic - Node Open Mining Portal
+# Zcash® and Zclassic - Node Open Mining Portal
+
+**[Click here for the official - Zcash® and Zclassic Stratum Mining Pool Installation Guide](https://zdeveloper.org/wiki:z-nomp_install)**
 
 This is a Zclassic mining pool based off of Node Open Mining Portal.
 
@@ -8,7 +9,7 @@ Donations for development are greatly appreciated!
   * ZCL: zcXDWbgReztLLXSTUMT2nEumiDM6zTzUXFb7vUnx9JNfJDVqbodyxwEQwgDkFw7Dp128tBU8n8rmVxT43DshmeTEM4LHcdz
 
 #### Production Usage Notice
-This is beta software. All of the following are things that can change and break an existing Z-NOMP setup: functionality of any feature, structure of configuration files and structure of redis data. If you use this software in production then *DO NOT* pull new code straight into production usage because it can and often will break your setup and require you to tweak things like config files or redis data.
+This is beta software. All of the following are things that can change and break an existing Z-NOMP setup: functionality of any feature, structure of configuration files and structure of redis data. If you use this software in production then *DO NOT* pull new code straight into production usage because it can and often will break your setup and require you to tweak things like config files or redis data. *Only tagged releases are considered stable.*
 
 #### Paid Solution
 Usage of this software requires abilities with sysadmin, database admin, coin daemons, and sometimes a bit of programming. Running a production pool can literally be more work than a full-time job. 
@@ -16,16 +17,18 @@ Usage of this software requires abilities with sysadmin, database admin, coin da
 
 ### Community / Support
 IRC
-* Support / general discussion join: https://zclassic.herokuapp.com
+* Support / general discussion join: https://rocketchat.zdeveloper.org
 
 If your pool uses Z-NOMP let us know and we will list your website here.
 
 ### Some pools using Z-NOMP or node-stratum-module:
-http://zclpool.tk:8888 Currently, this pool has found over 100 blocks in just under a month!
+http://zclmine.com/ Custom frontend with 1% of the fee going to the Zclassic donation fund!
 
-https://pool.cryptobroker.io/zcl Running MPOS
+https://pool.cryptobroker.io/zcl Running MPOS and 0.5% of the fee goes to the Zclassic donation fund! 200+ blocks have been found as well! 
 
-http://zclassic.coin-miners.info/ and http://zdash.coin-miners.info/
+http://zclassic.miningspeed.com Custom frontend and 0% fee
+
+http://luckpool.org Zcash Pool with Custom Frontend w/Miner's Jackpot
 
 Usage
 =====
@@ -88,13 +91,6 @@ Please Note that: 1 Difficulty is actually 8192, 0.125 Difficulty is actually 10
 Whenever a miner submits a share, the pool counts the difficulty and keeps adding them as the shares. 
 
 ie: Miner 1 mines at 0.1 difficulty and finds 10 shares, the pool sees it as 1 share. Miner 2 mines at 0.5 difficulty and finds 5 shares, the pool sees it as 2.5 shares. 
-```
-
-Solo mining? Set a port with a ridiculously high difficulty to force z-nomp to use the network difficulty, so every share finds a block. Be sure to disable payments as well.
-```
-"3032": {
-     "diff": 999999999999999
-}
 ```
 
 
