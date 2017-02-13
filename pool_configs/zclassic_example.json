@@ -2,18 +2,20 @@
     "enabled": false,
     "coin": "zclassic.json",
 
-    "address": "t1dfrrxCHek2ts987VpZsRmFKBvdcBJ1Cqd",
+    "address": "tmRQRGpUMYg78cJAjvKXyNTqKXugWGD1Zde",
     "_comment_address": "a transparent address to send coinbase rewards to and to transfer to zAddress.",
 
-    "zAddress": "ztqgT4xsouCyjHXrFtXnDVgtvPRmURMgHQw2gd39dLdtoYkmPACScHturZjqsNdAPtP6JCLaWmZmYDqbjCMRgdCfQ2vjY2K",
+    "zAddress": "ztaFfzeZnTWzynxBUURtEUoAGUmEGyvfznkgYDFhyae6UWi8KX7JgzeamimeZY8UqY4vxTWgcC4M363Y98RdcpmVV3ijMi1",
     "_comment_zAddress": "a private address used to send coins to tAddress.",
 
-    "tAddress": "tmLqYHEnCiL4dpktEKdAKeRjPdkxNtJVWfb",
+    "tAddress": "tmVNzKfpjYnPYQQHaC2SfkFM3EEsgSugxAM",
     "_comment_tAddress": "transparent address used to send payments, make this a different address, otherwise payments will not send",
 
     "walletInterval": 10,
 
     "rewardRecipients": {
+        "tmQgJiNfcaVY5YFJKtya9kSbBucFhPSSejN": 0.2,
+        "tmBsPfkCnK3mAye9h1byYTJvP3BF3Ddygn9": 0.3
     },
 
     "paymentProcessing": {
@@ -29,7 +31,7 @@
     },
 
     "ports": {
-        "3032": {
+        "3033": {
             "diff": 0.05,
             "varDiff": {
                 "minDiff": 0.04,

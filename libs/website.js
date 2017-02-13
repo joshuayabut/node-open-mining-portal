@@ -32,16 +32,19 @@ module.exports = function(logger){
     var logSystem = 'Website';
 
 
-    var pageFiles = {
+var pageFiles = {
         'index.html': 'index',
         'home.html': '',
-        'getting_started.html': 'getting_started',
-        'stats.html': 'stats',
         'tbs.html': 'tbs',
         'workers.html': 'workers',
         'api.html': 'api',
         'admin.html': 'admin',
-        'mining_key.html': 'mining_key'
+        'mining_key.html': 'mining_key',
+        'miner.html': 'miner',
+        'miner_stats.html': 'miner_stats',
+        'user_shares.html': 'user_shares',
+        'getting_started.html': 'getting_started',
+        'stats.html': 'stats'
     };
 
     var pageTemplates = {};
@@ -215,6 +218,64 @@ module.exports = function(logger){
         }
     };
 
+
+
+
+    var minerpage = function(req, res, next){
+        var address = req.params.address || null;
+
+        if (address != null){
+            portalStats.getBalanceByAddress(address, function(){
+                processTemplates();
+
+                res.end(indexesProcessed['miner_stats']);
+
+            });
+        }
+        else
+            next();
+    };
+
+    var payout = function(req, res, next){
+        var address = req.params.address || null;
+
+        if (address != null){
+            portalStats.getPayout(address, function(data){
+                res.write(data.toString());
+                res.end();
+            });
+        }
+        else
+            next();
+    };
+
+
+    var shares = function(req, res, next){
+        portalStats.getCoins(function(){
+            processTemplates();
+
+            res.end(indexesProcessed['user_shares']);
+
+        });
+    };
+
+    var usershares = function(req, res, next){
+
+        var coin = req.params.coin || null;
+
+        if(coin != null){
+            portalStats.getCoinTotals(coin, null, function(){
+                processTemplates();
+
+                res.end(indexesProcessed['user_shares']);
+
+            });
+        }
+        else
+            next();
+    };
+
+
     var route = function(req, res, next){
         var pageId = req.params.page || '';
         if (pageId in indexesProcessed){
@@ -245,6 +306,14 @@ module.exports = function(logger){
     app.get('/key.html', function(req, res, next){
         res.end(keyScriptProcessed);
     });
+
+
+        app.get('/stats/shares/:coin', usershares);
+    app.get('/stats/shares', shares);
+    app.get('/miner/:address', minerpage);
+    app.get('/payout/:address', payout);
+
+
 
     app.get('/:page', route);
     app.get('/', route);

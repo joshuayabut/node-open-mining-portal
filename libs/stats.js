@@ -94,7 +94,81 @@ module.exports = function(logger, portalConfig, poolConfigs){
         _this.statPoolHistory.push(data);
     }
 
+    this.getCoins = function(cback){
+        _this.stats.coins = redisClients[0].coins;
+        cback();
+    };
+    this.getPayout = function(address, cback){
+        async.waterfall([
+            function(callback){
+                _this.getBalanceByAddress(address, function(){
+                    callback(null, 'test');
+                });
+            }
+        ], function(err, total){
+            cback(total.toFixed());
+        });
+    };
 
+    this.getBalanceByAddress = function(address, cback){
+
+        var client = redisClients[0].client,
+            coins = redisClients[0].coins,
+            balances = [];
+            payouts = [];
+
+            client.hgetall('Payouts:' + address, function(error, txns){
+                //logger.error(logSystem, 'TEMP', 'txnid variable is:' + txnid);
+                if (error) {
+                   callback ('There was no payouts found');
+                   return;
+                }
+                if(txns === null){
+                   var index = [];
+                } else{
+                   payouts=txns;
+                }
+           });
+        async.each(coins, function(coin, cb){
+            client.hget(coin + ':balances', address, function(error, result){
+                if (error){
+                    callback('There was an error getting balances');
+                    return;
+                }
+                if(result === null) {
+                    result = 0;
+                }else{
+                    result = result;
+                }
+            client.hget(coin + ':payouts', address, function(error, paid){
+                if (error){
+                    callback('There was an error getting payouts');
+                    return;
+                }
+                if(paid === null) {
+                    paid = 0;
+                }else{
+                    paid = paid;
+                }
+                balances.push({
+                    coin:coin,
+                    balance:result,
+		    paid:paid
+                });
+                cb();
+            });
+            });
+        }, function(err){
+if (err){
+console.log('ERROR FROM STATS.JS ' + err);
+            cback();
+} else {
+            _this.stats.balances = balances;
+            _this.stats.address = address;
+            cback();
+}
+        });
+};
 
 
     this.getGlobalStats = function(callback){
