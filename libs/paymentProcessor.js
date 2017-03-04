@@ -636,7 +636,8 @@ function SetupForPool(logger, poolOptions, setupFinished){
 
                 if (totalPaid !== 0)
                     finalRedisCommands.push(['hincrbyfloat', coin + ':stats', 'totalPaid', totalPaid]);
-
+                    //i think here we need to add code for payment to be put in seperate redis database, so we have history of payments per worker
+                    // can @movrcx look into it, if i'm right or not??
                 if (finalRedisCommands.length === 0){
                     callback();
                     return;
