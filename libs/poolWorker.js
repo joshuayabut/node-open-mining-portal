@@ -13,7 +13,7 @@ module.exports = function(logger){
     var portalConfig = JSON.parse(process.env.portalConfig);
 
     var forkId = process.env.forkId;
-    
+
     var pools = {};
 
     var proxySwitch = {};
@@ -139,12 +139,13 @@ module.exports = function(logger){
                             new Buffer(workerName, 'hex');
                             authCallback(true);
                         }
-                        catch (e) {
+			catch (e) {
                             authCallback(false);
                         }
                     }
                     else {
-                        pool.daemon.cmd('validateaddress', [workerName], function (results) {
+			var WorkerName = workerName.substring(0, workerName.indexOf('.'));
+                        pool.daemon.cmd('validateaddress', [WorkerName], function (results) {
                             var isValid = results.filter(function (r) {
                                 return r.response.isvalid
                             }).length > 0;
@@ -273,7 +274,7 @@ module.exports = function(logger){
                             + switchName + ' from '
                             + socket.remoteAddress + ' on '
                             + port + ' routing to ' + currentPool);
-                        
+
                         if (pools[currentPool])
                             pools[currentPool].getStratumServer().handleNewClient(socket);
                         else
