@@ -6,7 +6,7 @@
     "_comment_address": "pools komodo address; ex, RSXGTHQSqwcMw1vowKfEE7sQ8fAmv1tmso",
 
     "zAddress": "",
-    "_comment_zAddress": "shielding not required in komodo, not used",
+    "_comment_zAddress": "shielding not required in komodo, but must be filled or payment processor is not working,
 
     "tAddress": "",
     "_comment_tAddress": "set to same as pools komodo address; ex, RSXGTHQSqwcMw1vowKfEE7sQ8fAmv1tmso",
