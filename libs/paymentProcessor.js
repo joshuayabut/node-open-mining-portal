@@ -239,6 +239,10 @@ function SetupForPool(logger, poolOptions, setupFinished){
     function sendTToZ (callback, tBalance) {
         if (callback === true)
             return;
+        if (!tBalance || tBalance === NaN) {
+            logger.error(logSystem, logComponent, 'tBalance === NaN for sendTToZ');
+            return;
+        }
         if ((tBalance - 10000) <= 0)
             return;
 
@@ -272,6 +276,10 @@ function SetupForPool(logger, poolOptions, setupFinished){
     function sendZToT (callback, zBalance) {
         if (callback === true)
             return;
+        if (!zBalance || zBalance === NaN) {
+            logger.error(logSystem, logComponent, 'zBalance === NaN for sendZToT');
+            return;
+        }
         if ((zBalance - 10000) <= 0)
             return;
 
