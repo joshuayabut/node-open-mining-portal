@@ -239,7 +239,7 @@ function SetupForPool(logger, poolOptions, setupFinished){
     function sendTToZ (callback, tBalance) {
         if (callback === true)
             return;
-        if ((tBalance - 10000) < 0)
+        if ((tBalance - 10000) <= 0)
             return;
 
         // do not allow more than a single z_sendmany operation at a time
@@ -272,7 +272,7 @@ function SetupForPool(logger, poolOptions, setupFinished){
     function sendZToT (callback, zBalance) {
         if (callback === true)
             return;
-        if ((zBalance - 10000) < 0)
+        if ((zBalance - 10000) <= 0)
             return;
 
         // do not allow more than a single z_sendmany operation at a time
