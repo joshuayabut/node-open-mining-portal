@@ -239,7 +239,7 @@ function SetupForPool(logger, poolOptions, setupFinished){
     function sendTToZ (callback, tBalance) {
         if (callback === true)
             return;
-        if (!tBalance || tBalance === NaN) {
+        if (tBalance === NaN) {
             logger.error(logSystem, logComponent, 'tBalance === NaN for sendTToZ');
             return;
         }
@@ -276,7 +276,7 @@ function SetupForPool(logger, poolOptions, setupFinished){
     function sendZToT (callback, zBalance) {
         if (callback === true)
             return;
-        if (!zBalance || zBalance === NaN) {
+        if (zBalance === NaN) {
             logger.error(logSystem, logComponent, 'zBalance === NaN for sendZToT');
             return;
         }
