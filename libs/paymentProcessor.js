@@ -182,7 +182,7 @@ function SetupForPool(logger, poolOptions, setupFinished){
     }
     
     //get t_address coinbalance
-    function listUnspent (addr, notAddr, minConf, displayBool, callback) {
+    function listUnspent(addr, notAddr, minConf, displayBool, callback) {
         if (addr !== null) {
             var args = [minConf, 99999999, [addr]];
         } else {
@@ -191,25 +191,26 @@ function SetupForPool(logger, poolOptions, setupFinished){
         }
         daemon.cmd('listunspent', args, function (result) {
             //Check if payments failed because wallet doesn't have enough coins to pay for tx fees
-            if (result.error) {
-                logger.error(logSystem, logComponent, 'Error trying to get t-addr ['+addr+'] balance with RPC listunspent.'
+            if (!result || result.error) {
+                logger.error(logSystem, logComponent, 'Error trying to get balance for address '+addr+' with RPC listunspent.'
                     + JSON.stringify(result.error));
                 callback = function (){};
                 callback(true);
             }
             else {
-                var tBalance = 0;
+                var tBalance = parseFloat(0);
                 if (result[0].response != null && result[0].response.length > 0) {
                     for (var i = 0, len = result[0].response.length; i < len; i++) {
-                        if (result[0].response[i].address !== notAddr) {
-                            tBalance = tBalance + (result[0].response[i].amount * magnitude);
+                        if (result[0].response[i].address && result[0].response[i].address !== notAddr) {
+                            tBalance += parseFloat(result[0].response[i].amount || 0);
                         }
                     }
+                    tBalance = coinsRound(tBalance);
                 }
                 if (displayBool === true) {
-                    logger.special(logSystem, logComponent, addr+' balance of ' + (tBalance / magnitude).toFixed(8));
+                    logger.special(logSystem, logComponent, addr+' balance of ' + satoshisToCoins(tBalance));
                 }
-                callback(null, tBalance.toFixed(8));
+                callback(null, coinsToSatoshies(tBalance));
             }
         });
     }
@@ -219,19 +220,19 @@ function SetupForPool(logger, poolOptions, setupFinished){
         daemon.cmd('z_getbalance', [addr, minConf], function (result) {
             //Check if payments failed because wallet doesn't have enough coins to pay for tx fees
             if (result[0].error) {
-                logger.error(logSystem, logComponent, 'Error trying to get coin balance with RPC z_getbalance.' + JSON.stringify(result[0].error));
+                logger.error(logSystem, logComponent, 'Error trying to get z-addr balance with RPC z_getbalance.' + JSON.stringify(result[0].error));
                 callback = function (){};
                 callback(true);
             }
             else {
-                var zBalance = 0;
+                var zBalance = parseFloat(0);
                 if (result[0].response != null) {
-                    zBalance = result[0].response;
+                    zBalance = coinsRound(result[0].response);
                 }
                 if (displayBool === true) {
                     logger.special(logSystem, logComponent, addr.substring(0,14) + '...' + addr.substring(addr.length - 14) + ' balance: '+(zBalance).toFixed(8));
                 }
-                callback(null, (zBalance * magnitude).toFixed(8));
+                callback(null, coinsToSatoshies(zBalance));
             }
         });
     }
@@ -870,8 +871,9 @@ function SetupForPool(logger, poolOptions, setupFinished){
                                                 if (timePeriod > 1.0) {
                                                     err = true;
                                                     logger.error(logSystem, logComponent, 'Time share period is greater than 1.0 for '+workerAddress+' round:' + round.height + ' blockHash:' + round.blockHash);
-                                                    return;                                                    
+                                                    return;
                                                 }
+                                                worker.timePeriod = timePeriod;
                                             } else {
                                                 logger.warning(logSystem, logComponent, 'PPLNT: Missing time share period for '+workerAddress+', miner shares qualified in round ' + round.height);
                                             }
@@ -937,6 +939,7 @@ function SetupForPool(logger, poolOptions, setupFinished){
                     var addressAmounts = {};
                     var balanceAmounts = {};
                     var shareAmounts = {};
+                    var timePeriods = {};
                     var minerTotals = {};
                     var totalSent = 0;
                     var totalShares = 0;
