@@ -182,7 +182,7 @@ function SetupForPool(logger, poolOptions, setupFinished){
     }
     
     //get t_address coinbalance
-    function listUnspent(addr, notAddr, minConf, displayBool, callback) {
+    function listUnspent (addr, notAddr, minConf, displayBool, callback) {
         if (addr !== null) {
             var args = [minConf, 99999999, [addr]];
         } else {
@@ -190,9 +190,8 @@ function SetupForPool(logger, poolOptions, setupFinished){
             var args = [minConf, 99999999];
         }
         daemon.cmd('listunspent', args, function (result) {
-            //Check if payments failed because wallet doesn't have enough coins to pay for tx fees
-            if (!result || result.error) {
-                logger.error(logSystem, logComponent, 'Error trying to get balance for address '+addr+' with RPC listunspent.'
+            if (!result || result.error || result[0].error || !result[0].response) {
+                logger.error(logSystem, logComponent, 'Error trying to get balance for address '+addr+' with RPC call listunspent.'
                     + JSON.stringify(result.error));
                 callback = function (){};
                 callback(true);
@@ -218,9 +217,8 @@ function SetupForPool(logger, poolOptions, setupFinished){
     // get z_address coinbalance
     function listUnspentZ (addr, minConf, displayBool, callback) {
         daemon.cmd('z_getbalance', [addr, minConf], function (result) {
-            //Check if payments failed because wallet doesn't have enough coins to pay for tx fees
-            if (result[0].error) {
-                logger.error(logSystem, logComponent, 'Error trying to get z-addr balance with RPC z_getbalance.' + JSON.stringify(result[0].error));
+            if (!result || result.error || result[0].error || !result[0].response) {
+                logger.error(logSystem, logComponent, 'Error trying to get z-addr balance with RPC call z_getbalance.');
                 callback = function (){};
                 callback(true);
             }
