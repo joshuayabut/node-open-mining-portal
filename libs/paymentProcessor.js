@@ -207,7 +207,7 @@ function SetupForPool(logger, poolOptions, setupFinished){
                     tBalance = coinsRound(tBalance);
                 }
                 if (displayBool === true) {
-                    logger.special(logSystem, logComponent, addr+' balance of ' + satoshisToCoins(tBalance));
+                    logger.special(logSystem, logComponent, addr+' balance of ' + tBalance);
                 }
                 callback(null, coinsToSatoshies(tBalance));
             }
