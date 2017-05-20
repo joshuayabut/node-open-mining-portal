@@ -453,8 +453,13 @@ function SetupForPool(logger, poolOptions, setupFinished){
                         }
                     }
                 });
+                // if there are no pending operations
                 if (batchRPC.length <= 0) {
                     opidInterval = setInterval(checkOpids, opid_interval);
+                    if (opidCount > 0) {
+                        opidCount = 0;
+                        logger.warning(logSystem, logComponent, 'Cleared opidCount, batchRPC.length <= 0 for z_getoperationresult RPC call.');
+                    }
                     return;
                 }
                 daemon.batchCmd(batchRPC, function(error, results){
@@ -478,6 +483,10 @@ function SetupForPool(logger, poolOptions, setupFinished){
                 checkOpIdSuccessAndGetResult(result.response);
               } else {
                 opidInterval = setInterval(checkOpids, opid_interval);
+                if (opidCount > 0) {
+                    opidCount = 0;
+                    logger.warning(logSystem, logComponent, 'Cleared opidCount, no response from z_getoperationstatus RPC call.');
+                }
               }
             }, true, true);
         }
