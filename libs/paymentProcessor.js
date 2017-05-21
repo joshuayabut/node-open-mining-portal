@@ -32,11 +32,9 @@ module.exports = function(logger){
             var logSystem = 'Payments';
             var logComponent = coin;
 
-            logger.debug(logSystem, logComponent, 'Payment processing setup to run every '
-                + processingConfig.paymentInterval + ' second(s) with daemon ('
+            logger.debug(logSystem, logComponent, 'Payment processing setup with daemon ('
                 + processingConfig.daemon.user + '@' + processingConfig.daemon.host + ':' + processingConfig.daemon.port
-                + ') and redis (' + poolOptions.redis.host + ':' + poolOptions.redis.port + ')');
-
+                + ') and redis (' + poolOptions.redis.host + ':' + poolOptions.redis.port + ')');                
         });
     });
 };
@@ -52,14 +50,19 @@ function SetupForPool(logger, poolOptions, setupFinished){
     var opidCount = 0;
     
     // zcash team recommends 10 confirmations for safety from orphaned blocks
-    var minConfShield = Math.max((processingConfig.minConf || 10), 1);  //Dont allow 0 conf transactions.
+    var minConfShield = Math.max((processingConfig.minConf || 10), 1); // Don't allow 0 conf transactions.
     var minConfPayout = Math.max((processingConfig.minConf || 10), 1);
-    
     if (minConfPayout  < 10) {
-           logger.debug(logSystem, logComponent, logComponent + 'Minimum confirmations for payments is less than 10, this increases the chances of a payment being orphaned');
+        logger.warning(logSystem, logComponent, logComponent + 'minConf of 10 is recommended to reduce chances of payments being orphaned.');
     }
     
-    var maxBlocksPerPayment = processingConfig.maxBlocksPerPayment || 3;
+    // minimum paymentInterval of 60 seconds
+    var paymentIntervalSecs = Math.max((processingConfig.paymentInterval || 180), 60);
+    if (parseInt(processingConfig.paymentInterval) < 180) {
+        logger.warning(logSystem, logComponent, 'paymentInterval of 180 seconds recommended to reduce the RPC work queue.');
+    }
+    
+    var maxBlocksPerPayment =  Math.max(processingConfig.maxBlocksPerPayment || 3, 1);
     
     // pplnt - pay per last N time shares
     var pplntEnabled = processingConfig.paymentMode === "pplnt" || false;
@@ -170,7 +173,7 @@ function SetupForPool(logger, poolOptions, setupFinished){
             } catch(e){
                 throw e;
             }
-        }, processingConfig.paymentInterval * 1000);
+        }, paymentIntervalSecs * 1000);
         setTimeout(processPayments, 100);
         setupFinished(true);
     }
@@ -394,9 +397,9 @@ function SetupForPool(logger, poolOptions, setupFinished){
         );
     }
 
-    // run coinbase coin transfers every x minutes
+    // run shielding process every x minutes
     var shieldIntervalState = 0; // do not send ZtoT and TtoZ and same time, this results in operation failed!
-    var shielding_interval = poolOptions.walletInterval * 60 * 1000; // run every x minutes
+    var shielding_interval = Math.max(parseInt(poolOptions.walletInterval || 1), 1) * 60 * 1000; // run every x minutes
     // shielding not required for some equihash coins
     if (requireShielding === true) {
         var shieldInterval = setInterval(function() {
@@ -468,7 +471,7 @@ function SetupForPool(logger, poolOptions, setupFinished){
                         return;
                     }
                     results.forEach(function(result, i) {
-                        if (parseFloat(result.result[i].execution_secs || 0) > parseFloat(poolOptions.walletInterval))
+                        if (parseFloat(result.result[i].execution_secs || 0) > shielding_interval)
                             logger.warning(logSystem, logComponent, 'Increase walletInterval in pool_config. opid execution took '+result.result[i].execution_secs+' secs.');
                     });
                     opidInterval = setInterval(checkOpids, opid_interval);
