@@ -167,14 +167,8 @@ function SetupForPool(logger, poolOptions, setupFinished){
         if (paymentInterval) {
             clearInterval(paymentInterval);
         }
-        paymentInterval = setInterval(function(){
-            try {
-                processPayments();
-            } catch(e){
-                throw e;
-            }
-        }, paymentIntervalSecs * 1000);
-        setTimeout(processPayments, 100);
+        paymentInterval = setInterval(processPayments, paymentIntervalSecs * 1000);
+        //setTimeout(processPayments, 100);
         setupFinished(true);
     }
 
@@ -432,14 +426,19 @@ function SetupForPool(logger, poolOptions, setupFinished){
     // shielding not required for some equihash coins
     if (requireShielding === true) {
         var checkOpids = function() {
+            clearTimeout(opidTimeout);
             var checkOpIdSuccessAndGetResult = function(ops) {
                 var batchRPC = [];
                 ops.forEach(function(op, i){
+                    // check operation id status
                     if (op.status == "success" || op.status == "failed") {
+                        // clear operation id result
                         batchRPC.push(['z_getoperationresult', [[op.id]]]);
+                        // clear operation id count
                         if (opidCount > 0) {
                             opidCount = 0;
                         }
+                        // log status to console
                         if (op.status == "failed") {
                             if (op.error) {
                               logger.error(logSystem, logComponent, "Shielding operation failed " + op.id + " " + op.error.code +", " + op.error.message);
@@ -456,45 +455,50 @@ function SetupForPool(logger, poolOptions, setupFinished){
                         }
                     }
                 });
-                // if there are no pending operations
+                // if there are no completed operations
                 if (batchRPC.length <= 0) {
-                    opidInterval = setInterval(checkOpids, opid_interval);
-                    if (opidCount > 0) {
-                        opidCount = 0;
-                        logger.warning(logSystem, logComponent, 'Cleared opidCount, batchRPC.length <= 0 for z_getoperationresult RPC call.');
-                    }
+                    opidTimeout = setTimeout(checkOpids, opid_interval);
                     return;
                 }
+                // clear results for completed operations
                 daemon.batchCmd(batchRPC, function(error, results){
                     if (error || !results) {
+                        opidTimeout = setTimeout(checkOpids, opid_interval);
                         logger.error(logSystem, logComponent, 'Error with z_getoperationresult ' + JSON.stringify(error));
                         return;
                     }
+                    // check result execution_secs vs pool_config
                     results.forEach(function(result, i) {
-                        if (parseFloat(result.result[i].execution_secs || 0) > shielding_interval)
+                        if (parseFloat(result.result[i].execution_secs || 0) > shielding_interval) {
                             logger.warning(logSystem, logComponent, 'Increase walletInterval in pool_config. opid execution took '+result.result[i].execution_secs+' secs.');
+                        }
                     });
-                    opidInterval = setInterval(checkOpids, opid_interval);
+                    // keep checking operation ids
+                    opidTimeout = setTimeout(checkOpids, opid_interval);
                 });
             };
-            clearInterval(opidInterval);
+            // check for completed operation ids
             daemon.cmd('z_getoperationstatus', null, function (result) {
-              if (result.error) {
-                logger.warning(logSystem, logComponent, 'Unable to get operation ids for clearing.');
-                opidInterval = setInterval(checkOpids, opid_interval);
-              } else if (result.response) {
-                checkOpIdSuccessAndGetResult(result.response);
-              } else {
-                opidInterval = setInterval(checkOpids, opid_interval);
-                if (opidCount > 0) {
-                    opidCount = 0;
-                    logger.warning(logSystem, logComponent, 'Cleared opidCount, no response from z_getoperationstatus RPC call.');
+                var err = false;
+                if (result.error) {
+                    err = true;
+                    logger.error(logSystem, logComponent, 'Error with z_getoperationstatus ' + JSON.stringify(result.error));
+                } else if (result.response) {
+                    checkOpIdSuccessAndGetResult(result.response);
+                } else {
+                    err = true;
+                    logger.error(logSystem, logComponent, 'No response from z_getoperationstatus RPC call.');
                 }
-              }
+                if (err === true) {
+                    opidTimeout = setTimeout(checkOpids, opid_interval);
+                    if (opidCount > 0) {
+                        opidCount = 0;
+                        logger.warning(logSystem, logComponent, 'Clearing operation ids due to RPC call errors.');
+                    }
+                }
             }, true, true);
         }
-        
-        var opidInterval = setInterval(checkOpids, opid_interval);
+        var opidTimeout = setTimeout(checkOpids, opid_interval);
     }
 
     function roundTo(n, digits) {
@@ -953,6 +957,7 @@ function SetupForPool(logger, poolOptions, setupFinished){
             */
             function(workers, rounds, addressAccount, callback) {
 
+                var tries = 0;
                 var trySend = function (withholdPercent) {
                     var addressAmounts = {};
                     var balanceAmounts = {};
@@ -961,6 +966,10 @@ function SetupForPool(logger, poolOptions, setupFinished){
                     var minerTotals = {};
                     var totalSent = 0;
                     var totalShares = 0;
+                    
+                    // track attempts made, calls to trySend...
+                    tries++;
+                    
                     // total up miner's balances
                     for (var w in workers) {
                         var worker = workers[w];
@@ -1024,31 +1033,55 @@ function SetupForPool(logger, poolOptions, setupFinished){
                         return;
                     }
                     
+                    // do final rounding of payments per address
+                    // this forces amounts to be valid (0.12345678)
+                    for (var a in addressAmounts) {
+                        addressAmounts[a] = coinsRound(addressAmounts[a]);
+                    }
+                    
                     // POINT OF NO RETURN! GOOD LUCK!
                     // WE ARE SENDING PAYMENT CMD TO DAEMON
                     
                     // perform the sendmany operation .. addressAccount
+                    var rpccallTracking = 'sendmany "" '+JSON.stringify(addressAmounts);
                     daemon.cmd('sendmany', ["", addressAmounts], function (result) {
                         // check for failed payments, there are many reasons
                         if (result.error && result.error.code === -6) {
-                            // we thought we had enough funds to send payments, but apparently not...
-                            // try decreasing payments by a small percent to cover unexpected tx fees?
-                            var higherPercent = withholdPercent + 0.001;
-                            logger.warning(logSystem, logComponent, 'Not enough funds to cover the tx fees for sending out payments, decreasing rewards by ' + (higherPercent * 100) + '% and retrying');
-                            trySend(higherPercent);
-                            //callback(true); not a complete failure...
+                            // check if it is because we don't have enough funds
+                            if (result.error.message && result.error.message.includes("insufficient funds")) {
+                                // only try up to XX times (Max, 0.5%)
+                                if (tries < 5) {
+                                    // we thought we had enough funds to send payments, but apparently not...
+                                    // try decreasing payments by a small percent to cover unexpected tx fees?
+                                    var higherPercent = withholdPercent + 0.001; // 0.1%
+                                    logger.warning(logSystem, logComponent, 'Insufficient funds (??) for payments ('+satoshisToCoins(totalSent)+'), decreasing rewards by ' + (higherPercent * 100).toFixed(1) + '% and retrying');
+                                    trySend(higherPercent);
+                                } else {
+                                    logger.warning(logSystem, logComponent, rpccallTracking);
+                                    logger.error(logSystem, logComponent, "Error sending payments, decreased rewards by too much!!!");
+                                    callback(true);
+                                }
+                            } else {
+                                // there was some fatal payment error?
+                                logger.warning(logSystem, logComponent, rpccallTracking);
+                                logger.error(logSystem, logComponent, 'Error sending payments ' + JSON.stringify(result.error));
+                                // payment failed, prevent updates to redis
+                                callback(true);
+                            }
                             return;
                         }
                         else if (result.error && result.error.code === -5) {
                             // invalid address specified in addressAmounts array
-                            logger.error(logSystem, logComponent, 'Error sending payments ' + result.error.message);
+                            logger.warning(logSystem, logComponent, rpccallTracking);
+                            logger.error(logSystem, logComponent, 'Error sending payments ' + JSON.stringify(result.error));
                             // payment failed, prevent updates to redis
                             callback(true);
                             return;
                         }
                         else if (result.error && result.error.message != null) {
-                            // error from daemon
-                            logger.error(logSystem, logComponent, 'Error sending payments ' + result.error.message);
+                            // invalid amount, others?
+                            logger.warning(logSystem, logComponent, rpccallTracking);
+                            logger.error(logSystem, logComponent, 'Error sending payments ' + JSON.stringify(result.error));
                             // payment failed, prevent updates to redis
                             callback(true);
                             return;
