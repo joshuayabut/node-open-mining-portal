@@ -213,7 +213,7 @@ function SetupForPool(logger, poolOptions, setupFinished){
     // get z_address coinbalance
     function listUnspentZ (addr, minConf, displayBool, callback) {
         daemon.cmd('z_getbalance', [addr, minConf], function (result) {
-            if (!result || result.error || result[0].error || !result[0].response) {
+            if (!result || result.error || result[0].error) {
                 logger.error(logSystem, logComponent, 'Error with RPC call z_getbalance '+addr+' '+JSON.stringify(result[0].error));
                 callback = function (){};
                 callback(true);
