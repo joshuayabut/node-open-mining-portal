@@ -187,7 +187,7 @@ function SetupForPool(logger, poolOptions, setupFinished){
             var args = [minConf, 99999999];
         }
         daemon.cmd('listunspent', args, function (result) {
-            if (!result || result.error || result[0].error || !result[0].response) {
+            if (!result || result.error || result[0].error) {
                 logger.error(logSystem, logComponent, 'Error with RPC call listunspent '+addr+' '+JSON.stringify(result[0].error));
                 callback = function (){};
                 callback(true);
