@@ -311,7 +311,10 @@ function SetupForPool(logger, poolOptions, setupFinished){
     
     function cacheMarketStats() {
         var marketStatsUpdate = [];
-        var coin = logComponent.replace('_testnet', '');
+        var coin = logComponent.replace('_testnet', '').toLowerCase();
+        if (coin == 'zen')
+            coin = 'zencash';
+        
         request('https://api.coinmarketcap.com/v1/ticker/'+coin+'/', function (error, response, body) {
             if (error) {
                 logger.error(logSystem, logComponent, 'Error with http request to https://api.coinmarketcap.com/ ' + JSON.stringify(error));
