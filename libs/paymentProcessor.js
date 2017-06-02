@@ -325,7 +325,7 @@ function SetupForPool(logger, poolOptions, setupFinished){
                     if (body) {
                         var data = JSON.parse(body);
                         if (data.length > 0) {
-                            marketStatsUpdate.push(['hset', coin + ':stats', 'coinmarketcap', JSON.stringify(data)]);
+                            marketStatsUpdate.push(['hset', logComponent + ':stats', 'coinmarketcap', JSON.stringify(data)]);
                             redisClient.multi(marketStatsUpdate).exec(function(err, results){
                                 if (err){
                                     logger.error(logSystem, logComponent, 'Error with redis during call to cacheMarketStats() ' + JSON.stringify(error));
