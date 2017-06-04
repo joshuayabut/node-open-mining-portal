@@ -10,7 +10,7 @@
     </tr>
     </thead>
     {{ for(var p in it.stats.pools[pool].payments) { }}
-    <tr class="pure-table-odd">
+    <tr>
         <td>{{=it.stats.pools[pool].payments[p].blocks}}</td>
         <td>{{=it.stats.pools[pool].payments[p].time}}</td>
         <td>{{=it.stats.pools[pool].payments[p].miners}}</td>
