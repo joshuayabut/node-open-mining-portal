@@ -49,7 +49,7 @@
       {{ for(var p in it.stats.pools[pool].payments) { }}
       <tr>
           <td>{{=it.stats.pools[pool].payments[p].blocks}}</td>
-          <td><a target="_blank" href="http://explorer.myhush.org/tx/{{=it.stats.pools[pool].payments[p].txid}}">{{=it.stats.pools[pool].payments[p].txid}}</td>
+          <td>{{=it.stats.pools[pool].payments[p].txid}}</td>
           <td>{{=it.stats.pools[pool].payments[p].miners}}</td>
           <td>{{=Math.round(it.stats.pools[pool].payments[p].shares)}}</td>
           <td>{{=it.stats.pools[pool].payments[p].paid}} {{=it.stats.pools[pool].symbol}}</td>
