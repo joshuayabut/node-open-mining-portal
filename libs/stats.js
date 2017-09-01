@@ -98,6 +98,21 @@ module.exports = function(logger, portalConfig, poolConfigs){
         });
     }
 
+    // For block stats
+    this.getBlocksStats = function (cback) {
+        var client = redisClients[0].client;
+        client.hgetall("Allblocks", function (error, data) {
+            if (error) {
+                logger.log("error:-" + error);
+                cback("");
+                return;
+            }
+
+            cback(data);
+
+        });
+    };
+
     function gatherStatHistory(){
         var retentionTime = (((Date.now() / 1000) - portalConfig.website.stats.historicalRetention) | 0).toString();
         redisStats.zrangebyscore(['statHistory', retentionTime, '+inf'], function(err, replies){
@@ -380,11 +395,13 @@ module.exports = function(logger, portalConfig, poolConfigs){
                             /* show all pending blocks */
 							pending: {
 								blocks: replies[i + 6].sort(sortBlocks),
+                                lastblock: replies[i + 6].sort(sortBlocks).slice(0,1),
                                 confirms: (replies[i + 9] || {})
 							},
                             /* show last 5 found blocks */
 							confirmed: {
 								blocks: replies[i + 7].sort(sortBlocks).slice(0,5)
+                                lastblock: replies[i + 7].sort(sortBlocks).slice(0,1)
 							},
                             payments: [],
 							currentRoundShares: (replies[i + 8] || {}),
