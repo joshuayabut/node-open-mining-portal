@@ -1,51 +1,50 @@
-
 {
-    "enabled": false,
-    "coin": "zcash_testnet.json",
-
+    "enabled": true,
+    "coin": "btg_testnet.json",
+    
     "address": "",
     "_comment_address": "a transparent address to send coinbase rewards to and to transfer to zAddress.",
-
+    
     "zAddress": "",
-    "_comment_zAddress": "a private address used to send coins to tAddress.",
-
+    "_comment_zAddress": "Not used",
+    
     "tAddress": "",
     "_comment_tAddress": "transparent address used to send payments, make this a different address, otherwise payments will not send",
-
-    "walletInterval": 2.5,
-
+    
+    "walletInterval": 5,
+    
     "rewardRecipients": {
-        "": 0.2,
-        "": 0.3
+        "": 1.0
     },
-
-    "paymentProcessing": {
-	"minConf": 10,
-        "enabled": false,
-        "paymentMode": "prop",
-        "_comment_paymentMode":"prop, pplnt",
-        "paymentInterval": 20,
-        "minimumPayment": 0.1,
-        "maxBlocksPerPayment": 1,
-        "daemon": {
-            "host": "127.0.0.1",
-            "port": 19332,
-            "user": "testuser",
-            "password": "testpass"
-        }
-    },
-
+    
     "tlsOptions": {
         "enabled": false,
         "serverKey":"",
         "serverCert":"",
         "ca":""
     },
-
+    
+    "paymentProcessing": {
+        "minConf": 10,
+        "enabled": true,
+        "paymentMode": "prop",
+        "_comment_paymentMode":"prop, pplnt",
+        "paymentInterval": 57,
+        "_comment_paymentInterval": "Interval in seconds to check and perform payments.",
+        "minimumPayment": 0.1,
+        "maxBlocksPerPayment": 3,
+        "daemon": {
+            "host": "127.0.0.1",
+            "port": 18332,
+            "user": "username",
+            "password": "password"
+        }
+    },
+    
     "ports": {
-        "3032": {
+        "3857": {
+            "tls":false,
             "diff": 0.05,
-            "tls": false,
             "varDiff": {
                 "minDiff": 0.04,
                 "maxDiff": 16,
@@ -55,32 +54,32 @@
             }
         }
     },
-
+    
     "daemons": [
-        {
-            "host": "127.0.0.1",
-            "port": 18232,
-            "user": "rpcuser",
-            "password": "rpcpassword"
-        }
-    ],
-
+                {
+                "host": "127.0.0.1",
+                "port": 18332,
+                "user": "username",
+                "password": "password"
+                }
+                ],
+    
     "p2p": {
         "enabled": false,
         "host": "127.0.0.1",
         "port": 19333,
         "disableTransactions": true
     },
-
+    
     "mposMode": {
         "enabled": false,
         "host": "127.0.0.1",
         "port": 3306,
         "user": "me",
         "password": "mypass",
-        "database": "taz",
+        "database": "kmd",
         "checkPassword": true,
         "autoCreateWorker": false
     }
-
+    
 }
