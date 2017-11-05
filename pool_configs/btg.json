@@ -1,32 +1,31 @@
 {
-    "enabled":false,
-    "coin": "komodo.json",
-
+    "enabled": false,
+    "coin": "btg.json",
+    
     "address": "",
-    "_comment_address": "pools komodo address; ex, RSXGTHQSqwcMw1vowKfEE7sQ8fAmv1tmso",
-
+    "_comment_address": "a transparent address to send coinbase rewards to and to transfer to zAddress.",
+    
     "zAddress": "",
-    "_comment_zAddress": "shielding not required in komodo, not used",
-
+    "_comment_zAddress": "Not used",
+    
     "tAddress": "",
-    "_comment_tAddress": "set to same as pools komodo address; ex, RSXGTHQSqwcMw1vowKfEE7sQ8fAmv1tmso",
-
-    "walletInterval": 1,
-    "_comment_walletInterval": "Used to cache komodo coin stats, shielding not performed.",
-
+    "_comment_tAddress": "transparent address used to send payments, make this a different address, otherwise payments will not send",
+    
+    "walletInterval": 5,
+    
     "rewardRecipients": {
         "": 1.0
     },
-
+    
     "tlsOptions": {
         "enabled": false,
         "serverKey":"",
         "serverCert":"",
         "ca":""
     },
-
+    
     "paymentProcessing": {
-	"minConf": 10,
+        "minConf": 10,
         "enabled": true,
         "paymentMode": "prop",
         "_comment_paymentMode":"prop, pplnt",
@@ -36,12 +35,12 @@
         "maxBlocksPerPayment": 3,
         "daemon": {
             "host": "127.0.0.1",
-            "port": 8232,
+            "port": 8332,
             "user": "username",
             "password": "password"
         }
     },
-
+    
     "ports": {
         "3857": {
             "tls":false,
@@ -55,23 +54,23 @@
             }
         }
     },
-
+    
     "daemons": [
-        {
-            "host": "127.0.0.1",
-            "port": 8232,
-            "user": "username",
-            "password": "password"
-        }
-    ],
-
+                {
+                "host": "127.0.0.1",
+                "port": 8332,
+                "user": "username",
+                "password": "password"
+                }
+                ],
+    
     "p2p": {
         "enabled": false,
         "host": "127.0.0.1",
         "port": 19333,
         "disableTransactions": true
     },
-
+    
     "mposMode": {
         "enabled": false,
         "host": "127.0.0.1",
@@ -82,5 +81,5 @@
         "checkPassword": true,
         "autoCreateWorker": false
     }
-
+    
 }
