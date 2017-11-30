@@ -5,3 +5,4 @@ pool_configs/*.json
 !pool_configs/zclassic_example.json
 logs/
 scripts/blocknotify
+!pool_configs/*_example.json
