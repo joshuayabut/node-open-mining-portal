@@ -149,6 +149,8 @@
 						<a href="https://classic.zcha.in/blocks/{{=block[0]}}" target="_blank">{{=block[2]}}</a>
 					{{ } else if (String(it.stats.pools[pool].name).startsWith("hush")) { }}
 						<a href="https://explorer.myhush.org/block/{{=block[0]}}" target="_blank">{{=block[2]}}</a>
+					{{ } else if (String(it.stats.pools[pool].name).startsWith("zen")) { }}
+                                                <a href="http://explorer.zenmine.pro/insight/block/{{=block[0]}}" target="_blanks">{{=block[2]}}</a>
 					{{ } else { }}
                                             {{=block[2]}}
                                         {{ } }}
@@ -177,6 +179,10 @@
 						<a href="https://explorer.zcha.in/blocks/{{=block[0]}}" target="_blank">{{=block[2]}}</a>
 					{{ } else if (String(it.stats.pools[pool].name).startsWith("zclassic")) { }}
 						<a href="https://classic.zcha.in/blocks/{{=block[0]}}" target="_blank">{{=block[2]}}</a>
+					{{ } else if (String(it.stats.pools[pool].name).startsWith("zen")) { }}
+						<a href="http://explorer.zenmine.pro/insight/block/{{=block[0]}}" target="_blanks">{{=block[2]}}</a>
+                                        {{ } else if (String(it.stats.pools[pool].name).startsWith("hush")) { }}
+                                                <a href="https://explorer.myhush.org/block/{{=block[0]}}" target="_blank">{{=block[2]}}</a> 
 					{{ } else { }}
 						{{=block[2]}}
 					{{ } }}

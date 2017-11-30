@@ -3,3 +3,5 @@ node_modules/
 config.json
 pool_configs/*.json
 !pool_configs/zclassic_example.json
+logs/
+scripts/blocknotify
