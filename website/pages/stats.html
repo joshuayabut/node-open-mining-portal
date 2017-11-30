@@ -149,6 +149,8 @@
 						<a href="https://classic.zcha.in/blocks/{{=block[0]}}" target="_blank">{{=block[2]}}</a>
 					{{ } else if (String(it.stats.pools[pool].name).startsWith("hush")) { }}
 						<a href="https://explorer.myhush.org/block/{{=block[0]}}" target="_blank">{{=block[2]}}</a>
+					{{ } else if (String(it.stats.pools[pool].name).startsWith("zen")) { }}
+                                                <a href="http://explorer.zenmine.pro/insight/block/{{=block[0]}}" target="_blanks">{{=block[2]}}</a>
 					{{ } else { }}
                                             {{=block[2]}}
                                         {{ } }}
@@ -164,7 +166,7 @@
 					{{ } else { }}
 					    <span style="float:right; color: red;"><small>*PENDING*</small></span>
 					{{ } }}
-					<div><i class="fa fa-gavel"></i><small>Mined By:</small> <a href="/workers/{{=block[3].split('.')[0]}}">{{=block[3]}}</a></div>
+					<div><i class="fa fa-gavel"></i><small>Mined By:</small> <a href="/workers/{{=block[3].split('.')[0]}}">{{=block[3].split('.')[0]}}</a></div>
 				</div>
         {{ blockscomb.push(block);}}
 			{{ } }}
@@ -177,6 +179,10 @@
 						<a href="https://explorer.zcha.in/blocks/{{=block[0]}}" target="_blank">{{=block[2]}}</a>
 					{{ } else if (String(it.stats.pools[pool].name).startsWith("zclassic")) { }}
 						<a href="https://classic.zcha.in/blocks/{{=block[0]}}" target="_blank">{{=block[2]}}</a>
+					{{ } else if (String(it.stats.pools[pool].name).startsWith("zen")) { }}
+						<a href="http://explorer.zenmine.pro/insight/block/{{=block[0]}}" target="_blanks">{{=block[2]}}</a>
+                                        {{ } else if (String(it.stats.pools[pool].name).startsWith("hush")) { }}
+                                                <a href="https://explorer.myhush.org/block/{{=block[0]}}" target="_blank">{{=block[2]}}</a> 
 					{{ } else { }}
 						{{=block[2]}}
 					{{ } }}
@@ -184,7 +190,7 @@
 					<span style="padding-left: 18px;"><small>{{=readableDate(block[4])}}</small></span>
 					{{ } }}
 					<span style="float:right; padding-left: 18px; color: green;"><small>*PAID*</small></span>
-					<div><i class="fa fa-gavel"></i><small>Mined By:</small> <a href="/workers/{{=block[3].split('.')[0]}}">{{=block[3]}}</a></div>
+					<div><i class="fa fa-gavel"></i><small>Mined By:</small> <a href="/workers/{{=block[3].split('.')[0]}}">{{=block[3].split('.')[0]}}</a></div>
 				</div>
         {{blockscomb.push(block);}}
 			{{ } }}
@@ -213,7 +219,7 @@ var groupedByFinder = {};
 var data = [];
 
 for (var i=0; i < blockscomb.length; i++) {
-    finder=blockscomb[i][3]; // if other doesn 't already have a property for the current letter
+    finder=blockscomb[i][3].split('.')[0]; // if other doesn 't already have a property for the current letter
     // create it and assign it to a new empty array
     if (!(finder in groupedByFinder))
         groupedByFinder[finder] = [];
