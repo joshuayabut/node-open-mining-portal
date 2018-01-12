@@ -47,6 +47,7 @@ function SetupForPool(logger, poolOptions, setupFinished){
 
     var logSystem = 'Payments';
     var logComponent = coin;
+    var lastFailedAddresses = [];
 
     var opidCount = 0;
     var opids = [];
@@ -1186,10 +1187,31 @@ function SetupForPool(logger, poolOptions, setupFinished){
                         }
                         else if (result.error && result.error.code === -5) {
                             // invalid address specified in addressAmounts array
-                            logger.warning(logSystem, logComponent, rpccallTracking);
-                            logger.error(logSystem, logComponent, 'Error sending payments ' + JSON.stringify(result.error));
-                            // payment failed, prevent updates to redis
-                            callback(true);
+                            if (tries < 2) {
+                              const regex = /.*Invalid\ .*\ address:\ (.*)/g;
+
+                              let m;
+                              while ((m = regex.exec(result.error.message)) !== null) {
+                                  // This is necessary to avoid infinite loops with zero-width matches
+                                  if (m.index === regex.lastIndex) {
+                                      regex.lastIndex++;
+                                  }
+
+                                  if (m.hasOwnProperty(1)){
+                                    lastFailedAddresses.push(m[1]);
+                                  }
+                              }
+                              logger.warning(logSystem, logComponent, rpccallTracking);
+                              logger.warning(logSystem, logComponent, 'Error sending payments ' + JSON.stringify(result.error));
+                              logger.warning(logSystem, logComponent, 'retry with replacinǵ adresses...');
+                              trySend(0);
+                            } else {
+                              logger.warning(logSystem, logComponent, rpccallTracking);
+                              logger.error(logSystem, logComponent, 'Error sending payments ' + JSON.stringify(result.error));
+                              // payment failed, prevent updates to redis
+                              callback(true);
+                            }
+
                             return;
                         }
                         else if (result.error && result.error.message != null) {
@@ -1407,6 +1429,10 @@ function SetupForPool(logger, poolOptions, setupFinished){
         }
         if (address.length <= 30) {
             logger.warning(logSystem, logComponent, 'Invalid address '+address+', convert to address '+(poolOptions.invalidAddress || poolOptions.address));
+            return (poolOptions.invalidAddress || poolOptions.address);
+        }
+        if (lastFailedAddresses.indexOf(address) > -1){
+            logger.warning(logSystem, logComponent, 'Invalid address '+address+' (lastFailedAddresses), convert to address '+(poolOptions.invalidAddress || poolOptions.address));
             return (poolOptions.invalidAddress || poolOptions.address);
         }
         return address;
