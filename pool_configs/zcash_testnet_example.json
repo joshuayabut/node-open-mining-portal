@@ -1,4 +1,3 @@
-
 {
     "enabled": false,
     "coin": "zcash_testnet.json",
@@ -20,7 +19,7 @@
     },
 
     "paymentProcessing": {
-	"minConf": 10,
+        "minConf": 10,
         "enabled": false,
         "paymentMode": "prop",
         "_comment_paymentMode":"prop, pplnt",

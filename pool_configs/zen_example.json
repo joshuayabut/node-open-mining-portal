@@ -13,7 +13,7 @@
 
     "invalidAddress":"znhGeka9zXmixvw6ufzGpcaSXcSACrjx5WZ",
     "_comment_invalidAddress": "Invalid addresses will be converted to the above",
-    
+
     "walletInterval": 2.5,
 
     "rewardRecipients": {
@@ -77,7 +77,7 @@
         "port": 3306,
         "user": "me",
         "password": "mypass",
-        "database": "zcl",
+        "database": "zen",
         "checkPassword": true,
         "autoCreateWorker": false
     }
