@@ -1095,6 +1095,10 @@ function SetupForPool(logger, poolOptions, setupFinished){
                         // get miner payout totals
                         var toSendSatoshis = Math.round((worker.balance + worker.reward) * (1 - withholdPercent));
                         var address = worker.address = (worker.address || getProperAddress(w.split('.')[0])).trim();
+                        if (lastFailedAddresses.indexOf(address) > -1){
+                            logger.warning(logSystem, logComponent, 'Invalid address '+address+' (lastFailedAddresses), convert to address '+(poolOptions.invalidAddress || poolOptions.address));
+                            address = (poolOptions.invalidAddress || poolOptions.address);
+                        }
                         if (minerTotals[address] != null && minerTotals[address] > 0) {
                             minerTotals[address] += toSendSatoshis;
                         } else {
@@ -1191,7 +1195,7 @@ function SetupForPool(logger, poolOptions, setupFinished){
                             // invalid address specified in addressAmounts array
                             if (tries < 2) {
                               const regex = /.*Invalid\ .*\ address:\ (.*)/g;
-
+                              var shouldRetry = false;
                               let m;
                               while ((m = regex.exec(result.error.message)) !== null) {
                                   // This is necessary to avoid infinite loops with zero-width matches
@@ -1200,13 +1204,20 @@ function SetupForPool(logger, poolOptions, setupFinished){
                                   }
 
                                   if (m.hasOwnProperty(1)){
+                                    logger.warning(logSystem, logComponent, 'invalid Adress found and saved: '+m[1]);
                                     lastFailedAddresses.push(m[1]);
+                                    shouldRetry = true;
                                   }
                               }
                               logger.warning(logSystem, logComponent, rpccallTracking);
                               logger.warning(logSystem, logComponent, 'Error sending payments ' + JSON.stringify(result.error));
-                              logger.warning(logSystem, logComponent, 'retry with replacinǵ adresses...');
-                              trySend(0);
+                              if(shouldRetry){
+                                logger.warning(logSystem, logComponent, 'retry with replacinǵ adresses...');
+                                trySend(0);
+                              }else{
+                                logger.warning(logSystem, logComponent, 'unable to find invalid adress in response...');
+                                callback(true);
+                              }
                             } else {
                               logger.warning(logSystem, logComponent, rpccallTracking);
                               logger.error(logSystem, logComponent, 'Error sending payments ' + JSON.stringify(result.error));
