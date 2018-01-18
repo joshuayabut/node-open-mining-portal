@@ -1,0 +1,8 @@
+{
+   "name": "bitcoinz",
+   "symbol": "btcz",
+   "algorithm": "equihash",
+   "requireShielding": true,
+   "shieldingAmount": 10000.0,
+   "txfee": 0.0001
+}

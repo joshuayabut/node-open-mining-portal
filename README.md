@@ -35,6 +35,8 @@ https://zpool.it 0.5% fee
 
 http://miningpool.io/
 
+https://coinblockers.com Custom frontend with 0% fee
+
 Usage
 =====
 

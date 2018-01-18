@@ -47,6 +47,7 @@ function SetupForPool(logger, poolOptions, setupFinished){
 
     var logSystem = 'Payments';
     var logComponent = coin;
+    var lastFailedAddresses = [];
 
     var opidCount = 0;
     var opids = [];
@@ -72,6 +73,7 @@ function SetupForPool(logger, poolOptions, setupFinished){
     
     var getMarketStats = poolOptions.coin.getMarketStats === true;
     var requireShielding = poolOptions.coin.requireShielding === true;
+    var shieldingAmount = parseFloat(poolOptions.coin.shieldingAmount) || parseFloat(100.0);
     var fee = parseFloat(poolOptions.coin.txfee) || parseFloat(0.0004);
 
     logger.debug(logSystem, logComponent, logComponent + ' requireShielding: ' + requireShielding);
@@ -294,9 +296,10 @@ function SetupForPool(logger, poolOptions, setupFinished){
         }
 
         var amount = satoshisToCoins(zBalance - 10000);
-        // unshield no more than 100 ZEC at a time
-        if (amount > 100.0)
-            amount = 100.0;
+        // unshield no more than x shieldingAmount at a time
+        if (amount > shieldingAmount)
+            amount = shieldingAmount;
+            logger.warning(logSystem, logComponent, 'ShieldingAmount above threshold ' + shieldingAmount);
 
         var params = [poolOptions.zAddress, [{'address': poolOptions.tAddress, 'amount': amount}]];
         daemon.cmd('z_sendmany', params,
@@ -1092,6 +1095,10 @@ function SetupForPool(logger, poolOptions, setupFinished){
                         // get miner payout totals
                         var toSendSatoshis = Math.round((worker.balance + worker.reward) * (1 - withholdPercent));
                         var address = worker.address = (worker.address || getProperAddress(w.split('.')[0])).trim();
+                        if (lastFailedAddresses.indexOf(address) > -1){
+                            logger.warning(logSystem, logComponent, 'Invalid address '+address+' (lastFailedAddresses), convert to address '+(poolOptions.invalidAddress || poolOptions.address));
+                            address = (poolOptions.invalidAddress || poolOptions.address);
+                        }
                         if (minerTotals[address] != null && minerTotals[address] > 0) {
                             minerTotals[address] += toSendSatoshis;
                         } else {
@@ -1186,10 +1193,38 @@ function SetupForPool(logger, poolOptions, setupFinished){
                         }
                         else if (result.error && result.error.code === -5) {
                             // invalid address specified in addressAmounts array
-                            logger.warning(logSystem, logComponent, rpccallTracking);
-                            logger.error(logSystem, logComponent, 'Error sending payments ' + JSON.stringify(result.error));
-                            // payment failed, prevent updates to redis
-                            callback(true);
+                            if (tries < 2) {
+                              const regex = /.*Invalid\ .*\ address:\ (.*)/g;
+                              var shouldRetry = false;
+                              let m;
+                              while ((m = regex.exec(result.error.message)) !== null) {
+                                  // This is necessary to avoid infinite loops with zero-width matches
+                                  if (m.index === regex.lastIndex) {
+                                      regex.lastIndex++;
+                                  }
+
+                                  if (m.hasOwnProperty(1)){
+                                    logger.warning(logSystem, logComponent, 'invalid Adress found and saved: '+m[1]);
+                                    lastFailedAddresses.push(m[1]);
+                                    shouldRetry = true;
+                                  }
+                              }
+                              logger.warning(logSystem, logComponent, rpccallTracking);
+                              logger.warning(logSystem, logComponent, 'Error sending payments ' + JSON.stringify(result.error));
+                              if(shouldRetry){
+                                logger.warning(logSystem, logComponent, 'retry with replacinǵ adresses...');
+                                trySend(0);
+                              }else{
+                                logger.warning(logSystem, logComponent, 'unable to find invalid adress in response...');
+                                callback(true);
+                              }
+                            } else {
+                              logger.warning(logSystem, logComponent, rpccallTracking);
+                              logger.error(logSystem, logComponent, 'Error sending payments ' + JSON.stringify(result.error));
+                              // payment failed, prevent updates to redis
+                              callback(true);
+                            }
+
                             return;
                         }
                         else if (result.error && result.error.message != null) {
@@ -1407,6 +1442,10 @@ function SetupForPool(logger, poolOptions, setupFinished){
         }
         if (address.length <= 30) {
             logger.warning(logSystem, logComponent, 'Invalid address '+address+', convert to address '+(poolOptions.invalidAddress || poolOptions.address));
+            return (poolOptions.invalidAddress || poolOptions.address);
+        }
+        if (lastFailedAddresses.indexOf(address) > -1){
+            logger.warning(logSystem, logComponent, 'Invalid address '+address+' (lastFailedAddresses), convert to address '+(poolOptions.invalidAddress || poolOptions.address));
             return (poolOptions.invalidAddress || poolOptions.address);
         }
         return address;
