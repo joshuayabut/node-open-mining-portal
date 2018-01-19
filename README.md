@@ -35,6 +35,8 @@ https://zpool.it 0.5% fee
 
 http://miningpool.io/
 
+http://zcash.deltapool.net 1% fee
+
 Usage
 =====
 
