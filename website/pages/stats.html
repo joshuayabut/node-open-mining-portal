@@ -230,6 +230,57 @@ function searchKeyPress(e)
 </div>
 
 
+<div class="pure-g-r" id="boxesLower">
+
+    <div class="pure-u-1-2">
+        <div class="boxStats" id="boxStatsLeft">
+            <div class="boxLowerHeader">Global Stats</div>
+            <div class="boxStatsList">
+                {{ for(var algo in it.stats.algos) { }}
+                <div>
+                    <div><i class="fa fa-flask"></i>{{=algo}}</div>
+                    <div><i class="fa fa-users"></i><span id="statsMiners{{=algo}}">{{=it.stats.algos[algo].workers}}</span> Miners</div>
+                    <div><i class="fa fa-tachometer"></i><span id="statsHashrate{{=algo}}">{{=it.stats.algos[algo].hashrateString}}</span></div>
+                </div>
+                {{ } }}
+            </div>
+        </div>
+    </div>
+
+    <div class="pure-u-1-2">
+        <div class="boxStats" id="boxStatsRight">
+            <div class="boxLowerHeader">Pools / Coins</div>
+            <div class="boxStatsList">
+                {{ for(var pool in it.stats.pools) { }}
+                <div>
+                    <div><i class="fa fa-dot-circle-o"></i>{{=pool}}</div>
+                    <div><i class="fa fa-users"></i><span id="statsMiners{{=pool}}">{{=it.stats.pools[pool].workerCount}}</span> Miners</div>
+                    <div><i class="fa fa-tachometer"></i><span id="statsHashrate{{=pool}}">{{=it.stats.pools[pool].hashrateString}}</span></div>
+                </div>
+                {{ } }}
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    $(function() {
+        statsSource.addEventListener('message', function (e) {
+            var stats = JSON.parse(e.data);
+            for (algo in stats.algos) {
+                $('#statsMiners' + algo).text(stats.algos[algo].workers);
+                $('#statsHashrate' + algo).text(stats.algos[algo].hashrateString);
+            }
+            for (var pool in stats.pools) {
+                $('#statsMiners' + pool).text(stats.pools[pool].workerCount);
+                $('#statsHashrate' + pool).text(stats.pools[pool].hashrateString);
+            }
+        });
+    });
+</script>
+
+
 {{ for(var pool in it.stats.pools) { }}
 {{ var blockscomb = new Array; }}
 <div class="pure-g-r" id="boxesLower">
