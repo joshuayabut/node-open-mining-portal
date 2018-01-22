@@ -38,16 +38,9 @@
         font-size: 1.3em;
         margin: 0 0 5px 10px;
     }
-    #boxStatsLeft{
-        color: black;
-        background-color: darksalmon;
-    }
-    #boxStatsRight{
-		    color: black;
-        background-color: darksalmon;
-    }
+
     .boxStats{
-        color: white;
+        color: black;
     }
     .boxStatsList{
         /*display: flex;*/
@@ -106,7 +99,7 @@
       </ol>
     </div>
     <div class="pure-u-1-2">
-      <div class="boxStats" id="boxStatsLeft">
+      <aside>
         <div class="boxHeader">{{=capitalizeFirstLetter(it.stats.pools[pool].name)}} Pool Stats</div>
           <div class="boxStatsList">
               <div>
@@ -117,8 +110,8 @@
               <div><i class="fa fa-gavel"></i>Luck: <span id="statsLuckDays{{=pool}}">{{=it.stats.pools[pool].luckDays}}</span> Days</div>
               </div>
           </div>
-      </div>
-      <div class="boxStats" id="boxStatsRight">
+      </aside>
+      <aside>
 		    <div class="boxHeader">{{=capitalizeFirstLetter(it.stats.pools[pool].name)}} Network Stats</div>
           <div class="boxStatsList">
               <div>
@@ -128,14 +121,110 @@
 				      <div><i class="fa fa-users"></i>Connected Nodes: <span id="statsNetworkConnections{{=pool}}">{{=it.stats.pools[pool].poolStats.networkConnections}}</span></div>
               </div>
           </div>
-      </div>
+      </aside>
     </div>
 	{{ } }}
 </div>
 
+<style>
+    #bottomNotes {
+        display: block;
+        padding-left: 18px;
+        padding-right: 18px;
+        padding-bottom: 18px;
+    }
+    #topPool {
+        padding-top: 18px;
+        padding-left: 18px;
+        padding-right: 18px;
+    }
+    #topPool > div > div > svg {
+        display: block;
+        height: 280px;
+    }
+    .poolWrapper {
+        border: solid 1px #c7c7c7;
+        border-radius: 5px;
+        padding: 5px;
+        margin-bottom: 18px;
+    }
+    .poolLabel {
+        font-size: 1.2em;
+        text-align: center;
+        padding: 4px;
+    }
+    .poolMinerTable {
+
+    }
+    table {
+        width: 100%;
+    }
+</style>
+<script type="text/javascript">
+function searchKeyPress(e)
+{
+    // look for window.event in case event isn't passed in
+    e = e || window.event;
+    if (e.keyCode == 13)
+    {
+        document.getElementById('btnSearch').click();
+        return false;
+    }
+    return true;
+}
+        $(document).ready(function(){
+                $('.btn-lg').click(function(){
+                        window.location = "workers/" + $('.input-lg').val();
+                });
+        });
+</script>
+{{ function capitalizeFirstLetter(t){return t.charAt(0).toUpperCase()+t.slice(1)} }}
+{{ var i=0; for(var pool in it.stats.pools) { }}
+<div id="topPool">
+    <div class="poolWrapper">
+        <div class="poolLabel">
+			<span style="float:right; margin-bottom: 8px;">
+				<small>Miner Lookup:
+				<input type="text" class="form-control input-lg" onkeypress="return searchKeyPress(event);">
+				<span class="input-group-btn">
+						<button class="btn btn-default btn-lg" type="button">Lookup</button>
+				</span>
+				</small>
+			</span>
+            {{=capitalizeFirstLetter(it.stats.pools[pool].name)}} Top Miners &nbsp;&nbsp;
+			<small><i class="fa fa-users"></i> <span id="statsMiners{{=pool}}">{{=it.stats.pools[pool].minerCount}}</span> Miners &nbsp;&nbsp;
+			<i class="fa fa-rocket"></i> <span id="statsWorkers{{=pool}}">{{=it.stats.pools[pool].workerCount}}</span> Workers &nbsp;&nbsp;
+			<i class="fa fa-cog"></i> <span id="statsWorkers{{=pool}}">{{=it.stats.pools[pool].shareCount}}</span> Shares </small>
+		</div>
+        <div class="poolMinerTable">
+            <table class="pure-table">
+                <thead>
+                <tr>
+                    <th>Address</th>
+                    <th>Shares</th>
+                    <th>Efficiency</th>
+                    <th>Hashrate</th>
+                </tr>
+                </thead>
+                {{ for(var worker in it.stats.pools[pool].miners) { }}
+                   {{var workerstat = it.stats.pools[pool].miners[worker];}}
+                    <tr class="pure-table-odd">
+                        <td><a href="/workers/{{=worker.split('.')[0]}}">{{=worker}}</a></td>
+                        <td>{{=Math.round(workerstat.currRoundShares * 100) / 100}}</td>
+                        <td>{{? workerstat.shares > 0}} {{=Math.floor(10000 * workerstat.shares / (workerstat.shares + workerstat.invalidshares)) / 100}}% {{??}} 0% {{?}}</td>
+                        <td>{{=workerstat.hashrateString}}</td>
+                    </tr>
+                {{ } }}
+            </table>
+        </div>
+    </div>
+</div>
+{{ } }}
+
+
 <div id="topCharts">
     <div class="chartWrapper">
-        <div class="chartLabel">Pool Historical Hashrate</div>
+        <div class="chartLabel">Pool Hashrate over Time</div>
         <div class="chartHolder"><svg id="poolHashrate"/></div>
     </div>
 </div>
@@ -145,7 +234,7 @@
 {{ var blockscomb = new Array; }}
 <div class="pure-g-r" id="boxesLower">
     <div class="pure-u-1-1">
-        <div class="boxStats" id="boxStatsRight">
+        <div class="boxStats">
 			<div class="boxHeader">{{=capitalizeFirstLetter(it.stats.pools[pool].name)}} Blocks Found &nbsp;&nbsp;
 			<span style="float:right;"><small>
             <i class="fa fa-bars"></i> <span id="statsValidBlocks{{=pool}}">{{=it.stats.pools[pool].poolStats.validBlocks}}</span> Blocks &nbsp;&nbsp;
