@@ -1,0 +1,19 @@
+[
+    {
+        "id": "bitcoinz", 
+        "name": "BitcoinZ", 
+        "symbol": "BTCZ", 
+        "rank": "477", 
+        "price_usd": "0.0107631", 
+        "price_btc": "0.00000072", 
+        "24h_volume_usd": "359658.0", 
+        "market_cap_usd": "8971987.0", 
+        "available_supply": "833587607.0", 
+        "total_supply": "833587607.0", 
+        "max_supply": "21000000000.0", 
+        "percent_change_1h": "-11.8", 
+        "percent_change_24h": "-27.83", 
+        "percent_change_7d": "189.83", 
+        "last_updated": "1515049154"
+    }
+]

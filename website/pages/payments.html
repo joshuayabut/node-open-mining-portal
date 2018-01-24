@@ -1,37 +1,3 @@
-<style>
-    #bottomNotes {
-        display: block;
-        padding-left: 18px;
-        padding-right: 18px;
-        padding-bottom: 18px;
-    }
-    #topPool {
-        padding-top: 18px;
-        padding-left: 18px;
-        padding-right: 18px;
-    }
-    #topPool > div > div > svg {
-        display: block;
-        height: 280px;
-    }
-    .poolWrapper {
-        border: solid 1px #c7c7c7;
-        border-radius: 5px;
-        padding: 5px;
-        margin-bottom: 18px;
-    }
-    .poolLabel {
-        font-size: 1.2em;
-        text-align: center;
-        padding: 4px;
-    }
-    .poolMinerTable {
-
-    }
-    table {
-        width: 100%;
-    }
-</style>
 <script type="text/javascript">
   $(function () {
     $(document).tooltip({
@@ -55,9 +21,25 @@
     });
 });
 </script>
-{{ function readableDate(a){ return new Date(parseInt(a)).toString(); } }}
+	            <!-- Breadcrumbs-->
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="/">Home</a>
+                </li>
+                <li class="breadcrumb-item active">Payments</li>
+            </ol>
+{{ function readableDate(a){ 
+	
+	var date = new Date(parseInt(a));
+	var options = {  
+    weekday: "long", year: "numeric", month: "short",  
+    day: "numeric", hour: "2-digit", minute: "2-digit"  
+};  
+	return date.toLocaleTimeString("en-us", options);
+
+} }}
 {{ for(var pool in it.stats.pools) { }}
-<table>
+<table id="paymentTable" class="table table-small table-hover fitsmall">
     <thead>
     <tr>
         <th>Blocks</th>
@@ -90,4 +72,12 @@
       {{ } }}
   </table>
 </div>
+<script>
+$(document).ready(function() {
+  $('#paymentTable').DataTable({
+		"order": [[0, "desc"]]
+  });
+});
+</script>
+
 {{ } }}
