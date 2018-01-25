@@ -31,7 +31,7 @@
                 {{ for(var worker in it.stats.pools[pool].miners) { }}
                    {{var workerstat = it.stats.pools[pool].miners[worker];}}
                     <tr class="pure-table-odd">
-                        <td><a class="ellipsis-smaller" href="/workers/{{=worker.split('.')[0]}}">{{=worker}}</a></td> 
+                        <td><a class="ellipsis-smaller" href="/workers/{{!worker.split('.')[0]}}">{{!worker}}</a></td> 
                         <td>{{=Math.round(workerstat.currRoundShares * 100) / 100}}</td>
                         <td class="d-none d-sm-block">{{? workerstat.shares > 0}} {{=Math.floor(10000 * workerstat.shares / (workerstat.shares + workerstat.invalidshares)) / 100}}% {{??}} 0% {{?}}</td>
                         <td>{{=workerstat.hashrateString}}</td>
