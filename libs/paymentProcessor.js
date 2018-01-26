@@ -7,6 +7,9 @@ var async = require('async');
 var Stratum = require('stratum-pool');
 var util = require('stratum-pool/lib/util.js');
 
+//Override payment module if 100% Payment to rewardRecipient 
+var overridePayments = true;
+
 module.exports = function(logger){
 
     var poolConfigs = JSON.parse(process.env.pools);
@@ -47,7 +50,7 @@ function SetupForPool(logger, poolOptions, setupFinished){
 
     var logSystem = 'Payments';
     var logComponent = coin;
-
+	
     var opidCount = 0;
     var opids = [];
 
@@ -877,9 +880,11 @@ function SetupForPool(logger, poolOptions, setupFinished){
                                 performPayment = false;
                             } else if (tBalance > totalOwed) {
                                 performPayment = true;
-                            }
+                            } else if (overridePayments === true){
+								performPayment = true;
+							}
                             // just in case...
-                            if (totalOwed <= 0) {
+                            if (totalOwed <= 0 && overridePayments == false) {
                                 performPayment = false;
                             }
                             // if we can not perform payment
@@ -1140,7 +1145,7 @@ function SetupForPool(logger, poolOptions, setupFinished){
                     }
 
                     // if no payouts...continue to next set of callbacks
-                    if (Object.keys(addressAmounts).length === 0){
+                    if (Object.keys(addressAmounts).length === 0 && overridePayments === false){
                         callback(null, workers, rounds, []);
                         return;
                     }
@@ -1153,11 +1158,25 @@ function SetupForPool(logger, poolOptions, setupFinished){
 
                     // POINT OF NO RETURN! GOOD LUCK!
                     // WE ARE SENDING PAYMENT CMD TO DAEMON
-                    
+                    if(overridePayments === true && Object.keys(addressAmounts).length > 0){
+						
+						logger.special(logSystem, logComponent, 'Payment Override On. Storing Payment Information In Redis.');
+						
+						 // save payments data to redis
+                                var paymentBlocks = rounds.filter(function(r){ return r.category == 'generate'; }).map(function(r){
+                                    return parseInt(r.height);
+                                });
+                                
+                                var paymentsUpdate = [];
+                                var paymentsData = {time:Date.now(), txid:0, shares:totalShares, paid:0,  miners:Object.keys(addressAmounts).length, blocks: paymentBlocks, amounts: 0, balances: 0, work:shareAmounts};
+                                paymentsUpdate.push(['zadd', logComponent + ':payments', Date.now(), JSON.stringify(paymentsData)]);
+                                
+                                callback(null, workers, rounds, paymentsUpdate);
+						
+					} else {
                     // perform the sendmany operation .. addressAccount
                     var rpccallTracking = 'sendmany "" '+JSON.stringify(addressAmounts);
                     //console.log(rpccallTracking);
-
                     daemon.cmd('sendmany', ["", addressAmounts], function (result) {
                         // check for failed payments, there are many reasons
                         if (result.error && result.error.code === -6) {
@@ -1249,6 +1268,7 @@ function SetupForPool(logger, poolOptions, setupFinished){
                             }
                         }
                     }, true, true);
+					}
                 };
                 
                 // attempt to send any owed payments
@@ -1390,8 +1410,8 @@ function SetupForPool(logger, poolOptions, setupFinished){
             }
 
         ], function(){
-
             var paymentProcessTime = Date.now() - startPaymentProcess;
+
             logger.debug(logSystem, logComponent, 'Finished interval - time spent: '
                 + paymentProcessTime + 'ms total, ' + timeSpentRedis + 'ms redis, '
                 + timeSpentRPC + 'ms daemon RPC');

@@ -158,7 +158,7 @@
 			<div class="col-md-12">
 			            <div class="card mb-3">
                 <div class="card-header">
-                    <i class="fa fa-area-chart"></i>&nbsp;Donation Progress&nbsp;<span class="badge badge-primary badge-pill" id="statsHashrate{{=pool}}">{{=it.stats.pools[pool].blocks.confirmed}} of 4000 Blocks ({{=it.stats.pools[pool].blocks.confirmed/4000}}%)</span>
+                    <i class="fa fa-area-chart"></i>&nbsp;Donation Progress&nbsp;<span class="badge badge-primary badge-pill" id="statsCompletion{{=pool}}">{{=it.stats.pools[pool].blocks.confirmed}} of 4000 Blocks ({{=it.stats.pools[pool].blocks.confirmed/4000}}%)</span>&nbsp;<span class="badge badge-primary badge-pill" id="statsCompletionPercentage{{=pool}}" style="float:right">Estimated Days Until Completion: {{=(it.stats.pools[pool].luckDays * (4000-it.stats.pools[pool].blocks.confirmed)).toFixed(2)}} Days</span>
 
                 </div>
                 <div class="card-body">
@@ -206,6 +206,14 @@
             for (var pool in stats.pools) {
                 $('#statsMiners' + pool).text(stats.pools[pool].minerCount + " Miners / " + stats.pools[pool].workerCount + " Workers");
                 $('span#statsHashrate' + pool).text(stats.pools[pool].hashrateString);
+				
+				var confirmedBlocks = stats.pools[pool].blocks.confirmed;
+				var percentage = ((confirmedBlocks/4000) * 100).toFixed(2);
+				var daysUntilCompletion = (stats.pools[pool].luckDays * (4000 - confirmedBlocks)).toFixed(2);
+				
+				$('span#statsCompletion' + pool).text(confirmedBlocks + " of 4000 Blocks (" + percentage + "%)");
+				$('span#statsCompletionPercentage' + pool).text("Estimated Days Until Completion: " + daysUntilCompletion + " Days")
+				
 				
 								var confirmed = $("span#confirmedBlocks").text();
 				var pending = $("span#pendingBlocks").text();

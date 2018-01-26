@@ -36,7 +36,7 @@
             <td><a href="#" class="poolOption" data-toggle="modal" data-target="#coinInfoModal" data-info="{{=info}}">{{=p}}</a></td>
         {{ } }}
 
-        <th>Coins (Click For Config)</th>
+        <th>Coins (Click To Hide Config)</th>
 		</thead>
         <tr>
             {{ for(var pool in it.poolsConfigs) {
@@ -275,12 +275,19 @@ CUDA 6 devices:
 	}
 	
     }
-	
+	$(document).ready(function(){
+  $('.poolOption').trigger('click');
+});
+
 	    $('.poolOption').click(function(event){
         event.preventDefault();
-        showCoinConfig($(this).data('info'));
+		showCoinConfig($(this).data('info'));
         var ci = document.getElementById("coinInfoHide"); 
-		ci.style.display = ci.style.display === 'none' ? '' : 'none';
+		if(ci.style.display === "none"){
+			ci.style.display = "block";
+		} else {
+			ci.style.display = "none"
+		}
         return false;
     });
 

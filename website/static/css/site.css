@@ -15,6 +15,14 @@ body.sticky-footer {
 	margin-right: 5px;
 }
 
+.badge-primary {
+	background-color: #c17446 !important;
+}
+
+.bg-info {
+	background-color: #c17446 !important;
+}
+
 .fade.show {
     display: unset !important;
 }

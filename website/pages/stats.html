@@ -201,7 +201,7 @@
 					</td>{{if (block[4] != null) { }}
 					<td id ="blockTime" class="d-none d-sm-block">{{=readableDate(block[4])}}</td>
 					{{ } }}
-					<td><a class="ellipsis" href="/workers/{{=block[3].split('.')[0]}}">{{=block[3]}}</a></td>
+					<td><a class="ellipsis" href="/workers/{{!block[3].split('.')[0]}}">{{!block[3]}}</a></td>
 					<td>
 						{{if (it.stats.pools[pool].pending.confirms) { }}
 					    {{if (it.stats.pools[pool].pending.confirms[block[0]]) { }}
@@ -232,7 +232,7 @@
 					<td class="d-none d-sm-block">{{=readableDate(block[4])}}</td>
 					{{ } }}
 					
-					<td><a class="ellipsis" href="/workers/{{=block[3].split('.')[0]}}">{{=block[3]}}</a></td>
+					<td><a class="ellipsis" href="/workers/{{!block[3].split('.')[0]}}">{{!block[3]}}</a></td>
 					<td><span style="font-weight:bold;color:green;">*PAID*</span></td></tr>
 					
         {{blockscomb.push(block);}}

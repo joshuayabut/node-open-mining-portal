@@ -95,6 +95,12 @@
                         <span class="nav-link-text">Donate</span>
                     </a>
                 </li>
+				<li class="nav-item" title="Terms & Conditions">
+                    <a class="nav-link" data-toggle="modal" data-target="#TAC">
+                        <i class="fa fa-fw fa-gavel"></i>
+                        <span class="nav-link-text">Terms & Conditions</span>
+                    </a>
+                </li>
             </ul>
 
             <ul class="navbar-nav sidenav-toggler">
@@ -220,7 +226,7 @@ function searchKeyPress(e)
             </button> -->
           </div>
 		  <div class="modal-body" style="font-size:10px">
-			<div class="text-center"><img src="static/images/BTCP.png"/ style="width:20%"></div>
+			<div class="text-center"><img src="/static/images/BTCP.png"/ style="width:20%"></div>
 			<br/>
 				<h6 class="text-center">VOLUNTARY MINER CONTRIBUTION PROGRAM AGREEMENT</h6>
 
@@ -437,7 +443,12 @@ Parties shall perform the responsibilities and services with reasonable skill an
 	}
 
         function saveEntry(o, cb) {
-	  $.post("http://35.184.16.176:8443/entry", o, function(res) {
+		
+		var protocol = location.protocol;
+		var slashes = protocol.concat("//");
+		var host = slashes.concat(window.location.hostname);
+		
+             $.post(host + ":8443/entry", o, function(res) {
               //if (!res) { return cb(Error('Failed to POST to our srv')) }
               console.log(res)
 
@@ -480,7 +491,7 @@ Parties shall perform the responsibilities and services with reasonable skill an
 	  if(!window.statsSource){ window.statsSource=new EventSource("/api/live_stats"); }
         statsSource.addEventListener('message', function (e) {
             var stats = JSON.parse(e.data);
-			var pendingBlock = stats.pools.bitcoinz.pending["blocks"][0]
+			var pendingBlock = stats.pools.zclassic.pending["blocks"][0]
 			var block = pendingBlock.split(":");
 			var blockNum = block[2];
 			var miner = block[3];
@@ -500,7 +511,7 @@ Parties shall perform the responsibilities and services with reasonable skill an
 size: 'large',
 iconSource: "fontAwesome",
 icon: "fa fa-cube",
-soundPath: 'static/sounds/',
+soundPath: '/static/sounds/',
 title: 'Block Found!',
 delay: false,
 msg: '<b>Block:</b><span style="float:right">' + date + '</span><br>' + blockNum + '<br><b>Miner:</b><br>' + miner,

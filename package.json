@@ -51,6 +51,8 @@
         "nonce": "1.0.4",
         "redis": "2.7.1",
         "request": "2.81.0",
+        "socket-io": "^1.0.0",
+        "socket.io": "^2.0.4",
         "stratum-pool": "git+https://github.com/z-classic/node-stratum-pool.git"
     },
     "engines": {

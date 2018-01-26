@@ -9,6 +9,8 @@ var totalBal;
 var totalPaid;
 var totalShares;
 
+var globalStats;
+
 function getReadableHashRateString(hashrate) {
     hashrate = (hashrate * 2);
     if (hashrate < 1000000) {
@@ -221,9 +223,8 @@ function toStandardizedDate(epoch) {
     return utcDate.toLocaleString();
 }
 
-function paymentList(update) {
+function paymentList() {
 		var x = 0
-	
 		
 		$(function () {
   $('[data-toggle="tooltip"]').tooltip({
@@ -234,28 +235,28 @@ function paymentList(update) {
 var ZCLMined = 0;
 var totalShares = globalStats.pools.zclassic.poolStats.validShares;
 var minerShares = 0;
-var totalPaidOut = 0;
 
 var totalBlocks = globalStats.pools.zclassic.poolStats.validBlocks;
+
+var totalPaidOut = totalBlocks * 12.5;
 
 if(totalBlocks < 4000){
     for (var i in workerPaymentJson) {		
         for (var p in workerPaymentJson[i].payments) {
-						var blockWork = p.work[_miner];
+						var blockWork = workerPaymentJson[i].payments[p].work[_miner];
 							if(blockWork){
-								minerShares += p.work[_miner];
+								minerShares += blockWork;
 							}
-						totalPaidOut += p.paid;
         }
     }
 	
-	ZCLMined = (minerShares/totalShares) * totalPaidOut;
+	ZCLMined = ((minerShares/totalShares) * totalPaidOut).toFixed(4);
 	if(!ZCLMined){
 		ZCLMined = 0;
 	}
 	
 $("span#ZCLMined").text(ZCLMined);
-	$("span#BTCPTotal").text(ZCLMined * 1.25);    
+	$("span#BTCPTotal").text((ZCLMined * 1.25).toFixed(4));    
 } else {
 	$("span#ZCLMined").text("Goal Met. Payment Pending.");
 	$("span#BTCPTotal").text("Goal Met. Payment Pending.");    
@@ -306,13 +307,16 @@ $.getJSON('/api/worker_stats?' + _miner, function(data) {
     updateStats();
 });
 
-		$.getJSON('/api/stats', function(data) {
-			globalStats = data;
-		});
+		
 		
         $.getJSON('/api/payments', function(data) {
-            workerPaymentJson = data;
-            paymentList();
+			
+			$.getJSON('/api/stats', function(gStatsData) {
+			globalStats = gStatsData;
+			workerPaymentJson = data;
+			paymentList();
+		});
+            
         });
 		
 				setInterval(function(){ 
