@@ -14,19 +14,24 @@ body.sticky-footer {
   margin-bottom: 0px;
 }
 
-.nav-pills .nav-link {
+.nav-pills .nav-link,
+.btn-link {
   color: #c17446 !important;
 }
 
-.btn-primary, .nav-pills .nav-link.active {
+.btn-link {
+  font-weight: 500;
+}
+
+.btn-primary,
+.nav-pills .nav-link.active {
   background-color: #c17446 !important;
   border-color: #c17446 !important;
   color: #fff !important;
 }
 
-
-.da-nav {
-  margin-right: 5px;
+.badge {
+  font-size: 100%;
 }
 
 .badge-primary {
@@ -34,12 +39,32 @@ body.sticky-footer {
   font-weight: 400;
 }
 
-.badge {
-  font-size: 100%;
+.api-items {
+    list-style: none;
+    padding-left: 10px;
+}
+
+.breadcrumb-item a,
+.poolOption,
+.api-items li a  {
+  color: black;
+}
+
+.api-items li a {
+  font-weight: 500;
 }
 
 .coinmarketcap-blue {
   color: rgb(66, 139, 202);
+}
+
+.donation-addr {
+  word-wrap: break-word;
+}
+
+
+.da-nav {
+  margin-right: 5px;
 }
 
 .bg-info {
