@@ -185,105 +185,110 @@ div.tooltip {
     </thead>
     {{ for(var b in it.stats.pools[pool].pending.blocks) { }}
     {{ var block = it.stats.pools[pool].pending.blocks[b].split(":"); }}
-    <tr><td>
-      {{if (String(it.stats.pools[pool].name).startsWith("zcash")) { }}
-      <a href="https://explorer.zcha.in/blocks/{{=block[0]}}" target="_blank">{{=block[2]}}</a>
-      {{ } else if (String(it.stats.pools[pool].name).startsWith("bitcoinz")) { }}
-      <a href="https://btczexplorer.blockhub.info/block/{{=block[0]}}" target="_blank">{{=block[2]}}</a>
-      {{ } else if (String(it.stats.pools[pool].name).startsWith("zclassic")) { }}
-      <a href="https://classic.zcha.in/blocks/{{=block[0]}}" target="_blank">{{=block[2]}}</a>
-      {{ } else if (String(it.stats.pools[pool].name).startsWith("hush")) { }}
-      <a href="https://explorer.myhush.org/block/{{=block[0]}}" target="_blank">{{=block[2]}}</a>
-      {{ } else { }}
-      {{=block[2]}}
+    <tr>
+      <td>
+        {{if (String(it.stats.pools[pool].name).startsWith("zcash")) { }}
+        <a href="https://explorer.zcha.in/blocks/{{=block[0]}}" target="_blank">{{=block[2]}}</a>
+        {{ } else if (String(it.stats.pools[pool].name).startsWith("bitcoinz")) { }}
+        <a href="https://btczexplorer.blockhub.info/block/{{=block[0]}}" target="_blank">{{=block[2]}}</a>
+        {{ } else if (String(it.stats.pools[pool].name).startsWith("zclassic")) { }}
+        <a href="https://classic.zcha.in/blocks/{{=block[0]}}" target="_blank">{{=block[2]}}</a>
+        {{ } else if (String(it.stats.pools[pool].name).startsWith("hush")) { }}
+        <a href="https://explorer.myhush.org/block/{{=block[0]}}" target="_blank">{{=block[2]}}</a>
+        {{ } else { }}
+        {{=block[2]}}
+        {{ } }}
+      </td>{{if (block[4] != null) { }}
+      <td id ="blockTime" class="d-none d-sm-block">{{=readableDate(block[4])}}</td>
       {{ } }}
-    </td>{{if (block[4] != null) { }}
-    <td id ="blockTime" class="d-none d-sm-block">{{=readableDate(block[4])}}</td>
-    {{ } }}
-    <td><a class="ellipsis" href="/workers/{{!block[3].split('.')[0]}}">{{!block[3]}}</a></td>
-    <td>
-      {{if (it.stats.pools[pool].pending.confirms) { }}
-      {{if (it.stats.pools[pool].pending.confirms[block[0]]) { }}
-      <span style="color:red;"><i class="fa fa-spinner fa-spin"></i>&nbsp;{{=it.stats.pools[pool].pending.confirms[block[0]]}} of 100</span>
-      {{ } else { }}
-      <span style="font-weight:bold;color:red;">*PENDING*</span>
-      {{ } }}
-      {{ } else { }}
-      <span style="font-weight:bold;color:red;">*PENDING*</span>
-      {{ } }}
-    </td></tr>
+      <td><a class="ellipsis" href="/workers/{{!block[3].split('.')[0]}}">{{!block[3]}}</a></td>
+      <td>
+        {{if (it.stats.pools[pool].pending.confirms) { }}
+        {{if (it.stats.pools[pool].pending.confirms[block[0]]) { }}
+        <span style="color:red;"><i class="fa fa-spinner fa-spin"></i>&nbsp;{{=it.stats.pools[pool].pending.confirms[block[0]]}} of 100</span>
+        {{ } else { }}
+        <span style="font-weight:bold;color:red;">*PENDING*</span>
+        {{ } }}
+        {{ } else { }}
+        <span style="font-weight:bold;color:red;">*PENDING*</span>
+        {{ } }}
+      </td>
+    </tr>
 
     {{ blockscomb.push(block);}}
     {{ } }}
     {{ var i=0; for(var b in it.stats.pools[pool].confirmed.blocks) { }}
     {{ if (i < 1000) { i++; }}
     {{ var block = it.stats.pools[pool].confirmed.blocks[b].split(":"); }}
-    <tr><td>{{if (String(it.stats.pools[pool].name).startsWith("zcash")) { }}
-      <a href="https://explorer.zcha.in/blocks/{{=block[0]}}" target="_blank">{{=block[2]}}</a>
-      {{ } else if (String(it.stats.pools[pool].name).startsWith("bitcoinz")) { }}
-      <a href="https://btczexplorer.blockhub.info/block/{{=block[0]}}" target="_blank">{{=block[2]}}</a>
-      {{ } else if (String(it.stats.pools[pool].name).startsWith("zclassic")) { }}
-      <a href="https://classic.zcha.in/blocks/{{=block[0]}}" target="_blank">{{=block[2]}}</a>
-      {{ } else { }}
-      {{=block[2]}}
-      {{ } }}
-      {{if (block[4] != null) { }}</td>
+    <tr>
+      <td>{{if (String(it.stats.pools[pool].name).startsWith("zcash")) { }}
+        <a href="https://explorer.zcha.in/blocks/{{=block[0]}}" target="_blank">{{=block[2]}}</a>
+        {{ } else if (String(it.stats.pools[pool].name).startsWith("bitcoinz")) { }}
+        <a href="https://btczexplorer.blockhub.info/block/{{=block[0]}}" target="_blank">{{=block[2]}}</a>
+        {{ } else if (String(it.stats.pools[pool].name).startsWith("zclassic")) { }}
+        <a href="https://classic.zcha.in/blocks/{{=block[0]}}" target="_blank">{{=block[2]}}</a>
+        {{ } else { }}
+        {{=block[2]}}
+        {{ } }}
+        {{if (block[4] != null) { }}
+      </td>
       <td class="d-none d-sm-block">{{=readableDate(block[4])}}</td>
       {{ } }}
 
       <td><a class="ellipsis" href="/workers/{{!block[3].split('.')[0]}}">{{!block[3]}}</a></td>
-      <td><span style="font-weight:bold;color:green;">*PAID*</span></td></tr>
+      <td><span style="font-weight:bold;color:green;">*PAID*</span></td>
+    </tr>
 
-      {{blockscomb.push(block);}}
-      {{ } }}
-      {{ } }}
-    </table>
-    <!--{{=JSON.stringify(blockscomb)}}-->
-    <script>
-    var blockscomb = ({{=JSON.stringify(blockscomb)}})
-    </script>
-
+    {{blockscomb.push(block);}}
     {{ } }}
-  </div>
-
+    {{ } }}
+  </table>
+  <!--{{=JSON.stringify(blockscomb)}}-->
   <script>
-  document.querySelector('main').appendChild(document.createElement('script')).src = '/static/js/stats.js';
+  var blockscomb = ({{=JSON.stringify(blockscomb)}})
   </script>
-  
-  <script>
-  $(document).ready(function() {
-    $('#blocksTable').DataTable({
-      "order": [[0, "desc"]]
-    });
-  });
 
-  window.statsSource = new EventSource("/api/live_stats");
-  $(function() {
-    statsSource.addEventListener('message', function (e) {
-      var stats = JSON.parse(e.data);
-      for (var pool in stats.pools) {
-        $('#statsMiners' + pool).text(stats.pools[pool].minerCount);
-        $('#statsWorkers' + pool).text(stats.pools[pool].workerCount);
-        $('#statsHashrate' + pool).text(stats.pools[pool].hashrateString);
-        $('#statsHashrateAvg' + pool).text(getReadableHashRateString(calculateAverageHashrate(pool)));
-        $('#statsLuckDays' + pool).text(stats.pools[pool].luckDays);
-        $('#statsValidBlocks' + pool).text(stats.pools[pool].poolStats.validBlocks);
-        $('#statsTotalPaid' + pool).text((parseFloat(stats.pools[pool].poolStats.totalPaid)).toFixed(8));
-        $('#statsNetworkBlocks' + pool).text(stats.pools[pool].poolStats.networkBlocks);
-        $('#statsNetworkDiff' + pool).text(stats.pools[pool].poolStats.networkDiff);
-        $('#statsNetworkSols' + pool).text(getReadableNetworkHashRateString(stats.pools[pool].poolStats.networkSols));
-        $('#statsNetworkConnections' + pool).text(stats.pools[pool].poolStats.networkConnections);
-      }
-    });
-  });
+  {{ } }}
+</div>
 
-  function getReadableNetworkHashRateString(hashrate){
-    hashrate = (hashrate * 1000000);
-    if (hashrate < 1000000)
-    return '0 Sol';
-    var byteUnits = [ ' Sol/s', ' KSol/s', ' MSol/s', ' GSol/s', ' TSol/s', ' PSol/s' ];
-    var i = Math.floor((Math.log(hashrate/1000) / Math.log(1000)) - 1);
-    hashrate = (hashrate/1000) / Math.pow(1000, i + 1);
-    return hashrate.toFixed(2) + byteUnits[i];
-  }
-  </script>
+<script>
+document.querySelector('main').appendChild(document.createElement('script')).src = '/static/js/stats.js';
+</script>
+
+<script>
+$(document).ready(function() {
+  $('#blocksTable').DataTable({
+    "order": [[0, "desc"]]
+  });
+});
+
+window.statsSource = new EventSource("/api/live_stats");
+$(function() {
+  statsSource.addEventListener('message', function (e) {
+    var stats = JSON.parse(e.data);
+    for (var pool in stats.pools) {
+      $('#statsMiners' + pool).text(stats.pools[pool].minerCount);
+      $('#statsWorkers' + pool).text(stats.pools[pool].workerCount);
+      $('#statsHashrate' + pool).text(stats.pools[pool].hashrateString);
+      $('#statsHashrateAvg' + pool).text(getReadableHashRateString(calculateAverageHashrate(pool)));
+      $('#statsLuckDays' + pool).text(stats.pools[pool].luckDays);
+      $('#statsValidBlocks' + pool).text(stats.pools[pool].poolStats.validBlocks);
+      $('#statsTotalPaid' + pool).text((parseFloat(stats.pools[pool].poolStats.totalPaid)).toFixed(8));
+      $('#statsNetworkBlocks' + pool).text(stats.pools[pool].poolStats.networkBlocks);
+      $('#statsNetworkDiff' + pool).text(stats.pools[pool].poolStats.networkDiff);
+      $('#statsNetworkSols' + pool).text(getReadableNetworkHashRateString(stats.pools[pool].poolStats.networkSols));
+      $('#statsNetworkConnections' + pool).text(stats.pools[pool].poolStats.networkConnections);
+    }
+  });
+});
+
+function getReadableNetworkHashRateString(hashrate){
+  hashrate = (hashrate * 1000000);
+  if (hashrate < 1000000)
+  return '0 Sol';
+  var byteUnits = [ ' Sol/s', ' KSol/s', ' MSol/s', ' GSol/s', ' TSol/s', ' PSol/s' ];
+  var i = Math.floor((Math.log(hashrate/1000) / Math.log(1000)) - 1);
+  hashrate = (hashrate/1000) / Math.pow(1000, i + 1);
+  return hashrate.toFixed(2) + byteUnits[i];
+}
+</script>

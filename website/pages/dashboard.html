@@ -197,7 +197,6 @@
           <button class="close" type="button" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">x</span>
           </button>
-
         </div>
         <div id="addcoins" class="modal-body">
           <div class="row">
@@ -205,82 +204,84 @@
               <div class="alert alert-primary alert-dismissable" role="alert">
                 <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
                 <b>Please enter a static coin amount OR enter a coin address and select the coin from the dropdown menu. If entering a coin address, you will be required to enter the url to the coin's explorer balance API</b>
-              </div> </div></div><br/>
-              <h6>Single Coin Import</h6>
-              <div class="row">
-                <div class="col-md-10">
-                  <div class="input-group">
-                    <span class="input-group-addon" id="basic-addon3">Static Coin Amount</span>
-                    <input type="text" class="form-control" id="static-coin-quantity" aria-describedby="basic-addon3" placeholder="Enter Coin Amount">
-                  </div>
-                </div>
-
-                <div class="col-md-2">
-                  <div class="input-group input-group-sm">
-                    <select id="cmc-dropdown-menu" class="custom-select">
-                    </select>
-                  </div>
-                </div>
-              </div>
-              <br/>
-              <h6>Exchange Import</h6>
-              <p style="font-weight: bold; text-decoration:underline">DO NOT enable trading for this key. Only read functionality.</p>
-
-
-              <div class="row">
-                <div class="col-md-5">
-                  <div class="input-group">
-                    <span class="input-group-addon" id="basic-addon3">Exchange API Key</span>
-                    <input type="text" class="form-control" id="exchange-key" aria-describedby="basic-addon3" placeholder="Enter API Key">
-                  </div>
-                </div>
-                <div class="col-md-5">
-                  <div class="input-group">
-                    <span class="input-group-addon" id="basic-addon3">Exchange API Secret</span>
-                    <input type="text" class="form-control" id="exchange-secret" aria-describedby="basic-addon3" placeholder="Enter API Secret">
-                  </div>
-                </div>
-
-                <div class="col-md-2">
-                  <div class="input-group input-group-sm">
-                    <select id="supported-exchanges" class="custom-select">
-                      <option value="bittrex" selected>Bittrex</option>
-                    </select>
-                  </div>
-                </div>
               </div>
             </div>
-            <div class="modal-footer">
-              <button class="btn btn-primary" id="AddCoin" class="btn btn-primary" onclick="alert('Under Development');">Add Coin</button>
-              <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+          </div>
+          <br/>
+          <h6>Single Coin Import</h6>
+          <div class="row">
+            <div class="col-md-10">
+              <div class="input-group">
+                <span class="input-group-addon" id="basic-addon3">Static Coin Amount</span>
+                <input type="text" class="form-control" id="static-coin-quantity" aria-describedby="basic-addon3" placeholder="Enter Coin Amount">
+              </div>
+            </div>
+
+            <div class="col-md-2">
+              <div class="input-group input-group-sm">
+                <select id="cmc-dropdown-menu" class="custom-select">
+                </select>
+              </div>
+            </div>
+          </div>
+          <br/>
+          <h6>Exchange Import</h6>
+          <p style="font-weight: bold; text-decoration:underline">DO NOT enable trading for this key. Only read functionality.</p>
+
+          <div class="row">
+            <div class="col-md-5">
+              <div class="input-group">
+                <span class="input-group-addon" id="basic-addon3">Exchange API Key</span>
+                <input type="text" class="form-control" id="exchange-key" aria-describedby="basic-addon3" placeholder="Enter API Key">
+              </div>
+            </div>
+            <div class="col-md-5">
+              <div class="input-group">
+                <span class="input-group-addon" id="basic-addon3">Exchange API Secret</span>
+                <input type="text" class="form-control" id="exchange-secret" aria-describedby="basic-addon3" placeholder="Enter API Secret">
+              </div>
+            </div>
+
+            <div class="col-md-2">
+              <div class="input-group input-group-sm">
+                <select id="supported-exchanges" class="custom-select">
+                  <option value="bittrex" selected>Bittrex</option>
+                </select>
+              </div>
             </div>
           </div>
         </div>
+        <div class="modal-footer">
+          <button class="btn btn-primary" id="AddCoin" class="btn btn-primary" onclick="alert('Under Development');">Add Coin</button>
+          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+        </div>
       </div>
+    </div>
+  </div>
 
-      <script>
+  <script>
 
-      document.querySelector('main').appendChild(document.createElement('script')).src = '/static/js/dashboard.js';
+  document.querySelector('main').appendChild(document.createElement('script')).src = '/static/js/dashboard.js';
 
-      var _miner = localStorage.vmAddress;
-      var _workerCount = 0;
-      window.statsSource = new EventSource("/api/live_stats");
-      document.querySelector('main').appendChild(document.createElement('script')).src = '/static/js/miner_stats.js';
-      document.querySelector('main').appendChild(document.createElement('script')).src = '/static/js/customViciousWS.js';
+  var _miner = localStorage.vmAddress;
+  var _workerCount = 0;
+  window.statsSource = new EventSource("/api/live_stats");
+  document.querySelector('main').appendChild(document.createElement('script')).src = '/static/js/miner_stats.js';
+  document.querySelector('main').appendChild(document.createElement('script')).src = '/static/js/customViciousWS.js';
 
-      $(document).ready(function() {
+  $(document).ready(function() {
 
-        if(!window.statsSource){window.statsSource=new EventSource("/api/live_stats");}
-        statsSource.addEventListener('message', function (e) {
-          var stats = JSON.parse(e.data);
-          for (algo in stats.algos) {
-            $('#statsMiners' + algo).text(stats.algos[algo].workers);
-            $('#statsHashrate' + algo).text(stats.algos[algo].hashrateString);
-          }
-          for (var pool in stats.pools) {
-            $('#statsMiners' + pool).text(stats.pools[pool].workerCount);
-            $('#statsHashrate' + pool).text(stats.pools[pool].hashrateString);
-          }
-        });
-      });
-      </script>
+    if(!window.statsSource){window.statsSource=new EventSource("/api/live_stats");}
+    statsSource.addEventListener('message', function (e) {
+      var stats = JSON.parse(e.data);
+      for (algo in stats.algos) {
+        $('#statsMiners' + algo).text(stats.algos[algo].workers);
+        $('#statsHashrate' + algo).text(stats.algos[algo].hashrateString);
+      }
+      for (var pool in stats.pools) {
+        $('#statsMiners' + pool).text(stats.pools[pool].workerCount);
+        $('#statsHashrate' + pool).text(stats.pools[pool].hashrateString);
+      }
+    });
+  });
+  </script>

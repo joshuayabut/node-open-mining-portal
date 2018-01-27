@@ -37,7 +37,7 @@ module.exports = function(logger){
         'home.html': '',
         'getting_started.html': 'getting_started',
         'stats.html': 'stats',
-        'tbs.html': 'tbs',
+        'tbs.html': '', /*tbs*/
         'workers.html': 'workers',
         'api.html': 'api',
         'admin.html': 'admin',
@@ -104,7 +104,7 @@ module.exports = function(logger){
             basename = path.basename(evt);
         else
             basename = path.basename(filename);
-        
+
         if (basename in pageFiles){
             readPageFiles([basename]);
             logger.special(logSystem, 'Server', 'Reloaded file ' + basename);
@@ -336,7 +336,7 @@ module.exports = function(logger){
         res.send(500, 'Something broke!');
     });
 
-    try {        
+    try {
         if (portalConfig.website.tlsOptions && portalConfig.website.tlsOptions.enabled === true) {
             var TLSoptions = {
               key: fs.readFileSync(portalConfig.website.tlsOptions.key),
@@ -345,7 +345,7 @@ module.exports = function(logger){
 
             https.createServer(TLSoptions, app).listen(portalConfig.website.port, portalConfig.website.host, function() {
                 logger.debug(logSystem, 'Server', 'TLS Website started on ' + portalConfig.website.host + ':' + portalConfig.website.port);
-            });        
+            });
         } else {
           app.listen(portalConfig.website.port, portalConfig.website.host, function () {
             logger.debug(logSystem, 'Server', 'Website started on ' + portalConfig.website.host + ':' + portalConfig.website.port);
