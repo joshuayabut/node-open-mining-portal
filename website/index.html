@@ -117,7 +117,7 @@
   <li class="nav-item">
     <form class="form-inline my-2 my-lg-0 mr-lg-2">
       <div class="input-group">
-        <input class="form-control minersearchinput" type="text" placeholder="Miner Address"  onkeypress="return searchKeyPress(event);">
+        <input class="form-control minersearchinput" type="text" placeholder="Miner Address:"  onkeypress="return searchKeyPress(event);">
         <span class="input-group-btn">
           <button class="btn btn-primary minersearchbtn" type="button">
             <i class="fa fa-search"></i>
@@ -416,113 +416,113 @@ $(function () {
                             <p><b>WHILE THE BITCOIN PRIVATE DEVELOPER COMMUNITY HAS IMPLEMENTED POWERFUL SECURITY MEASURES FOR THE SAFE STORAGE OF ZCLASSIC COINS CONTRIBUTED BY PARTICIPATING ZCLASSIC MINERS, THERE HAVE BEEN INCIDENTS OF DIGITAL CURRENCY THEFT AND ZCLASSIC REMAINS A POTENTIAL TARGET FOR HACKERS. ZCLASSIC THAT ARE LOST OR STOLEN CANNOT BE REPLACED, AS TRANSACTIONS ARE IRREVOCABLE. DESPITE THE DILIGENT EFFORTS PUT FORTH BY THE BITCOIN PRIVATE DEVELOPER COMMUNITY TO PROTECT ITS WALLET ASSETS, IT WOULD BE IRRESPONSIBLE AND UNLAWFUL TO GUARANTEE WITH 100% CERTAINTY THAT THE NETWORK IS ENTIRELY SAFEGUARDED FROM FRAUD, BUSINESS FAILURE, HACKERS, MALWARE, OR GOVERNMENT-MANDATED REGULATION. WHILE THE BITCOIN PRIVATE DEVELOPER COMMUNITY IS CONFIDENT THAT THESE RISKS ARE MINIMAL AND EXTREMELY UNLIKELY, LIKE MOST OTHER CRYPTOCURRENCIES, IT IS IMPORTANT THAT ALL PARTICIPATING MINERS AVAIL THEMSELVES TO THESE POTENTIAL RISKS.</b>
                             </p>
                           </ol>
-                          </div>
                         </div>
                       </div>
                     </div>
-                    <div class="modal-footer">
-                      <button type="button" id="tosAccept" class="btn btn-primary" data-dismiss="modal" onclick="TOSAccept();">Accept</button>
-                      <button type="button" id="tosDecline" class="btn btn-danger" onclick="window.location.href='https://zclassic.org'">Decline</button>
-                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" id="tosAccept" class="btn btn-primary" data-dismiss="modal" onclick="TOSAccept();">Accept</button>
+                    <button type="button" id="tosDecline" class="btn btn-danger" onclick="window.location.href='https://zclassic.org'">Decline</button>
                   </div>
                 </div>
               </div>
+            </div>
 
-            </body>
+          </body>
 
-            </html>
+          </html>
 
-            <script>
-            function gatherUserEntry(cb) {
-              $.get("https://ipinfo.io", function(res) {
-                if (!res) { return cb(Error('Failed to GET from IPInfo')) }
-                let o = { date: new Date(), ip: res.ip }
-                console.log(o.date.toUTCString())
-                console.log("User IP address: " + o.ip);
+          <script>
+          function gatherUserEntry(cb) {
+            $.get("https://ipinfo.io", function(res) {
+              if (!res) { return cb(Error('Failed to GET from IPInfo')) }
+              let o = { date: new Date(), ip: res.ip }
+              console.log(o.date.toUTCString())
+              console.log("User IP address: " + o.ip);
 
-                //localStorage.Timestamp = o.date
-                //localStorage.IpAddress = o.ip
-                return cb(null, o)
-              }, "jsonp");
-            }
+              //localStorage.Timestamp = o.date
+              //localStorage.IpAddress = o.ip
+              return cb(null, o)
+            }, "jsonp");
+          }
 
-            function saveEntry(o, cb) {
-              var protocol = location.protocol;
-              var slashes = protocol.concat("//");
-              var host = slashes.concat(window.location.hostname);
+          function saveEntry(o, cb) {
+            var protocol = location.protocol;
+            var slashes = protocol.concat("//");
+            var host = slashes.concat(window.location.hostname);
 
-              $.post(host + ":8443/entry", o, function(res) {
-                //if (!res) { return cb(Error('Failed to POST to our srv')) }
-                console.log(res)
+            $.post(host + ":8443/entry", o, function(res) {
+              //if (!res) { return cb(Error('Failed to POST to our srv')) }
+              console.log(res)
 
-                return cb(null, res)
+              return cb(null, res)
+            });
+          }
+
+          function TOSAccept(){
+            // Disable buttons
+            $('#tosAccept').attr('disabled', true)
+            $('#tosDecline').attr('disabled', true)
+
+            gatherUserEntry(function(err, r1) {
+              if (err || !r1) { console.log(err); return; }
+              saveEntry(r1, function(err, r2) {
+                if (err) { console.log(err); return; }
+
+                // Dismiss Modal
+                $('#TAC').modal('hide')
+
+                // Re-enable buttons
+                $('#tosAccept').attr('disabled', false)
+                $('#tosDecline').attr('disabled', false)
+
+                localStorage.ZCLAccept = true;
+                console.log('Done.')
+              })
+            })
+          }
+
+          $(document).ready(function() {
+            // Check whether either localStorage has this machine ok'd
+            // We could also re-check whether this connector's ip has already been logged, but no reason
+            if(localStorage.ZCLAccept == "false" || localStorage.ZCLAccept == "" || localStorage.ZCLAccept == null){
+              $(window).on('load',function(){
+                //$('#TAC').modal('show');
               });
             }
 
-            function TOSAccept(){
-              // Disable buttons
-              $('#tosAccept').attr('disabled', true)
-              $('#tosDecline').attr('disabled', true)
+            if (!window.statsSource) { window.statsSource=new EventSource("/api/live_stats"); }
+            statsSource.addEventListener('message', function (e) {
+              var stats = JSON.parse(e.data);
+              var pendingBlock = stats.pools.zclassic.pending["blocks"][0]
+              var block = pendingBlock.split(":");
+              var blockNum = block[2];
+              var miner = block[3];
+              var date = (new Date(parseInt(block[4]))).toLocaleString();
 
-              gatherUserEntry(function(err, r1) {
-                if (err || !r1) { console.log(err); return; }
-                saveEntry(r1, function(err, r2) {
-                  if (err) { console.log(err); return; }
+              var storedBlock = localStorage.vmlastBlockStored;
+              if (!storedBlock) {
+                localStorage.vmlastBlockStored = blockNum;
+                storedBlock = blockNum;
+              }
+              if (pendingBlock && storedBlock < blockNum) {
+                BlockNotify();
+                localStorage.vmlastBlockStored = blockNum;
+              }
 
-                  // Dismiss Modal
-                  $('#TAC').modal('hide')
-
-                  // Re-enable buttons
-                  $('#tosAccept').attr('disabled', false)
-                  $('#tosDecline').attr('disabled', false)
-
-                  localStorage.ZCLAccept = true;
-                  console.log('Done.')
-                })
-              })
-            }
-
-            $(document).ready(function() {
-              // Check whether either localStorage has this machine ok'd
-              // We could also re-check whether this connector's ip has already been logged, but no reason
-              if(localStorage.ZCLAccept == "false" || localStorage.ZCLAccept == "" || localStorage.ZCLAccept == null){
-                $(window).on('load',function(){
-                  $('#TAC').modal('show');
+              function BlockNotify() {
+                Lobibox.notify('success', {
+                  size: 'large',
+                  iconSource: "fontAwesome",
+                  icon: "fa fa-cube",
+                  soundPath: '/static/sounds/',
+                  title: 'Block Found!',
+                  delay: false,
+                  msg: '<b>Block:</b><span style="float:right">' + date + '</span><br>' + blockNum + '<br><b>Miner:</b><br>' + miner,
+                  sound: 'newblock'
                 });
               }
 
-              if (!window.statsSource) { window.statsSource=new EventSource("/api/live_stats"); }
-              statsSource.addEventListener('message', function (e) {
-                var stats = JSON.parse(e.data);
-                var pendingBlock = stats.pools.zclassic.pending["blocks"][0]
-                var block = pendingBlock.split(":");
-                var blockNum = block[2];
-                var miner = block[3];
-                var date = (new Date(parseInt(block[4]))).toLocaleString();
-
-                var storedBlock = localStorage.vmlastBlockStored;
-                if (!storedBlock) {
-                  localStorage.vmlastBlockStored = blockNum;
-                  storedBlock = blockNum;
-                }
-                if (pendingBlock && storedBlock < blockNum) {
-                  BlockNotify();
-                  localStorage.vmlastBlockStored = blockNum;
-                }
-
-                function BlockNotify() {
-                  Lobibox.notify('success', {
-                    size: 'large',
-                    iconSource: "fontAwesome",
-                    icon: "fa fa-cube",
-                    soundPath: '/static/sounds/',
-                    title: 'Block Found!',
-                    delay: false,
-                    msg: '<b>Block:</b><span style="float:right">' + date + '</span><br>' + blockNum + '<br><b>Miner:</b><br>' + miner,
-                    sound: 'newblock'
-                  });
-                }
-
-              });
             });
-            </script>
+          });
+          </script>

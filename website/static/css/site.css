@@ -1,92 +1,113 @@
 body.fixed-nav {
-    padding-top: 70px;
+  padding-top: 70px;
 }
 
 .content-wrapper {
-    min-height: calc(100vh - 70px) !important;
-	}
-
-body.sticky-footer {
-    margin-bottom: 40px;
+  min-height: calc(100vh - 70px) !important;
 }
 
+body.sticky-footer {
+  margin-bottom: 40px;
+}
+
+.card-title, .card-text, h5 {
+  margin-bottom: 0px;
+}
+
+.nav-pills .nav-link {
+  color: #c17446 !important;
+}
+
+.btn-primary, .nav-pills .nav-link.active {
+  background-color: #c17446 !important;
+  border-color: #c17446 !important;
+  color: #fff !important;
+}
+
+
 .da-nav {
-	
-	margin-right: 5px;
+  margin-right: 5px;
 }
 
 .badge-primary {
-	background-color: #c17446 !important;
+  background-color: #c17446 !important;
+  font-weight: 400;
+}
+
+.badge {
+  font-size: 100%;
+}
+
+.coinmarketcap-blue {
+  color: rgb(66, 139, 202);
 }
 
 .bg-info {
-	background-color: #c17446 !important;
+  background-color: #c17446 !important;
 }
 
 .fade.show {
-    display: unset !important;
+  display: unset !important;
 }
 
 .fade {
-    display: none !important;
+  display: none !important;
 }
 
-
-
 .dashboardmodal span {
-	font-size:12px;
+  font-size:12px;
 }
 
 @media (min-width: 992px) {
-#mainNav .navbar-collapse .navbar-sidenav {
+  #mainNav .navbar-collapse .navbar-sidenav {
     margin-top: 76px !important;
-}
+  }
 
-.giveawayModal {
+  .giveawayModal {
     width: 50%;
     max-width: 100%;
-}
+  }
 }
 
 @media (min-width: 576px){
-	.fitSmall {
-		font-size: 11px;
-	}
-	
-	.dashboardmodal {
-	max-width:50%;
-}
-	
-#updatesDiv {
-	max-width:50%;
-}}
+  .fitSmall {
+    font-size: 11px;
+  }
 
-@media only screen and (max-width: 575px)  {
-	.fitsmall {
-		font-size: 11px;
-	}
-	
-	.da-nav {
-		width:100%;
-	}
-	
-.ellipsis {
-	display:inline-block;
-  white-space: nowrap;
-  direction:rtl;
-  width:200px; 
-  overflow: hidden;
-  text-overflow: ellipsis;
-  -ms-text-overflow:ellipsis;
-}
+  .dashboardmodal {
+    max-width:50%;
+  }
 
-.ellipsis-smaller {
-	display:inline-block;
-  white-space: nowrap;
-  direction:rtl;
-  width:175px; 
-  overflow: hidden;
-  text-overflow: ellipsis;
-  -ms-text-overflow:ellipsis;
-}
-}
+  #updatesDiv {
+    max-width:50%;
+    }}
+
+    @media only screen and (max-width: 575px)  {
+      .fitsmall {
+        font-size: 11px;
+      }
+
+      .da-nav {
+        width:100%;
+      }
+
+      .ellipsis {
+        display:inline-block;
+        white-space: nowrap;
+        direction:rtl;
+        width:200px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        -ms-text-overflow:ellipsis;
+      }
+
+      .ellipsis-smaller {
+        display:inline-block;
+        white-space: nowrap;
+        direction:rtl;
+        width:175px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        -ms-text-overflow:ellipsis;
+      }
+    }

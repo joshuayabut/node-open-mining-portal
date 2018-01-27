@@ -54,7 +54,7 @@
 </div>
 
 <div class="col-md-10 col-sm-10 col-xs-10">
-  <div id="coinInfoHide" class="row" style="display:none; margin-bottom:10px">
+  <div id="coinInfoHide" style="display:none; margin-bottom:10px">
     <div class="col-md-12">
       <div class="card">
         <div class="card-header">
@@ -62,7 +62,6 @@
         </div>
         <div class="card-body">
           <dl class="row">
-
 
           </dl>
           <p class="card-text">
@@ -80,8 +79,8 @@
     </div>
   </div>
 
-  <div class="row">
-    <ul class="nav nav-pills mb-3 ml-3" id="pills-tab" role="tablist">
+  <div class="col-md-12">
+    <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
       <li class="nav-item">
         <a class="nav-link active" id="ewbf-pill-tab" data-toggle="pill" href="#ewbf" role="tab" aria-controls="ewbf" aria-selected="true">EWBF Miner (NVIDIA)</a>
       </li>
@@ -92,16 +91,17 @@
         <a class="nav-link" id="claymore-pill-tab" data-toggle="pill" href="#claymore" role="tab" aria-controls="claymore" aria-selected="false">Claymore Miner (AMD)</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" id="nheqminer-pill-tab" data-toggle="pill" href="#nheqminer" role="tab" aria-controls="nheqminer" aria-selected="false">Nheqminer (NVIDIA, CPU)</a>
+        <a class="nav-link" id="nheqminer-pill-tab" data-toggle="pill" href="#nheqminer" role="tab" aria-controls="nheqminer" aria-selected="false">NHeqminer (NVIDIA, CPU)</a>
       </li>
     </ul>
   </div>
-  <div class="row ml-auto">
+
+  <div class="col-md-12">
     <div class="tab-content" id="miner-tabContent" style="width:80%">
       <div class="tab-pane fade show active" id="ewbf" role="tabpanel" aria-labelledby="ewbf-pill-tab">
         <div class="card">
           <div class="card-header">
-            <h4 class="card-title">EBWF Miner Configuration (Recommended)</h4>
+            <h4 class="card-title">Miner Configuration - EBWF (Recommended)</h4>
           </div>
           <div class="card-body">
             <p class="card-text">
@@ -117,10 +117,10 @@
 
               <div class="tab-content" id="pills-tabContent">
                 <div class="tab-pane fade show active" id="pills-win" role="tabpanel" aria-labelledby="pills-win-tab">
-                  <span>Make sure start.bat file file looks like this:</span><pre class="pre-help">miner.exe --server {{=it.portalConfig.website.stratumHost}} --user YOUR_WALLET_ADDRESS.YOUR_WORKER_NAME --pass x --port [port] </pre><p>Where:</p><ul><li>YOUR_WALLET_ADDRESS - your valid {{=pool}} address</li><li>YOUR_WORKER_NAME - simple short worker name</li><li>PORT - Choose from menu</li><ul>
+                  <span>Make sure start.bat file looks like this:</span><pre class="pre-help">miner.exe --server {{=it.portalConfig.website.stratumHost}} --user YOUR_WALLET_ADDRESS.YOUR_WORKER_NAME --pass x --port [port] </pre><p>Where:</p><ul><li>YOUR_WALLET_ADDRESS - your valid {{=pool}} address</li><li>YOUR_WORKER_NAME - simple short worker name</li><li>PORT - Choose from menu</li><ul>
                   </div>
                   <div class="tab-pane fade" id="pills-linux" role="tabpanel" aria-labelledby="pills-linux-tab">
-                    <span>Make sure your shell file file looks like this:</span><pre class="pre-help">./miner --server {{=it.portalConfig.website.stratumHost}} --user YOUR_WALLET_ADDRESS.YOUR_WORKER_NAME --pass z --port [port] </pre><p>Where:</p><ul><li>YOUR_WALLET_ADDRESS - your valid {{=pool}} address</li><li>YOUR_WORKER_NAME - simple short worker name</li><li>PORT - Choose from menu</li></ul>
+                    <span>Make sure your shell file looks like this:</span><pre class="pre-help">./miner --server {{=it.portalConfig.website.stratumHost}} --user YOUR_WALLET_ADDRESS.YOUR_WORKER_NAME --pass z --port [port] </pre><p>Where:</p><ul><li>YOUR_WALLET_ADDRESS - your valid {{=pool}} address</li><li>YOUR_WORKER_NAME - simple short worker name</li><li>PORT - Choose from menu</li></ul>
                   </div>
                 </div>
               </div>
@@ -134,7 +134,7 @@
       <div class="tab-pane fade" id="dstm" role="tabpanel" aria-labelledby="dstm-pill-tab">
         <div class="card">
           <div class="card-header">
-            <h4 class="card-title">DSTM Miner Configuration (Recommended)</h4>
+            <h4 class="card-title">Miner Configuration - DSTM</h4>
           </div>
           <div class="card-body">
             <p class="card-text">
@@ -150,10 +150,10 @@
 
               <div class="tab-content" id="pills-tabContent">
                 <div class="tab-pane fade show active" id="pills-win-dstm" role="tabpanel" aria-labelledby="pills-win-dstm">
-                  <span>Make sure start.bat file file looks like this:</span><pre class="pre-help">zm.exe --server {{=it.portalConfig.website.stratumHost}} --user YOUR_WALLET_ADDRESS.YOUR_WORKER_NAME --pass x --port [port] </pre><p>Where:</p><ul><li>YOUR_WALLET_ADDRESS - your valid {{=pool}} address</li><li>YOUR_WORKER_NAME - simple short worker name</li><li>PORT - Choose from menu</li></ul>
+                  <span>Make sure start.bat file looks like this:</span><pre class="pre-help">zm.exe --server {{=it.portalConfig.website.stratumHost}} --user YOUR_WALLET_ADDRESS.YOUR_WORKER_NAME --pass x --port [port] </pre><p>Where:</p><ul><li>YOUR_WALLET_ADDRESS - your valid {{=pool}} address</li><li>YOUR_WORKER_NAME - simple short worker name</li><li>PORT - Choose from menu</li></ul>
                 </div>
                 <div class="tab-pane fade" id="pills-linux-dstm" role="tabpanel" aria-labelledby="pills-linux-dstm">
-                  <span>Make sure your shell file file looks like this:</span><pre class="pre-help">./zm --server {{=it.portalConfig.website.stratumHost}} --user YOUR_WALLET_ADDRESS.YOUR_WORKER_NAME --pass z --port [port] </pre><p>Where:</p><ul><li>YOUR_WALLET_ADDRESS - your valid {{=pool}} address</li><li>YOUR_WORKER_NAME - simple short worker name</li><li>PORT - Choose from menu</li></ul>
+                  <span>Make sure your shell file looks like this:</span><pre class="pre-help">./zm --server {{=it.portalConfig.website.stratumHost}} --user YOUR_WALLET_ADDRESS.YOUR_WORKER_NAME --pass z --port [port] </pre><p>Where:</p><ul><li>YOUR_WALLET_ADDRESS - your valid {{=pool}} address</li><li>YOUR_WORKER_NAME - simple short worker name</li><li>PORT - Choose from menu</li></ul>
                 </div>
               </div>
             </div>
@@ -168,7 +168,7 @@
     <div class="tab-pane fade" id="claymore" role="tabpanel" aria-labelledby="claymore-pill-tab">
       <div class="card">
         <div class="card-header">
-          <h4 class="card-title">Claymore Miner Configuration (Recommended)</h4>
+          <h4 class="card-title">Miner Configuration - Claymore</h4>
         </div>
         <div class="card-body">
           <p class="card-text">
@@ -184,10 +184,10 @@
 
             <div class="tab-content" id="pills-tabContent">
               <div class="tab-pane fade show active" id="pills-win-claymore" role="tabpanel" aria-labelledby="pills-win-claymore">
-                <span>Make sure start.bat file file looks like this:</span><pre class="pre-help">ZecMiner64.exe -zpool {{=it.portalConfig.website.stratumHost}} -zwal YOUR_WALLET_ADDRESS.YOUR_WORKER_NAME --zpsw x --port [port] </pre><p>Where:</p><ul><li>YOUR_WALLET_ADDRESS - your valid {{=pool}} address</li><li>YOUR_WORKER_NAME - simple short worker name</li><li>PORT - Choose from menu</li></ul>
+                <span>Make sure start.bat file looks like this:</span><pre class="pre-help">ZecMiner64.exe -zpool {{=it.portalConfig.website.stratumHost}} -zwal YOUR_WALLET_ADDRESS.YOUR_WORKER_NAME --zpsw x --port [port] </pre><p>Where:</p><ul><li>YOUR_WALLET_ADDRESS - your valid {{=pool}} address</li><li>YOUR_WORKER_NAME - simple short worker name</li><li>PORT - Choose from menu</li></ul>
               </div>
               <div class="tab-pane fade" id="pills-linux-claymore" role="tabpanel" aria-labelledby="pills-linux-claymore">
-                <span>Make sure your shell file file looks like this:</span><pre class="pre-help">./ZecMiner64.exe -zpool {{=it.portalConfig.website.stratumHost}} -zwal YOUR_WALLET_ADDRESS.YOUR_WORKER_NAME --zpsw x --port [port] </pre><p>Where:</p><ul><li>YOUR_WALLET_ADDRESS - your valid {{=pool}} address</li><li>YOUR_WORKER_NAME - simple short worker name</li><li>PORT - Choose from menu</li></ul>
+                <span>Make sure your shell file looks like this:</span><pre class="pre-help">./ZecMiner64.exe -zpool {{=it.portalConfig.website.stratumHost}} -zwal YOUR_WALLET_ADDRESS.YOUR_WORKER_NAME --zpsw x --port [port] </pre><p>Where:</p><ul><li>YOUR_WALLET_ADDRESS - your valid {{=pool}} address</li><li>YOUR_WORKER_NAME - simple short worker name</li><li>PORT - Choose from menu</li></ul>
               </div>
             </div>
           </div>
@@ -202,7 +202,7 @@
   <div class="tab-pane fade" id="nheqminer" role="tabpanel" aria-labelledby="nheqminer-pill-tab">
     <div class="card">
       <div class="card-header">
-        <h4 class="card-title">Nheqminer Miner Configuration</h4>
+        <h4 class="card-title">Miner Configuration - NHeqminer</h4>
       </div>
       <div class="card-body">
         <p class="card-text">
@@ -218,14 +218,14 @@
 
           <div class="tab-content" id="pills-tabContent">
             <div class="tab-pane fade show active" id="pills-win-nheq" role="tabpanel" aria-labelledby="pills-win-tab-nheq">
-              <span>Make sure start.bat file file looks like this:</span><pre class="pre-help"><b>CPU: </b>nheqminer.exe -l {{=it.portalConfig.website.stratumHost}}:[port] -u YOUR_WALLET_ADDRESS/YOUR_WORKER_NAME -p x
+              <span>Make sure start.bat file looks like this:</span><pre class="pre-help"><b>CPU: </b>nheqminer.exe -l {{=it.portalConfig.website.stratumHost}}:[port] -u YOUR_WALLET_ADDRESS/YOUR_WORKER_NAME -p x
                 <b>OpenCL 4 devices: </b>nheqminer.exe -l {{=it.portalConfig.website.stratumHost}}:[port] -u YOUR_WALLET_ADDRESS/YOUR_WORKER_NAME -p x -od 0 1 2 3
                 <b>OpenCL 6 devices: </b>nheqminer.exe -l {{=it.portalConfig.website.stratumHost}}:[port] -u YOUR_WALLET_ADDRESS/YOUR_WORKER_NAME -p x -od 0 1 2 3 4 5
                 <b>CUDA 4 devices: </b>nheqminer.exe -l {{=it.portalConfig.website.stratumHost}}:[port] -u YOUR_WALLET_ADDRESS/YOUR_WORKER_NAME -p x -cd 0 1 2 3
                 <b>CUDA 6 devices: </b>nheqminer.exe -l {{=it.portalConfig.website.stratumHost}}:[port] -u YOUR_WALLET_ADDRESS/YOUR_WORKER_NAME -p x-cd 0 1 2 3 4 5</pre><p>Where:</p><ul><li>YOUR_WALLET_ADDRESS - your valid {{=pool}} address</li><li>YOUR_WORKER_NAME - simple short worker name</li><li>PORT - Choose from menu</li></ul>
               </div>
               <div class="tab-pane fade" id="pills-linux-nheq" role="tabpanel" aria-labelledby="pills-linux-tab-nheq">
-                <span>Make sure start.bat file file looks like this:</span><pre class="pre-help">CPU:
+                <span>Make sure start.bat file looks like this:</span><pre class="pre-help">CPU:
                   ./nheqminer -l {{=it.portalConfig.website.stratumHost}}:[port] -u YOUR_WALLET_ADDRESS/YOUR_WORKER_NAME -p x
                   OpenCL 4 devices:
                   ./nheqminer -l {{=it.portalConfig.website.stratumHost}}:[port] -u YOUR_WALLET_ADDRESS/YOUR_WORKER_NAME -p x -od 0 1 2 3
