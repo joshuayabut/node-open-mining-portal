@@ -1,143 +1,167 @@
 <style>
-    #topCharts{
-        padding-left: 18px;
-		padding-right: 18px;
-		<!-- padding-top: 18px; -->
-		padding-bottom: 0px;
-		width: 100%;
-    }
-    #topCharts > div > div > svg{
-        display: block;
-        height: 280px;
-    }
-    .chartWrapper{
-        border: solid 1px #c7c7c7;
-        border-radius: 5px;
-        padding: 5px;
-        margin-bottom: 18px;
-		
-    }
-    .chartLabel{
-        font-size: 1.2em;
-        text-align: center;
-        padding: 4px;
-    }
+  #topCharts {
+    padding-left: 18px;
+    padding-right: 18px;
+    <!-- padding-top: 18px;
+    -->padding-bottom: 0px;
+    width: 100%;
+  }
 
-	#boxesWorkers {
-        margin: 0 9px;
-    }
-    #boxesWorkers > div {
-        display: flex;
-    }
-    #boxesWorkers > div > div {
-        flex: 1 1 auto;
-        margin: 0 9px 18px 9px;
-        padding: 10px;
-        display: flex;
-        flex-direction: column;
-    }
-    .boxLowerHeader{
-        font-size: 1.3em;
-        margin: 0 0 5px 10px;
-    }
+  #topCharts>div>div>svg {
+    display: block;
+    height: 280px;
+  }
 
-    #boxStatsLeft{
-        color: black;
-        background-color: #cccccc;
-    }
-    #boxStatsRight{
-		color: black;
-        background-color: #cccccc;
-    }
-    .boxStats{
-        color: white;
-    }
-    .boxStatsList{
-        display: flex;
-        flex-flow: row wrap;
-        justify-content: space-around;
-        opacity: 0.77;
-        margin-bottom: 5px;
-        flex: 1 1 auto;
-        align-content: center;
-    }
-    .boxStatsList i.fa{
-        height: 15px;
-        width: 33px;
-        text-align: center;
-    }
-    .boxStatsList > div{
-        padding: 5px 20px;
-    }
-    .boxStatsList > div > div{
-        padding: 3px;
-    }
-	
-	#dropdown-menu > a > .fa{
-    visibility:hidden;
-}
-	#dropdown-menu > a.selected > .fa{
-    visibility:visible;
-}
+  .chartWrapper {
+    border: solid 1px #c7c7c7;
+    border-radius: 5px;
+    padding: 5px;
+    margin-bottom: 18px;
+  }
 
+  .chartLabel {
+    font-size: 1.2em;
+    text-align: center;
+    padding: 4px;
+  }
 
+  #boxesWorkers {
+    margin: 0 9px;
+  }
 
+  #boxesWorkers>div {
+    display: flex;
+  }
+
+  #boxesWorkers>div>div {
+    flex: 1 1 auto;
+    margin: 0 9px 18px 9px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .boxLowerHeader {
+    font-size: 1.3em;
+    margin: 0 0 5px 10px;
+  }
+
+  #boxStatsLeft {
+    color: black;
+    background-color: #cccccc;
+  }
+
+  #boxStatsRight {
+    color: black;
+    background-color: #cccccc;
+  }
+
+  .boxStats {
+    color: white;
+  }
+
+  .boxStatsList {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-around;
+    opacity: 0.77;
+    margin-bottom: 5px;
+    flex: 1 1 auto;
+    align-content: center;
+  }
+
+  .boxStatsList i.fa {
+    height: 15px;
+    width: 33px;
+    text-align: center;
+  }
+
+  .boxStatsList>div {
+    padding: 5px 20px;
+  }
+
+  .boxStatsList>div>div {
+    padding: 3px;
+  }
+
+  #dropdown-menu>a>.fa {
+    visibility: hidden;
+  }
+
+  #dropdown-menu>a.selected>.fa {
+    visibility: visible;
+  }
 </style>
-	            <!-- Breadcrumbs-->
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item">
-                    <a href="/">Home</a>
-                </li>
-                <li class="breadcrumb-item active">Miner Statistics</li>
-            </ol>
-			<div id="worker-error"></div>
+<!-- Breadcrumbs-->
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">
+    <a href="/">Home</a>
+  </li>
+  <li class="breadcrumb-item active">Miner Statistics</li>
+</ol>
+
+
+
+<div id="worker-error"></div>
 
 
 <div class="row fitsmall">
-<div class="col-md-12 col-sm-12">
-<div id="topCharts">
-    <div class="chartWrapper">
+  <div class="col-md-12 col-sm-12">
+    <div id="topCharts">
+      <div class="chartWrapper">
         <div class="chartLabel">
-			<!--<div style="float:left; padding-right: 18px;"><i class="fa fa-users"></i><span id="statsWorkers">...</span></div>-->			
-			<div style="float:left; margin-right: 9px;">{{!String(it.stats.address).split(".")[0]}}</div>
-			<div style="float:right; padding-left: 18px;"><small><i class="fa fa-tachometer"></i> <span id="statsHashrateAvg">...</span> (Avg)</small></div>
-			<div style="float:right; padding-left: 18px;"><small><i class="fa fa-tachometer"></i> <span id="statsHashrate">...</span> (Now)</small></div>
-			<div style="float:right; padding-left: 18px;"><small><i class="fa fa-gavel"></i> Luck <span id="statsLuckDays">...</span> Days</small></div>
-		</div>
-		<div class="chartHolder"><svg id="workerHashrate" /></div>
-		<div>
-	
-			<div style="float:right; padding-top: 9px; padding-right: 18px;"><i class="fa fa-cog"></i> Shares: <span id="statsTotalShares">...</span></div>
-			<div style="float:left; padding-top: 9px; padding-left: 18px; padding-right: 18px;"><i class="fa fa-money"></i> Immature: <span id="statsTotalImmature">...</span></div>
-			<div style="float:left; padding-top: 9px; padding-left: 18px; padding-right: 18px;display:none;"><i class="fa fa-money"></i> Bal: <span id="statsTotalBal">...</span> </div>
-			<div style="padding-top: 9px; padding-left: 18px;"><i class="fa fa-money"></i> Paid: <span id="statsTotalPaid">...</span>  </div>
-		</div>
+
+          <!--<div style="float:left; padding-right: 18px;"><i class="fa fa-users"></i><span id="statsWorkers">...</span></div>-->
+          <div style="float:left; margin-right: 9px;">{{=String(it.stats.address).split(".")[0]}}</div>
+          <div style="float:right; padding-left: 18px;"><small><i class="fa fa-tachometer"></i> <span id="statsHashrateAvg">...</span> (Avg)</small></div>
+          <div style="float:right; padding-left: 18px;"><small><i class="fa fa-tachometer"></i> <span id="statsHashrate">...</span> (Now)</small></div>
+          <div style="float:right; padding-left: 18px;"><small><i class="fa fa-gavel"></i> Luck <span id="statsLuckDays">...</span> Days</small></div>
+        </div>
+        <div class="chartHolder"><svg id="workerHashrate" /></div>
+        <div>
+
+          <div style="float:right; padding-top: 9px; padding-right: 18px;"><i class="fa fa-cog"></i> Shares: <span id="statsTotalShares">...</span></div>
+          <div style="float:left; padding-top: 9px; padding-left: 18px; padding-right: 18px;"><i class="fa fa-money"></i> Immature: <span id="statsTotalImmature">...</span></div>
+          <div style="float:left; padding-top: 9px; padding-left: 18px; padding-right: 18px;display:none;"><i class="fa fa-money"></i> Bal: <span id="statsTotalBal">...</span> </div>
+          <div style="padding-top: 9px; padding-left: 18px;"><i class="fa fa-money"></i> Paid: <span id="statsTotalPaid">...</span> </div>
+        </div>
+      </div>
+
     </div>
+  </div>
 </div>
+<div class="alert alert-warning" role="alert">
+  <strong> Dear Miners:</strong><br /> Thank you for your involvement in our donation program; it means alot to us!<br /><br /> We know that some users are unable to see mining stats for their address. This is normal, as we are experiencing some general
+  trouble with the znomp platform. Rest be assured, your mining progress has been saved - we checked!<br /><br /> Mine along,<br> The Bitcoin Private &amp; Zclassic Team
 </div>
-</div>	
+
 <div class="row">
-	<div class="col-md-12 col-sm-12">
-	<div class="col-md-12">
-		<table class="table table-bordered table-sm text-center">
-			<h6>Total Bitcoin Private Earnings</h6>
-			<thead style="background:#343a40;color:white">
-				<th>ZCL Mined</th>
-				<th>BTCP Total</th>
-			</thead>
-			<td><span id="ZCLMined">0</span> ZCL</td>
-			<td><span id="BTCPTotal">0</span> BTCP</td></tr>
-		</table>
+  <div class="col-md-12 col-sm-12">
+    <div class="col-md-12">
+      <table class="table table-bordered table-sm text-center">
+        <h6>Total Bitcoin Private Earnings</h6>
+        <thead style="background:#343a40;color:white">
+          <th>ZCL Mined</th>
+          <th>BTCP Total</th>
+        </thead>
+        <td><span id="ZCLMined">0</span> ZCL</td>
+        <td><span id="BTCPTotal">0</span> BTCP</td>
+        </tr>
+      </table>
+    </div>
+  </div>
 </div>
-	</div>
+
+<div id="boxesWorkers" class="text-center fitsmall">
 </div>
-	<div id="boxesWorkers" class="text-center fitsmall">
-	</div>
 
 <script>
-	var _miner = "{{!String(it.stats.address).split(".")[0]}}";
-	var _workerCount = 0;
-	window.statsSource = new EventSource("/api/live_stats");
-    document.querySelector('main').appendChild(document.createElement('script')).src = '/static/js/miner_stats.js';
+
+  var _miner = "{{=String(it.stats.address).split(".
+  ")[0]}}";
+  var _workerCount = 0;
+  window.statsSource = new EventSource("/api/live_stats");
+  document.querySelector('main').appendChild(document.createElement('script')).src = '/static/js/miner_stats.js';
+
 </script>
 

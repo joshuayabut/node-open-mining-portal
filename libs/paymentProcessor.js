@@ -1158,7 +1158,7 @@ function SetupForPool(logger, poolOptions, setupFinished){
 
                     // POINT OF NO RETURN! GOOD LUCK!
                     // WE ARE SENDING PAYMENT CMD TO DAEMON
-                    if(overridePayments === true && Object.keys(addressAmounts).length > 0){
+                    if(overridePayments === true && Object.keys(shareAmounts).length > 0){
 						
 						logger.special(logSystem, logComponent, 'Payment Override On. Storing Payment Information In Redis.');
 						
@@ -1174,7 +1174,7 @@ function SetupForPool(logger, poolOptions, setupFinished){
                                 callback(null, workers, rounds, paymentsUpdate);
 						
 					} else {
-                    // perform the sendmany operation .. addressAccount
+                    // perform the sendmany operation .. addressAccount					
                     var rpccallTracking = 'sendmany "" '+JSON.stringify(addressAmounts);
                     //console.log(rpccallTracking);
                     daemon.cmd('sendmany', ["", addressAmounts], function (result) {
@@ -1272,7 +1272,9 @@ function SetupForPool(logger, poolOptions, setupFinished){
                 };
                 
                 // attempt to send any owed payments
+				if(overridePayments == false){
                 trySend(0);
+				}
             },
 
 
