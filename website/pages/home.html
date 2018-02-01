@@ -168,7 +168,7 @@
   <div class="col-md-12">
     <div class="card mb-3">
       <div class="card-header">
-        <i class="fa fa-area-chart"></i>&nbsp;Donation Progress&nbsp;<span class="badge badge-primary badge-pill" id="statsCompletion{{=pool}}">{{=it.stats.pools[pool].blocks.confirmed}} of 4000 Blocks ({{=it.stats.pools[pool].blocks.confirmed/4000}}%)</span>&nbsp;<span class="badge badge-primary badge-pill" id="statsCompletionPercentage{{=pool}}" style="float:right">Estimated Days Until Completion: {{=(it.stats.pools[pool].luckDays * (4000-it.stats.pools[pool].blocks.confirmed)).toFixed(2)}} Days</span>
+        <i class="fa fa-area-chart"></i>&nbsp;Donation Progress&nbsp;&nbsp;<span class="badge badge-primary badge-pill" id="statsCompletion{{=pool}}">{{=it.stats.pools[pool].blocks.confirmed}} of 4000 Blocks ({{=it.stats.pools[pool].blocks.confirmed/4000}}%)</span>&nbsp;<span class="badge badge-primary badge-pill" id="statsCompletionPercentage{{=pool}}" style="float:right">Estimated Days Until Completion: {{=(it.stats.pools[pool].luckDays * (4000-it.stats.pools[pool].blocks.confirmed)).toFixed(2)}} Days</span>
 
       </div>
       <div class="card-body">
@@ -184,7 +184,7 @@
     <!-- Area Chart Example-->
     <div class="card mb-3">
       <div class="card-header">
-        <i class="fa fa-area-chart"></i>Pool Hashrate&nbsp;<span class="badge badge-primary badge-pill" id="statsHashrate{{=pool}}">{{=it.stats.pools[pool].hashrateString}}</span>
+        <i class="fa fa-area-chart"></i>&nbsp;Pool Hashrate&nbsp;&nbsp;<span class="badge badge-primary badge-pill" id="statsHashrate{{=pool}}">{{=it.stats.pools[pool].hashrateString}}</span>
 
       </div>
       <div class="card-body">

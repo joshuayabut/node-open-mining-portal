@@ -16,6 +16,7 @@
   font-size: 1.2em;
   text-align: center;
   padding: 4px;
+  font-weight: 600;
 }
 
 #boxesLower {
@@ -94,13 +95,7 @@ div.tooltip {
 
 }
 </style>
-<!-- Breadcrumbs-->
-<ol class="breadcrumb">
-  <li class="breadcrumb-item">
-    <a href="/">Home</a>
-  </li>
-  <li class="breadcrumb-item active">Graph Stats</li>
-</ol>
+
 <div class="row">
   <div class="col-md-12">
     <div id="topCharts">
@@ -111,6 +106,7 @@ div.tooltip {
     </div>
   </div>
 </div>
+
 <div class="row rowpadding">
   {{ function capitalizeFirstLetter(t){return t.charAt(0).toUpperCase()+t.slice(1)} }}
   {{ function readableDate(a){
