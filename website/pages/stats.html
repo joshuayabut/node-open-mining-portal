@@ -1,110 +1,104 @@
 <style>
-    #topCharts{
-        padding: 18px;
-    }
-    #topCharts > div > div > svg{
-        display: block;
-        height: 280px;
-    }
-    .chartWrapper{
-        border: solid 1px #c7c7c7;
-        border-radius: 5px;
-        padding: 5px;
-        margin-bottom: 18px;
-    }
-    .chartLabel{
-        font-size: 1.2em;
-        text-align: center;
-        padding: 4px;
-    }
+#topCharts{
+  padding: 18px;
+}
+#topCharts > div > div > svg{
+  display: block;
+  height: 280px;
+}
+.chartWrapper{
+  border: solid 1px #c7c7c7;
+  border-radius: 5px;
+  padding: 5px;
+  margin-bottom: 18px;
+}
+.chartLabel{
+  font-size: 1.2em;
+  text-align: center;
+  padding: 4px;
+  font-weight: 600;
+}
 
-	#boxesLower {
-        margin: 0 9px;
-    }
-    #boxesLower > div {
-        display: flex;
-    }
-    #boxesLower > div > div {
-        flex: 1 1 auto;
-        margin: 0 9px 18px 9px;
-        display: flex;
-        flex-direction: column;
-    }
-    .boxLowerHeader{
-        font-size: 1.3em;
-        margin: 0 0 5px 10px;
-    }
-    #boxStatsLeft{
-        color: black;
-        background-color: #cccccc;
-    }
-    #boxStatsRight{
-		color: black;
-        background-color: #cccccc;
-    }
-    .boxStats{
-        color: white;
-    }
-    .boxStatsList{
-        display: flex;
-        flex-flow: row wrap;
-        justify-content: space-around;
-        opacity: 0.77;
-        margin-bottom: 5px;
-        flex: 1 1 auto;
-        align-content: center;
-    }
-    .boxStatsList i.fa{
-        height: 15px;
-        width: 33px;
-        text-align: center;
-    }
-    .boxStatsList > div{
-        padding: 5px 20px;
-    }
-    .boxStatsList > div > div{
-        padding: 3px;
-    }
+#boxesLower {
+  margin: 0 9px;
+}
+#boxesLower > div {
+  display: flex;
+}
+#boxesLower > div > div {
+  flex: 1 1 auto;
+  margin: 0 9px 18px 9px;
+  display: flex;
+  flex-direction: column;
+}
+.boxLowerHeader{
+  font-size: 1.3em;
+  margin: 0 0 5px 10px;
+}
+#boxStatsLeft{
+  color: black;
+  background-color: #cccccc;
+}
+#boxStatsRight{
+  color: black;
+  background-color: #cccccc;
+}
+.boxStats{
+  color: white;
+}
+.boxStatsList{
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-around;
+  opacity: 0.77;
+  flex: 1 1 auto;
+  align-content: center;
+}
+.boxStatsList i.fa{
+  height: 15px;
+  width: 33px;
+  text-align: center;
+}
+.boxStatsList > div{
+  padding: 5px 20px;
+}
+.boxStatsList > div > div{
+  padding: 3px;
+}
 
-    div.tooltip {
-        position: absolute;
-        text-align: center;
-        width: 60px;
-        height: 28px;
-        padding: 2px;
-        font: 12px sans-serif;
-        background: lightsteelblue;
-        border: 0px;
-        border-radius: 8px;
-        pointer-events: none;
-    }
-    #tooltip.hidden {
-        opacity: 0;
-    }
+div.tooltip {
+  position: absolute;
+  text-align: center;
+  width: 60px;
+  height: 28px;
+  padding: 2px;
+  font: 12px sans-serif;
+  background: lightsteelblue;
+  border: 0px;
+  border-radius: 8px;
+  pointer-events: none;
+}
+#tooltip.hidden {
+  opacity: 0;
+}
 
-	.center-justified {
-    text-align: justify;
-    -moz-text-align-last: center;
-    text-align-last: center;
+.center-justified {
+  text-align: justify;
+  -moz-text-align-last: center;
+  text-align-last: center;
 }
 
 .rowpadding {
-	padding-bottom: 15px;
+  padding-bottom: 15px;
 
 
 }
 </style>
-	            <!-- Breadcrumbs-->
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item">
-                    <a href="/">Home</a>
-                </li>
-                <li class="breadcrumb-item active">Graph Stats</li>
-            </ol>
-			<div class="row">
-			<div class="col-md-12">
-<div id="topCharts">
-    <div class="chartWrapper">
+
+<div class="row">
+  <div class="col-md-12">
+    <div id="topCharts">
+      <div class="chartWrapper">
         <div class="chartLabel">Pool Historical Hashrate</div>
         <div class="chartHolder"><svg id="poolHashrate"/></div>
     </div>
