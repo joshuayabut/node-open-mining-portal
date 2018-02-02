@@ -81,16 +81,7 @@
 </div>  -->
 
 <!-- Icon Cards-->
-<div class="alert alert-warning" role="alert">
 
-  <h4 class="alert-heading"> Dear Miners:</h4>
-  Thank you for your involvement in our donation program; it means alot to us!<br /><br />
-
-  We know that some users are unable to see mining stats for their address. This is normal, as we are experiencing some general trouble with the znomp platform. Rest be assured, your mining progress has been saved - we checked!<br /><br />
-
-  Mine along,<br>
-  The Bitcoin Private &amp; Zclassic Team
-</div>
 <div class="row">
   <div class="col-xl-3 col-sm-6 mb-3 text-center">
 
@@ -162,14 +153,14 @@
 
     <script type="text/javascript" src="https://files.coinmarketcap.com/static/widget/currency.js"></script><div class="coinmarketcap-currency-widget" data-currency="zclassic" data-base="USD" data-secondary="BTC" data-ticker="true" data-rank="true" data-marketcap="true" data-volume="true" data-stats="USD" data-statsticker="false"></div>
   </div>
-
 </div>
+
+
 <div class="row">
   <div class="col-md-12">
     <div class="card mb-3">
       <div class="card-header">
-        <i class="fa fa-area-chart"></i>&nbsp;Donation Progress&nbsp;&nbsp;<span class="badge badge-primary badge-pill" id="statsCompletion{{=pool}}">{{=it.stats.pools[pool].blocks.confirmed}} of 4000 Blocks ({{=it.stats.pools[pool].blocks.confirmed/4000}}%)</span>&nbsp;<span class="badge badge-primary badge-pill" id="statsCompletionPercentage{{=pool}}" style="float:right">Estimated Days Until Completion: {{=(it.stats.pools[pool].luckDays * (4000-it.stats.pools[pool].blocks.confirmed)).toFixed(2)}} Days</span>
-
+        <i class="fa fa-area-chart"></i>&nbsp;Donation Progress&nbsp;<span class="badge badge-primary badge-pill" id="statsCompletion{{=pool}}">{{=it.stats.pools[pool].blocks.confirmed}} of 4000 Blocks ({{=it.stats.pools[pool].blocks.confirmed/4000}}%)</span>&nbsp;<span class="badge badge-primary badge-pill" id="statsCompletionPercentage{{=pool}}" style="float:right">Estimated Days Until Completion: {{=(it.stats.pools[pool].luckDays * (4000-it.stats.pools[pool].blocks.confirmed)).toFixed(2)}} Days</span>
       </div>
       <div class="card-body">
         <div class="progress">
@@ -184,8 +175,7 @@
     <!-- Area Chart Example-->
     <div class="card mb-3">
       <div class="card-header">
-        <i class="fa fa-area-chart"></i>&nbsp;Pool Hashrate&nbsp;&nbsp;<span class="badge badge-primary badge-pill" id="statsHashrate{{=pool}}">{{=it.stats.pools[pool].hashrateString}}</span>
-
+        <i class="fa fa-area-chart"></i> Pool Hashrate&nbsp;<span class="badge badge-primary badge-pill" id="statsHashrate{{=pool}}">{{=it.stats.pools[pool].hashrateString}}</span>
       </div>
       <div class="card-body">
         <div id="topCharts">
@@ -206,7 +196,9 @@ document.querySelector('main').appendChild(document.createElement('script')).src
 <script>
 $(document).ready(function() {
 
-  if(!window.statsSource){window.statsSource=new EventSource("/api/live_stats");}
+
+  if (!window.statsSource) { window.statsSource = new EventSource("/api/live_stats"); }
+
   statsSource.addEventListener('message', function (e) {
     var stats = JSON.parse(e.data);
     for (algo in stats.algos) {

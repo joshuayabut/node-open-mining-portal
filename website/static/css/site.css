@@ -10,11 +10,6 @@ body.sticky-footer {
   margin-bottom: 40px;
 }
 
-.form-control:focus {
-  border-color: #c17446 !important;
-  box-shadow: 0 0 0 0;
-}
-
 .card-title, .card-text, h5 {
   margin-bottom: 0px;
 }
@@ -37,13 +32,20 @@ body.sticky-footer {
 
 .badge {
   font-size: 100%;
-  font-weight: 500;
+
 }
 
-.donation-addr {
-  word-wrap: break-word;
+.badge-primary {
+  background-color: #c17446 !important;
+  font-weight: 400;
 }
 
+.api-items {
+    list-style: none;
+    padding-left: 10px;
+}
+
+.breadcrumb-item a,
 .poolOption,
 .api-items li a  {
   color: black;
@@ -53,17 +55,18 @@ body.sticky-footer {
   font-weight: 500;
 }
 
-.api-items {
-    list-style: none;
-    padding-left: 10px;
+.coinmarketcap-blue {
+  color: rgb(66, 139, 202);
 }
+
+.donation-addr {
+  word-wrap: break-word;
+}
+
 
 .da-nav {
   margin-right: 5px;
-}
 
-.badge-primary {
-  background-color: #c17446 !important;
 }
 
 .bg-info {
@@ -77,8 +80,6 @@ body.sticky-footer {
 .fade {
   display: none !important;
 }
-
-
 
 .dashboardmodal span {
   font-size:12px;

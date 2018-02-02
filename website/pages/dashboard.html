@@ -2,7 +2,9 @@
 #topCharts{
   padding-left: 18px;
   padding-right: 18px;
-  /*<!-- padding-top: 18px; -->*/
+
+  <!-- padding-top: 18px; -->
+
   padding-bottom: 0px;
   width: 100%;
 }
@@ -15,6 +17,7 @@
   border-radius: 5px;
   padding: 5px;
   margin-bottom: 18px;
+
 
 }
 .chartLabel{
@@ -73,6 +76,7 @@
   padding: 3px;
 }
 
+
 #dropdown-menu > a > .fa{
   visibility:hidden;
 }
@@ -80,6 +84,15 @@
   visibility:visible;
 }
 </style>
+
+
+<!-- Breadcrumbs-->
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">
+    <a href="/">Home</a>
+  </li>
+  <li class="breadcrumb-item active">Dashboard</li>
+</ol>
 
 <div id="worker-error"></div>
 
@@ -136,7 +149,7 @@
         <div id="NoUrlProvided" class="alert alert-danger collapse" role="alert">No URL Provided</div>
         <div id="NoMSProvided" class="alert alert-danger collapse" role="alert">No Miner Software Selected</div>
         <div class="alert alert-primary" style="font-size:12px" role="alert">EWBF Miner and DSTM Miner are both supported. Please research how to turn on your respective miner's API function and open your ports.</div>
-        <div class="input-group input-group-sm"><span>EWBF URL &amp; Port</span>
+        <div class="input-group input-group-sm"><span>EWBF URL & Port</span>
           <div class="input-group">
             <span class="input-group-addon" id="basic-addon3">127.0.0.1:42000</span>
             <input id="MinerRigURL" type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3">
@@ -149,15 +162,16 @@
             <option value="3" disabled>Claymore</option>
           </select>
         </div>
-
       </div>
       <div class="modal-footer">
         <button class="btn btn-primary" class="btn btn-primary" href="#"  onclick="execMinerURL();">Add Rig</a>
+
           <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
         </div>
       </div>
     </div>
   </div>
+
 
   <!-- Add Address Modal-->
   <div class="modal fade" id="AddAddressModal" tabindex="-1" role="dialog" aria-labelledby="AddAddressModalLabel" aria-hidden="true">
@@ -174,79 +188,81 @@
 
         </div>
         <div class="modal-footer">
-          <button id="BTCZAddress" class="btn btn-primary" onclick="execAddress();">Add Address</button>
-          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+          <button id="BTCZAddress" class="btn btn-primary" class="btn btn-primary" href="#"  onclick="execAddress();">Add Address</a>
+            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+          </div>
         </div>
       </div>
     </div>
   </div>
-</div>
 
-<!-- Add Coin Modal-->
-<div class="modal fade" id="AddCoinModal" tabindex="-1" role="dialog" aria-labelledby="AddCoinModalLabel" aria-hidden="true">
-  <div class="modal-dialog dashboardmodal" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="LoginModalLabel">Add New Coin</h5>
-        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">x</span>
-        </button>
+  <!-- Add Coin Modal-->
+  <div class="modal fade" id="AddCoinModal" tabindex="-1" role="dialog" aria-labelledby="AddCoinModalLabel" aria-hidden="true">
+    <div class="modal-dialog dashboardmodal" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="LoginModalLabel">Add New Coin</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">x</span>
+          </button>
+        </div>
+        <div id="addcoins" class="modal-body">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="alert alert-primary alert-dismissable" role="alert">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <b>Please enter a static coin amount OR enter a coin address and select the coin from the dropdown menu. If entering a coin address, you will be required to enter the url to the coin's explorer balance API</b>
+              </div>
+            </div>
+          </div>
+          <br/>
+          <h6>Single Coin Import</h6>
+          <div class="row">
+            <div class="col-md-10">
+              <div class="input-group">
+                <span class="input-group-addon" id="basic-addon3">Static Coin Amount</span>
+                <input type="text" class="form-control" id="static-coin-quantity" aria-describedby="basic-addon3" placeholder="Enter Coin Amount">
+              </div>
+            </div>
 
-      </div>
-      <div id="addcoins" class="modal-body">
-        <div class="row">
-          <div class="col-md-12">
-            <div class="alert alert-primary alert-dismissable" role="alert">
-              <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-              <b>Please enter a static coin amount OR enter a coin address and select the coin from the dropdown menu. If entering a coin address, you will be required to enter the url to the coin's explorer balance API</b>
+            <div class="col-md-2">
+              <div class="input-group input-group-sm">
+                <select id="cmc-dropdown-menu" class="custom-select">
+                </select>
+              </div>
+            </div>
+          </div>
+          <br/>
+          <h6>Exchange Import</h6>
+          <p style="font-weight: bold; text-decoration:underline">DO NOT enable trading for this key. Only read functionality.</p>
+
+          <div class="row">
+            <div class="col-md-5">
+              <div class="input-group">
+                <span class="input-group-addon" id="basic-addon3">Exchange API Key</span>
+                <input type="text" class="form-control" id="exchange-key" aria-describedby="basic-addon3" placeholder="Enter API Key">
+              </div>
+            </div>
+            <div class="col-md-5">
+              <div class="input-group">
+                <span class="input-group-addon" id="basic-addon3">Exchange API Secret</span>
+                <input type="text" class="form-control" id="exchange-secret" aria-describedby="basic-addon3" placeholder="Enter API Secret">
+              </div>
+            </div>
+
+            <div class="col-md-2">
+              <div class="input-group input-group-sm">
+                <select id="supported-exchanges" class="custom-select">
+                  <option value="bittrex" selected>Bittrex</option>
+                </select>
+              </div>
+
             </div>
           </div>
         </div>
-        <br/>
-
-        <h6>Single Coin Import</h6>
-        <div class="row">
-          <div class="col-md-10">
-            <div class="input-group">
-              <span class="input-group-addon" id="basic-addon3">Static Coin Amount</span>
-              <input type="text" class="form-control" id="static-coin-quantity" aria-describedby="basic-addon3" placeholder="Enter Coin Amount">
-            </div>
-          </div>
-
-          <div class="col-md-2">
-            <div class="input-group input-group-sm">
-              <select id="cmc-dropdown-menu" class="custom-select">
-              </select>
-            </div>
-          </div>
-        </div>
-        <br/>
-
-        <h6>Exchange Import</h6>
-        <p style="font-weight: bold; text-decoration:underline">DO NOT enable trading for this key. Only read functionality.</p>
-
-        <div class="row">
-          <div class="col-md-5">
-            <div class="input-group">
-              <span class="input-group-addon" id="basic-addon3">Exchange API Key</span>
-              <input type="text" class="form-control" id="exchange-key" aria-describedby="basic-addon3" placeholder="Enter API Key">
-            </div>
-          </div>
-          <div class="col-md-5">
-            <div class="input-group">
-              <span class="input-group-addon" id="basic-addon3">Exchange API Secret</span>
-              <input type="text" class="form-control" id="exchange-secret" aria-describedby="basic-addon3" placeholder="Enter API Secret">
-            </div>
-          </div>
-
-          <div class="col-md-2">
-            <div class="input-group input-group-sm">
-              <select id="supported-exchanges" class="custom-select">
-                <option value="bittrex" selected>Bittrex</option>
-
-              </select>
-            </div>
-          </div>
+        <div class="modal-footer">
+          <button class="btn btn-primary" id="AddCoin" class="btn btn-primary" onclick="alert('Under Development');">Add Coin</button>
+          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
         </div>
       </div>
 

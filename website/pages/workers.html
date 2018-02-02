@@ -1,4 +1,13 @@
 
+<!-- Breadcrumbs-->
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">
+    <a href="/">Home</a>
+  </li>
+  <li class="breadcrumb-item active">Worker Stats</li>
+</ol>
+
+
 {{ function capitalizeFirstLetter(t){return t.charAt(0).toUpperCase()+t.slice(1)} }}
 {{ var i=0; for(var pool in it.stats.pools) { }}
 <div class="row" style="margin-bottom:15px">
@@ -34,11 +43,13 @@
   </table>
 </div>
 {{ } }}
+
 <script>
 $(document).ready(function() {
   $('#workers').DataTable();
 });
 </script>
+
 <script>
 function format(data) {
   var units = data.replace(/[\d\.]/g, '').toLowerCase();
@@ -50,12 +61,14 @@ function format(data) {
   }
   return parseFloat(data) * multiplier;
 }
+
 function formatNumber(number, decimals) {
   if (!decimals) {
     decimals = 2;
   }
   return parseFloat(number).toFixed(decimals).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
+
 $(document).ready(function () {
   $.extend($.fn.dataTable.ext.type.order, {
     'sol-asc': function (a, b) {
