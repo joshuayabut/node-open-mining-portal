@@ -83,14 +83,14 @@
       <!-- Icon Cards-->
       <div class="alert alert-warning" role="alert">
 
-      <h4 class="alert-heading"> Dear Miners:</h4>
+      <h4 class="alert-heading">Dear Miners:</h4>
 
-      We have switched to an auction system, you can read more about it <a href="https://redd.it/7txoej" target="_blank"> Here</a><br /><br />
+      We have switched to an auction system. <a href="https://redd.it/7txoej" target="_blank">Learn More</a>
+      <br /><br />
 
-      ATTENTION MINERS: The stats on the website were only showing our first 100 blocks, so as you were continuing to mine your ZCL amount decreses, it was not really decreasing as we have the numbers in the database,
-      the front end stats were just not displaying correctly. ****UPDATE**** This issue has been resolved.<br /><br />
+      ATTENTION MINERS: Some stats on the website were only reflecting our first 100 blocks, causing the UI to underestimate your amount of ZCL mined - This has been resolved.<br /><br />
 
-      Also, We have changed the pool payout type to PPLNT! <br /><br />
+      Also - We have changed the pool payout type to PPLNT! <br /><br />
 
       Mine along,<br />
       The Bitcoin Private &amp; Zclassic Team
@@ -190,7 +190,7 @@
             <!-- Area Chart Example-->
             <div class="card mb-3">
                 <div class="card-header">
-                    <i class="fa fa-area-chart"></i>Pool Hashrate&nbsp;<span class="badge badge-primary badge-pill" id="statsHashrate{{=pool}}">{{=it.stats.pools[pool].hashrateString}}</span>
+                    <i class="fa fa-area-chart"></i>&nbsp;Pool Hashrate&nbsp;<span class="badge badge-primary badge-pill" id="statsHashrate{{=pool}}">{{=it.stats.pools[pool].hashrateString}}</span>
 
                 </div>
                 <div class="card-body">
@@ -228,7 +228,7 @@
 				var daysUntilCompletion = (stats.pools[pool].luckDays * (4000 - confirmedBlocks)).toFixed(2);
 
 				$('span#statsCompletion' + pool).text(confirmedBlocks + " of 4000 Blocks (" + percentage + "%)");
-				$('span#statsCompletionPercentage' + pool).text("Donation End date, Feburary 25th 2018.")
+				$('span#statsCompletionPercentage' + pool).text("End Date: Feburary 25th, 2018")
 
 
 								var confirmed = $("span#confirmedBlocks").text();

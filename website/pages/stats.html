@@ -165,7 +165,7 @@ div.tooltip {
 <tr>
 	<td colspan="2" class="h5 text-center">{{=capitalizeFirstLetter(it.stats.pools[pool].name)}} Blocks Found</td></tr>
 
-            <tr><td style="width:50%"><i class="fa fa-cubes"></i> <span id="statsValidBlocks{{=pool}}">{{=it.stats.pools[pool].poolStats.validBlocks}} Blocks Found<br />(Total - includes orphaned and pending)</span> </td>
+            <tr><td style="width:50%"><i class="fa fa-cubes"></i> <span id="statsValidBlocks{{=pool}}">{{=it.stats.pools[pool].poolStats.validBlocks}} Blocks Found<br />(includes orphaned and pending)</span> </td>
 			<td style="width:50%"><i class="fa fa-money"></i> Paid: <span id="statsTotalPaid{{=pool}}">{{=(parseFloat(it.stats.pools[pool].poolStats.totalPaid)).toFixed(2)}} {{=it.stats.pools[pool].symbol}}</span> </small></td>
 			</tr>
 			</table>

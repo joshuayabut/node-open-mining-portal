@@ -109,7 +109,7 @@
                         <span class="nav-link-text">Donate</span>
                     </a>
         </li>
-        <li class="nav-item" title="Terms & Conditions">
+        <li class="nav-item" title="Terms &amp; Conditions">
           <a class="nav-link" data-toggle="modal" data-target="#TAC">
                         <i class="fa fa-fw fa-gavel"></i>
                         <span class="nav-link-text">Terms & Conditions</span>
@@ -556,7 +556,7 @@
       var miner = block[3];
       var date = (new Date(parseInt(block[4]))).toLocaleString();
       var storedBlock = localStorage.vmlastBlockStored;
-	  
+
 	        function BlockNotify() {
         Lobibox.notify('success', {
           size: 'large',
@@ -568,7 +568,7 @@
           msg: '<b>Block:</b><span style="float:right">' + date + '</span><br>' + blockNum + '<br><b>Miner:</b><br>' + miner,
           sound: 'coinDrop'
         });
-	  
+
       if (!storedBlock) {
         localStorage.vmlastBlockStored = blockNum;
         storedBlock = blockNum;
