@@ -51,6 +51,7 @@
   justify-content: space-around;
   opacity: 0.77;
   margin-bottom: 5px;
+
   flex: 1 1 auto;
   align-content: center;
 }
@@ -101,11 +102,14 @@ div.tooltip {
   <li class="breadcrumb-item active">Graph Stats</li>
 </ol>
 
+
 <div class="row">
   <div class="col-md-12">
     <div id="topCharts">
       <div class="chartWrapper">
+
         <div class="chartLabel">Pool Hashrate</div>
+
         <div class="chartHolder"><svg id="poolHashrate"/></div>
       </div>
     </div>
@@ -115,13 +119,13 @@ div.tooltip {
 <div class="row rowpadding">
   {{ function capitalizeFirstLetter(t){return t.charAt(0).toUpperCase()+t.slice(1)} }}
   {{ function readableDate(a){
-
     var date = new Date(parseInt(a));
     var options = {
       weekday: "long", year: "numeric", month: "short",
       day: "numeric", hour: "2-digit", minute: "2-digit"
     };
     return date.toLocaleTimeString("en-us", options);
+
 
   } }}
   <div class="col-md-12 col-sm-12">
@@ -167,6 +171,7 @@ div.tooltip {
 {{ for(var pool in it.stats.pools) { }}
 {{ var blockscomb = new Array; }}
 <div class="row">
+
   <table class="table table-small text-center h6">
     <tr><td colspan="2" class="h5 text-center">{{=capitalizeFirstLetter(it.stats.pools[pool].name)}} Blocks Found</td></tr>
     <tr>
@@ -187,12 +192,15 @@ div.tooltip {
     {{ var block = it.stats.pools[pool].pending.blocks[b].split(":"); }}
     <tr>
       <td>
+
         {{if (String(it.stats.pools[pool].name).startsWith("zcash")) { }}
         <a href="https://explorer.zcha.in/blocks/{{=block[0]}}" target="_blank">{{=block[2]}}</a>
         {{ } else if (String(it.stats.pools[pool].name).startsWith("bitcoinz")) { }}
         <a href="https://btczexplorer.blockhub.info/block/{{=block[0]}}" target="_blank">{{=block[2]}}</a>
         {{ } else if (String(it.stats.pools[pool].name).startsWith("zclassic")) { }}
+
         <a href="https://classic.zcha.in/blocks/{{=block[0]}}" target="_blank">{{=block[2]}}</a>
+
         {{ } else if (String(it.stats.pools[pool].name).startsWith("hush")) { }}
         <a href="https://explorer.myhush.org/block/{{=block[0]}}" target="_blank">{{=block[2]}}</a>
         {{ } else { }}
@@ -222,10 +230,12 @@ div.tooltip {
     {{ var block = it.stats.pools[pool].confirmed.blocks[b].split(":"); }}
     <tr>
       <td>{{if (String(it.stats.pools[pool].name).startsWith("zcash")) { }}
+
         <a href="https://explorer.zcha.in/blocks/{{=block[0]}}" target="_blank">{{=block[2]}}</a>
         {{ } else if (String(it.stats.pools[pool].name).startsWith("bitcoinz")) { }}
         <a href="https://btczexplorer.blockhub.info/block/{{=block[0]}}" target="_blank">{{=block[2]}}</a>
         {{ } else if (String(it.stats.pools[pool].name).startsWith("zclassic")) { }}
+
         <a href="https://classic.zcha.in/blocks/{{=block[0]}}" target="_blank">{{=block[2]}}</a>
         {{ } else { }}
         {{=block[2]}}
@@ -259,8 +269,9 @@ document.querySelector('main').appendChild(document.createElement('script')).src
 $(document).ready(function() {
   $('#blocksTable').DataTable({
     "order": [[0, "desc"]]
+
   });
-});
+
 
 window.statsSource = new EventSource("/api/live_stats");
 $(function() {
@@ -291,4 +302,5 @@ function getReadableNetworkHashRateString(hashrate){
   hashrate = (hashrate/1000) / Math.pow(1000, i + 1);
   return hashrate.toFixed(2) + byteUnits[i];
 }
+
 </script>

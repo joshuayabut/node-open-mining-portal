@@ -24,7 +24,7 @@
 
 </head>
 <!-- <body class="fixed-nav sticky-footer bg-dark" id="page-top"> -->
-<body class="fixed-nav bg-dark" id="page-top">
+
 
   <!-- Navigation-->
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
@@ -131,6 +131,7 @@
 </div>
 </nav>
 
+
 <!-- Bootstrap core JavaScript-->
 
 
@@ -155,17 +156,19 @@
 <script src="/static/js/lobibox.js"></script>
 
 <script type="text/javascript">
+
 function searchKeyPress(e)
 {
   // look for window.event in case event isn't passed in
   e = e || window.event;
   if (e.keyCode == 13)
   {
+
     document.getElementById('btnSearch').click();
     return false;
   }
   return true;
-}
+
 $(document).ready(function(){
   $('.minersearchbtn').click(function(){
     window.location = "/workers/" + $('.minersearchinput').val();

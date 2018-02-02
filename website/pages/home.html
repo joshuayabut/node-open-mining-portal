@@ -81,6 +81,7 @@
 </div>  -->
 
 <!-- Icon Cards-->
+
 <div class="row">
   <div class="col-xl-3 col-sm-6 mb-3 text-center">
 
@@ -149,9 +150,11 @@
     {{ } }}
   </div>
   <div class="col-xl-3 col-sm-6 mb-3">
+
     <script type="text/javascript" src="https://files.coinmarketcap.com/static/widget/currency.js"></script><div class="coinmarketcap-currency-widget" data-currency="zclassic" data-base="USD" data-secondary="BTC" data-ticker="true" data-rank="true" data-marketcap="true" data-volume="true" data-stats="USD" data-statsticker="false"></div>
   </div>
 </div>
+
 
 <div class="row">
   <div class="col-md-12">
@@ -193,7 +196,9 @@ document.querySelector('main').appendChild(document.createElement('script')).src
 <script>
 $(document).ready(function() {
 
+
   if (!window.statsSource) { window.statsSource = new EventSource("/api/live_stats"); }
+
   statsSource.addEventListener('message', function (e) {
     var stats = JSON.parse(e.data);
     for (algo in stats.algos) {
@@ -221,7 +226,6 @@ $(document).ready(function() {
       if(pending != stats.pools[pool].blocks.pending){
         $("span#pendingBlocks").text(stats.pools[pool].blocks.pending);
       }
-
     }
   });
 });

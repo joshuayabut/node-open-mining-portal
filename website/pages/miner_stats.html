@@ -1,4 +1,5 @@
 <style>
+
 #topCharts{
   padding-left: 18px;
   padding-right: 18px;
@@ -92,13 +93,17 @@
 <div id="worker-error"></div>
 
 
+<div id="worker-error"></div>
+
 <div class="row fitsmall">
   <div class="col-md-12 col-sm-12">
     <div id="topCharts">
       <div class="chartWrapper">
         <div class="chartLabel">
           <!--<div style="float:left; padding-right: 18px;"><i class="fa fa-users"></i><span id="statsWorkers">...</span></div>-->
+
           <div style="float:left; margin-right: 9px;">{{!String(it.stats.address).split(".")[0]}}</div>
+
           <div style="float:right; padding-left: 18px;"><small><i class="fa fa-tachometer"></i> <span id="statsHashrateAvg">...</span> (Avg)</small></div>
           <div style="float:right; padding-left: 18px;"><small><i class="fa fa-tachometer"></i> <span id="statsHashrate">...</span> (Now)</small></div>
           <div style="float:right; padding-left: 18px;"><small><i class="fa fa-gavel"></i> Luck <span id="statsLuckDays">...</span> Days</small></div>
@@ -108,12 +113,15 @@
           <div style="float:right; padding-top: 9px; padding-right: 18px;"><i class="fa fa-cog"></i> Shares: <span id="statsTotalShares">...</span></div>
           <div style="float:left; padding-top: 9px; padding-left: 18px; padding-right: 18px;"><i class="fa fa-money"></i> Immature: <span id="statsTotalImmature">...</span></div>
           <div style="float:left; padding-top: 9px; padding-left: 18px; padding-right: 18px;display:none;"><i class="fa fa-money"></i> Bal: <span id="statsTotalBal">...</span> </div>
+
           <div style="padding-top: 9px; padding-left: 18px;"><i class="fa fa-money"></i> Paid: <span id="statsTotalPaid">...</span>  </div>
+
         </div>
       </div>
     </div>
   </div>
 </div>
+
 
 <div class="row">
   <div class="col-md-12 col-sm-12">
@@ -125,18 +133,22 @@
           <th>BTCP Total</th>
         </thead>
         <td><span id="ZCLMined">0</span> ZCL</td>
+
         <td><span id="BTCPTotal">0</span> BTCP</td></tr>
       </table>
     </div>
   </div>
+
 </div>
 
 <div id="boxesWorkers" class="text-center fitsmall">
 </div>
 
 <script>
+
 var _miner = "{{!String(it.stats.address).split(".")[0]}}";
 var _workerCount = 0;
 window.statsSource = new EventSource("/api/live_stats");
 document.querySelector('main').appendChild(document.createElement('script')).src = '/static/js/miner_stats.js';
+
 </script>

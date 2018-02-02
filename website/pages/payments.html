@@ -22,6 +22,7 @@ $(function () {
   });
 </script>
 
+
 <!-- Breadcrumbs-->
 <ol class="breadcrumb">
   <li class="breadcrumb-item">
@@ -29,6 +30,7 @@ $(function () {
   </li>
   <li class="breadcrumb-item active">Payments</li>
 </ol>
+
 {{ function readableDate(a){
 
   var date = new Date(parseInt(a));
@@ -72,7 +74,6 @@ $(function () {
   </tr>
   {{ } }}
 </table>
-
 <script>
 $(document).ready(function() {
   $('#paymentTable').DataTable({
