@@ -45,9 +45,7 @@ header > .home-menu > ul > li > a:hover, header > .home-menu > ul > li.pure-menu
 }
 
 main{
-    padding: 20px;
-
-    background-color: white;
+    background-color: #ebf4fa;
     position: relative;
 }
 
