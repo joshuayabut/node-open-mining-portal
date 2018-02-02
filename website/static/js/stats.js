@@ -18,7 +18,7 @@ function buildChartData(){
     }
 
     for (var i = 0; i < statData.length; i++) {
-        var time = statData[i].time * 1000;
+        var time = statData[i].time * 60000;
 		for (var f = 0; f < poolKeys.length; f++){
             var pName = poolKeys[f];
             var a = pools[pName] = (pools[pName] || {

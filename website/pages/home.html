@@ -72,7 +72,7 @@
     }
 
 </style>
-    
+
 <!-- 	<div class="row">
 	<div class="col-md-12 col-xs-12" style="font-size: 12px;">
 <div class="alert alert-primary alert-dismissable" role="alert">
@@ -81,19 +81,24 @@
 </div>  -->
 
       <!-- Icon Cards-->
-<div class="alert alert-warning" role="alert">
+      <div class="alert alert-warning" role="alert">
 
-<h4 class="alert-heading"> Dear Miners:</h4>
-Thank you for your involvement in our donation program; it means alot to us!<br /><br />
+      <h4 class="alert-heading"> Dear Miners:</h4>
 
-We know that some users are unable to see mining stats for their address. This is normal, as we are experiencing some general trouble with the znomp platform. Rest be assured, your mining progress has been saved - we checked!<br /><br />
+      We have switched to an auction system, you can read more about it <a href="https://redd.it/7txoej" target="_blank"> Here</a><br /><br />
 
-Mine along,<br>
-The Bitcoin Private &amp; Zclassic Team
-</div>
+      ATTENTION MINERS: The stats on the website were only showing our first 100 blocks, so as you were continuing to mine your ZCL amount decreses, it was not really decreasing as we have the numbers in the database,
+      the front end stats were just not displaying correctly. ****UPDATE**** This issue has been resolved.<br /><br />
+
+      Also, We have changed the pool payout type to PPLNT! <br /><br />
+
+      Mine along,<br />
+      The Bitcoin Private &amp; Zclassic Team
+      </div>
+
       <div class="row">
 	  <div class="col-xl-3 col-sm-6 mb-3 text-center">
-	  
+
 		<ul class="list-group text-justify">
 		  <li class="list-group-item"><b>Donation Pool Info</b></li>
 
@@ -101,7 +106,7 @@ The Bitcoin Private &amp; Zclassic Team
     <span style="font-size:13px; width:100%;"><i class="fa fa-fw fa-money"></i>&nbsp;100% Donation To ZCL Treasury Until 50,000 ZCL Reached</span>
   </li>
   <li class="list-group-item d-flex justify-content-between align-items-center">
-    <span style="font-size:13px; width:100%;"><i class="fa fa-fw fa-tachometer"></i>&nbsp;1.25 Bitcoin Private Reward Per ZCL Mined</span>
+    <span style="font-size:13px; width:100%;"><i class="fa fa-fw fa-gavel"></i>&nbsp;<a href="https://redd.it/7txoej" target="_blank">Auction Style Payout</a></span>
   </li>
     <li class="list-group-item d-flex justify-content-between align-items-center">
     <span style="font-size:13px; width:100%;"><i class="fa fa-fw fa-flash"></i>&nbsp;View Your BTCP Total In Your Miner Page</span>
@@ -109,8 +114,8 @@ The Bitcoin Private &amp; Zclassic Team
     <li class="list-group-item d-flex justify-content-between align-items-center">
     <span style="font-size:13px; width:100%;"><i class="fa fa-fw fa-exchange"></i><b>&nbsp;BTCP Payout Will Be <span style="text-decoration:underline">After</span> The Fork</b></span>
   </li>
-</ul>  
-      </div>	  
+</ul>
+      </div>
         <div class="col-xl-3 col-sm-6 mb-3">
 		{{ function capitalizeFirstLetter(t){return t.charAt(0).toUpperCase()+t.slice(1)} }}
 
@@ -122,7 +127,7 @@ The Bitcoin Private &amp; Zclassic Team
     <span class="badge badge-primary badge-pill" id="statsMiners{{=pool}}">{{=it.stats.pools[pool].minerCount}} Miners / {{=it.stats.pools[pool].workerCount}} Workers</span>
   </li>
         <li class="list-group-item d-flex justify-content-between align-items-center">
-    <span style="font-size:13px"><i class="fa fa-fw fa-cubes"></i>&nbsp;Total Blocks Mined (Pending)</span>
+    <span style="font-size:13px"><i class="fa fa-fw fa-cubes"></i>&nbsp;Total Confirmed Blocks Mined (Pending)</span>
     <span class="badge badge-primary badge-pill" id="statsBlocksConfirmed{{=pool}}"><span id="confirmedBlocks">{{=it.stats.pools[pool].blocks.confirmed}}</span> Blocks (<span id="pendingBlocks">{{=it.stats.pools[pool].blocks.pending}}</span>)</span>
   </li>
   <li class="list-group-item d-flex justify-content-between align-items-center">
@@ -133,7 +138,7 @@ The Bitcoin Private &amp; Zclassic Team
     <span style="font-size:13px"><i class="fa fa-fw fa-flash"></i>&nbsp;Luck</span>
     <span class="badge badge-primary badge-pill" id="statsLuckDays{{=pool}}">{{=it.stats.pools[pool].luckDays}} Days</span>
   </li>
-</ul>  
+</ul>
       </div>
         <div class="col-xl-3 col-sm-6 mb-3">
 		<ul class="list-group">
@@ -152,23 +157,24 @@ The Bitcoin Private &amp; Zclassic Team
 	<span class="badge badge-primary badge-pill" id="statsNetworkDiff{{=pool}}">{{=(parseFloat(it.stats.pools[pool].poolStats.networkDiff)).toFixed(0)}}</span>
   </li>
       <li class="list-group-item d-flex justify-content-between align-items-center">
-    <span style="font-size:13px"><i class="fa fa-users"></i>&nbsp; Node Connections:</span> 
+    <span style="font-size:13px"><i class="fa fa-users"></i>&nbsp; Node Connections:</span>
 	<span class="badge badge-primary badge-pill" id="statsNetworkConnections{{=pool}}">{{=it.stats.pools[pool].poolStats.networkConnections}}</span>
   </li>
-</ul>  
+</ul>
 {{ } }}
       </div>
 	  	  	  	          <div class="col-xl-3 col-sm-6 mb-3">
 
 			  	  <script type="text/javascript" src="https://files.coinmarketcap.com/static/widget/currency.js"></script><div class="coinmarketcap-currency-widget" data-currency="zclassic" data-base="USD" data-secondary="BTC" data-ticker="true" data-rank="true" data-marketcap="true" data-volume="true" data-stats="USD" data-statsticker="false"></div>
 			  </div>
-                
-          </div>	  
+
+          </div>
 		 <div class="row">
 			<div class="col-md-12">
 			            <div class="card mb-3">
                 <div class="card-header">
-                    <i class="fa fa-area-chart"></i>&nbsp;Donation Progress&nbsp;<span class="badge badge-primary badge-pill" id="statsCompletion{{=pool}}">{{=it.stats.pools[pool].blocks.confirmed}} of 4000 Blocks ({{=it.stats.pools[pool].blocks.confirmed/4000}}%)</span>&nbsp;<span class="badge badge-primary badge-pill" id="statsCompletionPercentage{{=pool}}" style="float:right">Estimated Days Until Completion: {{=(it.stats.pools[pool].luckDays * (4000-it.stats.pools[pool].blocks.confirmed)).toFixed(2)}} Days</span>
+                    <i class="fa fa-area-chart"></i>&nbsp;Donation Progress&nbsp;<span class="badge badge-primary badge-pill" id="statsCompletion{{=pool}}">{{=it.stats.pools[pool].blocks.confirmed}} of 4000 Blocks ({{=((it.stats.pools[pool].blocks.confirmed/4000)*100).toFixed(2)}}%)</span>
+                    &nbsp;<span class="badge badge-primary badge-pill" id="statsCompletionPercentage{{=pool}}" style="float:right">Donation End date, February 25th 2018.</span>
 
                 </div>
                 <div class="card-body">
@@ -216,25 +222,25 @@ The Bitcoin Private &amp; Zclassic Team
             for (var pool in stats.pools) {
                 $('#statsMiners' + pool).text(stats.pools[pool].minerCount + " Miners / " + stats.pools[pool].workerCount + " Workers");
                 $('span#statsHashrate' + pool).text(stats.pools[pool].hashrateString);
-				
+
 				var confirmedBlocks = stats.pools[pool].blocks.confirmed;
 				var percentage = ((confirmedBlocks/4000) * 100).toFixed(2);
 				var daysUntilCompletion = (stats.pools[pool].luckDays * (4000 - confirmedBlocks)).toFixed(2);
-				
+
 				$('span#statsCompletion' + pool).text(confirmedBlocks + " of 4000 Blocks (" + percentage + "%)");
-				$('span#statsCompletionPercentage' + pool).text("Estimated Days Until Completion: " + daysUntilCompletion + " Days")
-				
-				
+				$('span#statsCompletionPercentage' + pool).text("Donation End date, Feburary 25th 2018.")
+
+
 								var confirmed = $("span#confirmedBlocks").text();
 				var pending = $("span#pendingBlocks").text();
-				
+
 				if(confirmed != stats.pools[pool].blocks.confirmed){
 					$("span#confirmedBlocks").text(stats.pools[pool].blocks.confirmed);
 				}
 								if(pending != stats.pools[pool].blocks.pending){
 					$("span#pendingBlocks").text(stats.pools[pool].blocks.pending);
 				}
-			
+
             }
         });
     });

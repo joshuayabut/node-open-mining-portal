@@ -54,6 +54,12 @@
                         <span class="nav-link-text">Connection Information</span>
                     </a>
         </li>
+<!--                 <li class="nav-item {{? it.selected === 'contributions' }}active{{?}}"  title="contributions">
+                    <a class="nav-link" href="/contributions">
+                        <i class="fa fa-fw fa-area-chart"></i>
+                        <span class="nav-link-text">All Contributions</span>
+                    </a>
+                </li> -->
         <li class="nav-item {{? it.selected === 'stats' }}active{{?}}" title="Graph Stats">
           <a class="nav-link" href="/stats">
                         <i class="fa fa-fw fa-area-chart"></i>
@@ -72,12 +78,7 @@
                         <span class="nav-link-text">Worker Stats</span>
                     </a>
         </li>
-        <li class="nav-item {{? it.selected === 'payments' }}active{{?}}" title="Payments">
-          <a class="nav-link" href="/payments">
-                        <i class="fa fa-fw fa-money"></i>
-                        <span class="nav-link-text">Payments</span>
-                    </a>
-        </li>
+
         <li class="nav-item" title="FAQ">
           <a class="nav-link" href="/faq">
                         <i class="fa fa-fw fa-question-circle"></i>
@@ -88,6 +89,12 @@
           <a class="nav-link" href="http://www.discord.gg/RNenQfx" target="_blank">
                         <i class="fa fa-fw fa-life-ring"></i>
                         <span class="nav-link-text">Support</span>
+                    </a>
+        </li>
+        <li class="nav-item {{? it.selected === 'payments' }}active{{?}}" title="Payments">
+          <a class="nav-link" href="/payments">
+                        <i class="fa fa-fw fa-money"></i>
+                        <span class="nav-link-text">Payments</span>
                     </a>
         </li>
         <li class="nav-item {{? it.selected === 'api' }}active{{?}}" title="API">
@@ -213,7 +220,7 @@
             </button>
             </div>
             <div class="modal-body text-center">
-              <h6>You can donate directly to the ZClassic donation address</h6> ZClassic: <b>t1gsePJZ6ojJYygj3PWMGJfojPUoMd5AVfU</b>
+              See <a href="https://redd.it/7txoej" target="_blank"> Here</a> for auction information.
             </div>
           </div>
         </div>
@@ -270,10 +277,7 @@
 
                   <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
                     <div class="card-body">
-                      <p>The Parties further acknowledge that in consideration for the contributions of the ZClassic Miners, each participating miner will receive 1.25 BTCP for each ZCL coin contributed and deposited into the Fund (the “Miner Reward”). The
-                        Miner Reward will be issued to the contributing ZClassic Miners, after the Fork Date, for each ZCL contributed to the Fund up to 50,000 ZCL or the aggregate amount of ZCL contributed by ZClassic Miners on the eve prior to the Fork
-                        Date, whichever event takes place sooner. The BTCP blockchain developers have developed a protocol on the blockchain that will code the fork such that these Miner Rewards are generated on the Fork Date and sent directly to the
-                        ZClassic Miners who contributed to the Fund pursuant to this Agreement.</p>
+                      <p>The Parties further acknowledge that in consideration for the contributions of the ZClassic Miners, each participating miner will receive a minimum of 1.25 BTCP for each ZCL coin contributed and deposited into the Fund (the “Miner Reward”). The Miner Reward will be issued to the contributing ZClassic Miners, after the Fork Date, for each ZCL contributed to the Fund up to 50,000 ZCL or the aggregate amount of ZCL contributed by ZClassic Miners on the eve prior to the Fork Date, whichever event takes place sooner. The BTCP blockchain developers have developed a protocol on the blockchain that will code the fork such that these Miner Rewards are generated on the Fork Date and sent directly to the ZClassic Miners who contributed to the Fund pursuant to this Agreement.</p>
                     </div>
                   </div>
                 </div>
@@ -552,6 +556,19 @@
       var miner = block[3];
       var date = (new Date(parseInt(block[4]))).toLocaleString();
       var storedBlock = localStorage.vmlastBlockStored;
+	  
+	        function BlockNotify() {
+        Lobibox.notify('success', {
+          size: 'large',
+          iconSource: "fontAwesome",
+          icon: "fa fa-cube",
+          soundPath: '/static/sounds/',
+          title: 'Block Found!',
+          delay: false,
+          msg: '<b>Block:</b><span style="float:right">' + date + '</span><br>' + blockNum + '<br><b>Miner:</b><br>' + miner,
+          sound: 'coinDrop'
+        });
+	  
       if (!storedBlock) {
         localStorage.vmlastBlockStored = blockNum;
         storedBlock = blockNum;
@@ -561,21 +578,10 @@
         localStorage.vmlastBlockStored = blockNum;
       }
 
-      function BlockNotify() {
-        Lobibox.notify('success', {
-          size: 'large',
-          iconSource: "fontAwesome",
-          icon: "fa fa-cube",
-          soundPath: '/static/sounds/',
-          title: 'Block Found!',
-          delay: false,
-          msg: '<b>Block:</b><span style="float:right">' + date + '</span><br>' + blockNum + '<br><b>Miner:</b><br>' + miner,
-          sound: 'newblock'
-        });
+
       }
 
 
     });
   });
 </script>
-

@@ -15,10 +15,10 @@ var Stratum = require('stratum-pool');
 var util = require('stratum-pool/lib/util.js');
 
 
-const level = require('level')
+const level = require('level');
 
 // Create our database for IPs and Dates
-var db = level('../masf-entries-db')
+var db = level('../masf-entries-db');
 
 var api = require('./api.js');
 
@@ -279,7 +279,7 @@ module.exports = function(logger){
     var route = function(req, res, next){
         var pageId = req.params.page || '';
         if (pageId === '') {
-          var ip = req.headers['cf-connecting-ip'];
+          var ip = req.headers['cf-connecting-ip'] || '';
           console.log('User connected - ', ip);
           // See if ip already logged; only log once
           db.get(ip, function (err, value) {

@@ -17,7 +17,7 @@
         text-align: center;
         padding: 4px;
     }
-	
+
 	#boxesLower {
         margin: 0 9px;
     }
@@ -81,7 +81,7 @@
     #tooltip.hidden {
         opacity: 0;
     }
-	
+
 	.center-justified {
     text-align: justify;
     -moz-text-align-last: center;
@@ -90,8 +90,8 @@
 
 .rowpadding {
 	padding-bottom: 15px;
-	
-	
+
+
 }
 </style>
 	            <!-- Breadcrumbs-->
@@ -113,13 +113,13 @@
 </div>
 <div class="row rowpadding">
 {{ function capitalizeFirstLetter(t){return t.charAt(0).toUpperCase()+t.slice(1)} }}
-{{ function readableDate(a){ 
-	
+{{ function readableDate(a){
+
 	var date = new Date(parseInt(a));
-	var options = {  
-    weekday: "long", year: "numeric", month: "short",  
-    day: "numeric", hour: "2-digit", minute: "2-digit"  
-};  
+	var options = {
+    weekday: "long", year: "numeric", month: "short",
+    day: "numeric", hour: "2-digit", minute: "2-digit"
+};
 	return date.toLocaleTimeString("en-us", options);
 
 } }}
@@ -170,14 +170,14 @@
 <table class="table table-small text-center h6">
 <tr>
 	<td colspan="2" class="h5 text-center">{{=capitalizeFirstLetter(it.stats.pools[pool].name)}} Blocks Found</td></tr>
-		
-            <tr><td style="width:50%"><i class="fa fa-cubes"></i> <span id="statsValidBlocks{{=pool}}">{{=it.stats.pools[pool].poolStats.validBlocks}} Blocks</span> </td>
+
+            <tr><td style="width:50%"><i class="fa fa-cubes"></i> <span id="statsValidBlocks{{=pool}}">{{=it.stats.pools[pool].poolStats.validBlocks}} Blocks Found<br />(Total - includes orphaned and pending)</span> </td>
 			<td style="width:50%"><i class="fa fa-money"></i> Paid: <span id="statsTotalPaid{{=pool}}">{{=(parseFloat(it.stats.pools[pool].poolStats.totalPaid)).toFixed(2)}} {{=it.stats.pools[pool].symbol}}</span> </small></td>
 			</tr>
 			</table>
 </div>
 <div class="row">
-<table id="blocksTable" class="table table-small table-hover text-center fitsmall"> 
+<table id="blocksTable" class="table table-small table-hover text-center fitsmall">
 	<thead style="text-align:center">
 	<th>Block</th>
 	<th class="d-none d-sm-block">Date Mined</th>
@@ -213,7 +213,7 @@
 					    <span style="font-weight:bold;color:red;">*PENDING*</span>
 					{{ } }}
 					</td></tr>
-			
+
         {{ blockscomb.push(block);}}
 			{{ } }}
 			{{ var i=0; for(var b in it.stats.pools[pool].confirmed.blocks) { }}
@@ -227,14 +227,14 @@
 						<a href="https://zcl-explorer.com/insight/block/{{=block[0]}}" target="_blank">{{=block[2]}}</a>
 					{{ } else { }}
 						{{=block[2]}}
-					{{ } }} 
+					{{ } }}
 					{{if (block[4] != null) { }}</td>
 					<td class="d-none d-sm-block">{{=readableDate(block[4])}}</td>
 					{{ } }}
-					
+
 					<td><a class="ellipsis" href="/workers/{{!block[3].split('.')[0]}}">{{!block[3]}}</a></td>
 					<td><span style="font-weight:bold;color:green;">*PAID*</span></td></tr>
-					
+
         {{blockscomb.push(block);}}
 			{{ } }}
 			{{ } }}
@@ -243,7 +243,7 @@
       <script>
       var blockscomb = ({{=JSON.stringify(blockscomb)}})
       </script>
-			
+
 {{ } }}
 </div>
 <script>

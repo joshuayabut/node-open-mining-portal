@@ -69,10 +69,13 @@
 			<table id="coinInfo" class="table hover">
 				<thead>
 				<th>Miner Type</th>
+				<th>Difficulty</th>
 				<th>Username</th>
 				<th>Password</th>
 				<th>Host</th>
 				</thead>
+				<tbody id="gs_tbody">
+				</tbody>
 			</table>
 		</p>
 		</div>
@@ -255,9 +258,15 @@ CUDA 6 devices:
 
     function showCoinConfig(info){
 
-        var htmlKeys = '';
+        var htmlKeys;
+		var ssl;
 		var i = 0;
 			for (var port in info.ports) {
+			if(port == 3053){
+				ssl = " <b>(SSL)</b>";
+			} else {
+				ssl = ""
+			}
 			i++;
 		var diff = info.ports[port].diff;
 		if (diff < 0.1) {
@@ -270,12 +279,25 @@ CUDA 6 devices:
 			var device = 'Nicehash';
 		}
 		if($('#coinInfo #coinInfoRow').length < i){
-		$('#coinInfo tr:last').after('<tr id="coinInfoRow"><td>' + device + '</td><td>{{=pool}}-wallet-address</td><td>x</td><td>' + '<b>' + info.host + ':' + port + '</b></td></tr>');
+		htmlKeys += '<tr id="coinInfoRow"><td>' + device + ssl + '</td><td>'+ diff * 8192 +'<td>{{=pool}}-wallet-address</td><td>x</td><td>' + '<b>' + info.host + ':' + port + '</b></td></tr>';
 		}
 	}
 	
+	$("#gs_tbody").html(htmlKeys)
+	
+	$("#coinInfo").dataTable({
+		"order": [[1, "asc"]],
+		"paging":   false,
+        "ordering": true,
+        "info":     false,
+		"searching": false
+	});
+	
     }
 	$(document).ready(function(){
+	
+	
+	
   $('.poolOption').trigger('click');
 });
 

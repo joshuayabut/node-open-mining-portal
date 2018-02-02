@@ -41,52 +41,45 @@
     </div>
 {{ } }}
 <script>
-$(document).ready(function() {
-  $('#workers').DataTable();
-});
-</script>
-<script>
-function format(data) {
-	var units = data.replace(/[\d\.]/g, '').toLowerCase();
-	var multiplier = 1;
-	if (units === ' sol/s') {
-		multiplier = 1;
-	} else if (units === ' ksol/s') {
-		multiplier = 1000;
+function formatHashrate(data) {
+    var units = data.replace(/[\d\.]/g, '').toLowerCase();
+    var multiplier = 1;
+    if (units === ' sol/s' || units === ' Sol/s') {
+        multiplier = 1;
+    } else if (units === ' ksol/s' || units === ' KSol/s') {
+        multiplier = 1000;
+    } else {
+		multiplier = 100000;
 	}
-	return parseFloat(data) * multiplier;
+    return parseFloat(data) * multiplier;
 }
-function formatNumber(number, decimals) {
-	if (!decimals) {
-		decimals = 2;
-	}
-	return parseFloat(number).toFixed(decimals).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-}
-$(document).ready(function () {
-	$.extend($.fn.dataTable.ext.type.order, {
-		'sol-asc': function (a, b) {
-			a = format(a);
-			b = format(b);
-			return ((a < b) ? -1 : ((a > b) ? 1 : 0));
-		},
-		'sol-desc': function (a, b) {
-			a = format(a);
-			b = format(b);
-			return ((a < b) ? 1 : ((a > b) ? -1 : 0));
-		}
-	});
-	});
+    var dataTableConfigs = {
+        autoWidth: false,
+        order: [],
+        pageLength: 25,
+        responsive: true,
+        stateSave: false,
+        columnDefs: [{
+            'type': 'sol',
+            'targets': -1
+        }]
+    }
 	
-	$('table').DataTable({
-		autoWidth: false,
-		order: [],
-		pageLength: 25,
-		responsive: true,
-		stateSave: true,
-		columnDefs: [{
-				'type': 'sol',
-				'targets': -1
-			}
-		]
+	    $('#workers').DataTable(dataTableConfigs);
+		
+		$(document).ready(function() {
+    $.extend($.fn.dataTable.ext.type.order, {
+        'sol-asc': function(a, b) {
+            a = formatHashrate(a);
+            b = formatHashrate(b);
+            return ((a < b) ? -1 : ((a > b) ? 1 : 0));
+        },
+        'sol-desc': function(a, b) {
+            a = formatHashrate(a);
+            b = formatHashrate(b);
+            return ((a < b) ? 1 : ((a > b) ? -1 : 0));
+        }
+    });
 	});
+
 </script>

@@ -2,7 +2,6 @@ var workerHashrateData;
 var workerHashrateChart;
 var workerHistoryMax = 160;
 var statData;
-var poolData;
 var totalHash;
 var totalImmature;
 var totalBal;
@@ -10,6 +9,7 @@ var totalPaid;
 var totalShares;
 
 var globalStats;
+var workerPaymentJson;
 
 function getReadableHashRateString(hashrate) {
     hashrate = (hashrate * 2);
@@ -162,9 +162,17 @@ function updateStats() {
     $("#statsHashrateAvg").text(getReadableHashRateString(calculateAverageHashrate(null)));
     $("#statsLuckDays").text(luckDays);
     $("#statsTotalImmature").text(totalImmature);
-    $("#statsTotalBal").text(totalBal);
-    $("#statsTotalPaid").text(totalPaid);
-    var totalShares = statData.totalShares;
+    //$("#statsTotalBal").text(totalBal);
+    //$("#statsTotalPaid").text(totalPaid);
+	
+	var totalShares = statData.totalShares;
+	
+	if(totalShares === 0){
+	for(var x in statData.workers){
+		totalShares += statData.workers[x].currRoundShares;
+	}
+}
+    
     var estimatedCoins = 0;
     totalShares = totalShares.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     $("#statsTotalShares").text(totalShares);
@@ -183,8 +191,8 @@ function updateWorkerStats() {
         $("#statsHashrate" + htmlSafeWorkerName).text(getReadableHashRateString(statData.workers[w].hashrate));
         $("#statsHashrateAvg" + htmlSafeWorkerName).text(getReadableHashRateString(calculateAverageHashrate(saneWorkerName)));
         $("#statsLuckDays" + htmlSafeWorkerName).text(statData.workers[w].luckDays);
-        $("#statsPaid" + htmlSafeWorkerName).text(statData.workers[w].paid);
-        $("#statsBalance" + htmlSafeWorkerName).text(statData.workers[w].balance);
+        //$("#statsPaid" + htmlSafeWorkerName).text(statData.workers[w].paid);
+        //$("#statsBalance" + htmlSafeWorkerName).text(statData.workers[w].balance);
         $("#statsShares" + htmlSafeWorkerName).text(Math.round(statData.workers[w].currRoundShares * 100) / 100);
         $("#statsDiff" + htmlSafeWorkerName).text(statData.workers[w].diff);
     }
@@ -200,8 +208,9 @@ function addWorkerToDisplay(name, htmlSafeName, workerObj) {
     htmlToAdd += '<p><i class="fa fa-shield"></i> <small>Diff:</small> <span id="statsDiff' + htmlSafeName + '">' + workerObj.diff + '</span></p>';
     htmlToAdd += '<p><i class="fa fa-cog"></i> <small>Shares:</small> <span id="statsShares' + htmlSafeName + '">' + (Math.round(workerObj.currRoundShares * 100) / 100) + '</span></p>';
     htmlToAdd += '<p><i class="fa fa-gavel"></i> <small>Luck <span id="statsLuckDays' + htmlSafeName + '">' + workerObj.luckDays + '</span> Days</small></p>';
-    htmlToAdd += '<p><i class="fa fa-money"></i> <small>Bal: <span id="statsBalance' + htmlSafeName + '">' + workerObj.balance + '</span></small></p>';
-    htmlToAdd += '<p><i class="fa fa-money"></i> <small>Paid: <span id="statsPaid' + htmlSafeName + '">' + workerObj.paid + '</span></small></p></div></div></div>';
+    //htmlToAdd += '<p><i class="fa fa-money"></i> <small>Bal: <span id="statsBalance' + htmlSafeName + '">' + workerObj.balance + '</span></small></p>';
+    //htmlToAdd += '<p><i class="fa fa-money"></i> <small>Paid: <span id="statsPaid' + htmlSafeName + '">' + workerObj.paid + '</span></small></p>';
+	htmlToAdd += '</div></div></div>'
     return htmlToAdd;
 
 	
@@ -224,44 +233,102 @@ function toStandardizedDate(epoch) {
 }
 
 function paymentList() {
-		var x = 0
+
+	//Destory Datatables So New Information Can Be Populated
+	if($.fn.DataTable.isDataTable("#shareTable")){ $("#shareTable").DataTable().clear().destroy(); }
+	if($.fn.DataTable.isDataTable("#pendingBlocksTable")){ $("#pendingBlocksTable").DataTable().clear().destroy(); }
+	
+	//Pending Blocks Section
+	
+	var pendingHTML = "<h6>Pending Blocks</h6><table id='pendingBlocksTable' class='table table-bordered table-sm text-center datatable2'><thead style='background:#343a40;color:white'><tr><th>Block</th><th>Date Mined</th><th>Mined By</th><th>Status</th></tr></thead><tbody>"
+	
+	for(var i in workerPaymentJson){
+									for(var block in workerPaymentJson[i].pending.blocks){
+									if(!block){return}
+								var pendingBlockFinder = workerPaymentJson[i].pending.blocks[block].split(":")[3].split(".")[0]
+								var date = parseInt(workerPaymentJson[i].pending.blocks[block].split(":")[4]);
+								var txid = workerPaymentJson[i].pending.blocks[block].split(":")[1];
+								var blockid = workerPaymentJson[i].pending.blocks[block].split(":")[2];
+								var hex = workerPaymentJson[i].pending.blocks[block].split(":")[0];
+								var confirms = workerPaymentJson[i].pending.confirms[hex];
+								pendingHTML += '<tr><td><a href="https://zcl-explorer.com/insight/block/' + hex + '" target="_blank">' +  blockid + "</a></td><td>" + toStandardizedDate(date) + "</td><td>" + pendingBlockFinder + "</td><td><span style='color:red;'><i class='fa fa-spinner fa-spin'></i>&nbsp;" +  confirms + "</span></td></tr>";
+	}
+	}
+	
+				$("div#pendingBlocksDiv").html(pendingHTML);
+	
 		
-		$(function () {
-  $('[data-toggle="tooltip"]').tooltip({
-    container : 'body'
-  });
-});
+	
+	/////////////////////////
+	/////////////////////////
+	
+	//Confirms Blocks Section
+	
+		var x = 0
 
 var ZCLMined = 0;
-var totalShares = globalStats.pools.zclassic.poolStats.validShares;
-var minerShares = 0;
 
-var totalBlocks = globalStats.pools.zclassic.poolStats.validBlocks;
+var totalBlocks = globalStats.pools.zclassic.blocks.confirmed;
+var totalPaidOut = 0;
+var totalPoolPayout = totalBlocks * 12.5;
 
-var totalPaidOut = totalBlocks * 12.5;
+var html = "<h6>Block Share Breakdown</h6><table id='shareTable' class='table table-bordered table-sm text-center datatable'><thead style='background:#343a40;color:white'><tr><th>Block</th><th>Shares</th><th>Block Share %</th><th>ZCL Mined</th></tr></thead><tbody>"
 
-if(totalBlocks < 4000){
     for (var i in workerPaymentJson) {		
         for (var p in workerPaymentJson[i].payments) {
-						var blockWork = workerPaymentJson[i].payments[p].work[_miner];
-							if(blockWork){
-								minerShares += blockWork;
+			if(p > 4000){ return }
+			var totalMinerShares = workerPaymentJson[i].payments[p].shares;
+			var blockNum = workerPaymentJson[i].payments[p].blocks[0];
+			var blockWork = 0;
+					var blockWork = workerPaymentJson[i].payments[p].work[_miner];
+						if(blockWork){
+								html += "<tr><td>" +  blockNum + "</td><td>" + blockWork + "</td><td>" + (((blockWork/totalMinerShares)*100)).toFixed(2) + "</td><td>" +  (((blockWork / totalMinerShares) * 12.5)).toFixed(6) + "</td></tr>"
+								totalPaidOut += (blockWork / totalMinerShares) * 12.5;
 							}
         }
     }
 	
-	ZCLMined = ((minerShares/totalShares) * totalPaidOut).toFixed(4);
+	html += "</tbody></table>"
+	
+	var BTCPOwed = 62500 * (totalPaidOut/totalPoolPayout);
+
+	
+	ZCLMined = (totalPaidOut).toFixed(4);
 	if(!ZCLMined){
 		ZCLMined = 0;
 	}
 	
+	
+	$("div#shareTableDiv").html(html);
+	
+	
+
+				$('table.datatable').dataTable({
+				"order": [[0, "desc"]],
+				"pageLength": 5,
+				"bLengthChange": false,
+				"searching": false
+			});
+			
+							 $('table.datatable2').dataTable({
+				"order": [[0, "asc"]],
+				"pageLength": 5,
+				"bLengthChange": false,
+				"searching": false
+			});
+		
+		
+
+			
+$("span#BTCP20K").text((totalPaidOut * (62500/20000)).toFixed(4));
+$("span#BTCP30K").text((totalPaidOut * (62500/30000)).toFixed(4));
+$("span#BTCP40K").text((totalPaidOut * (62500/40000)).toFixed(4));
+$("span#BTCP50K").text((totalPaidOut * (62500/50000)).toFixed(4));
+$("span#ZCLPercent").text(((totalPaidOut/totalPoolPayout)*100).toFixed(2));	
 $("span#ZCLMined").text(ZCLMined);
-	$("span#BTCPTotal").text((ZCLMined * 1.25).toFixed(4));    
-} else {
-	$("span#ZCLMined").text("Goal Met. Payment Pending.");
-	$("span#BTCPTotal").text("Goal Met. Payment Pending.");    
-} 
+$("span#BTCPNow").text((BTCPOwed).toFixed(4));    
 }
+
 
 function rebuildWorkerDisplay() {
 	$("#boxesWorkers").html("");
@@ -315,18 +382,24 @@ $.getJSON('/api/worker_stats?' + _miner, function(data) {
 			globalStats = gStatsData;
 			workerPaymentJson = data;
 			paymentList();
+		
 		});
             
         });
 		
 				setInterval(function(){ 
-		paymentList(true);
-		}, 60000);	
+				        $.getJSON('/api/payments', function(data) {
+			
+			$.getJSON('/api/stats', function(gStatsData) {
+			globalStats = gStatsData;
+			workerPaymentJson = data;
+			paymentList();
 		
+		});
+            
+        });
+		}, 150000);	
 		
-
-		
-
 		
 		statsSource.addEventListener('message', function(e) {
     $.getJSON('/api/worker_stats?' + _miner, function(data) {
@@ -348,9 +421,6 @@ $.getJSON('/api/worker_stats?' + _miner, function(data) {
         if (!rebuilt) {
             updateWorkerStats();
         }
-    });
-    $.getJSON('/api/stats', function(data) {
-        poolData = data;
     });
 });
 
