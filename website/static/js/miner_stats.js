@@ -164,15 +164,15 @@ function updateStats() {
     $("#statsTotalImmature").text(totalImmature);
     //$("#statsTotalBal").text(totalBal);
     //$("#statsTotalPaid").text(totalPaid);
-	
+
 	var totalShares = statData.totalShares;
-	
+
 	if(totalShares === 0){
 	for(var x in statData.workers){
 		totalShares += statData.workers[x].currRoundShares;
 	}
 }
-    
+
     var estimatedCoins = 0;
     totalShares = totalShares.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     $("#statsTotalShares").text(totalShares);
@@ -200,8 +200,8 @@ function updateWorkerStats() {
 
 function addWorkerToDisplay(name, htmlSafeName, workerObj) {
 	var htmlToAdd = "";
-	 
-	
+
+
     htmlToAdd += '<div class="col-md-2"><div class="card"><div class="card-header h5" style="background:#343a40;color:white; font-size:14px">' + name + '</div><div class="card-block">';
     htmlToAdd += '<p><i class="fa fa-tachometer"></i> <span id="statsHashrate' + htmlSafeName + '">' + getReadableHashRateString(workerObj.hashrate) + '</span> (Now)</p>';
     htmlToAdd += '<p><i class="fa fa-tachometer"></i> <span id="statsHashrateAvg' + htmlSafeName + '">' + getReadableHashRateString(calculateAverageHashrate(name)) + '</span> (Avg)</p>';
@@ -213,7 +213,7 @@ function addWorkerToDisplay(name, htmlSafeName, workerObj) {
 	htmlToAdd += '</div></div></div>'
     return htmlToAdd;
 
-	
+
 }
 
 function objectLength(obj) {
@@ -237,11 +237,11 @@ function paymentList() {
 	//Destory Datatables So New Information Can Be Populated
 	if($.fn.DataTable.isDataTable("#shareTable")){ $("#shareTable").DataTable().clear().destroy(); }
 	if($.fn.DataTable.isDataTable("#pendingBlocksTable")){ $("#pendingBlocksTable").DataTable().clear().destroy(); }
-	
+
 	//Pending Blocks Section
-	
-	var pendingHTML = "<h6>Pending Blocks</h6><table id='pendingBlocksTable' class='table table-bordered table-sm text-center datatable2'><thead style='background:#343a40;color:white'><tr><th>Block</th><th>Date Mined</th><th>Mined By</th><th>Status</th></tr></thead><tbody>"
-	
+
+	var pendingHTML = "<h6 style='margin-bottom: 0px;'>Pending Blocks</h6><table id='pendingBlocksTable' class='table table-bordered table-sm text-center datatable2'><thead style='background:#343a40;color:white'><tr><th>Block</th><th>Date Mined</th><th>Mined By</th><th>Status</th></tr></thead><tbody>"
+
 	for(var i in workerPaymentJson){
 									for(var block in workerPaymentJson[i].pending.blocks){
 									if(!block){return}
@@ -254,16 +254,16 @@ function paymentList() {
 								pendingHTML += '<tr><td><a href="https://zcl-explorer.com/insight/block/' + hex + '" target="_blank">' +  blockid + "</a></td><td>" + toStandardizedDate(date) + "</td><td>" + pendingBlockFinder + "</td><td><span style='color:red;'><i class='fa fa-spinner fa-spin'></i>&nbsp;" +  confirms + "</span></td></tr>";
 	}
 	}
-	
+
 				$("div#pendingBlocksDiv").html(pendingHTML);
-	
-		
-	
+
+
+
 	/////////////////////////
 	/////////////////////////
-	
+
 	//Confirms Blocks Section
-	
+
 		var x = 0
 
 var ZCLMined = 0;
@@ -272,9 +272,9 @@ var totalBlocks = globalStats.pools.zclassic.blocks.confirmed;
 var totalPaidOut = 0;
 var totalPoolPayout = totalBlocks * 12.5;
 
-var html = "<h6>Block Share Breakdown</h6><table id='shareTable' class='table table-bordered table-sm text-center datatable'><thead style='background:#343a40;color:white'><tr><th>Block</th><th>Shares</th><th>Block Share %</th><th>ZCL Mined</th></tr></thead><tbody>"
+var html = "<h6 style='margin-bottom: 0px;'>Block Share Breakdown</h6><table id='shareTable' class='table table-bordered table-sm text-center datatable'><thead style='background:#343a40;color:white'><tr><th>Block</th><th>Shares</th><th>Block Share %</th><th>ZCL Mined</th></tr></thead><tbody>"
 
-    for (var i in workerPaymentJson) {		
+    for (var i in workerPaymentJson) {
         for (var p in workerPaymentJson[i].payments) {
 			if(p > 4000){ return }
 			var totalMinerShares = workerPaymentJson[i].payments[p].shares;
@@ -287,21 +287,21 @@ var html = "<h6>Block Share Breakdown</h6><table id='shareTable' class='table ta
 							}
         }
     }
-	
+
 	html += "</tbody></table>"
-	
+
 	var BTCPOwed = 62500 * (totalPaidOut/totalPoolPayout);
 
-	
+
 	ZCLMined = (totalPaidOut).toFixed(4);
 	if(!ZCLMined){
 		ZCLMined = 0;
 	}
-	
-	
+
+
 	$("div#shareTableDiv").html(html);
-	
-	
+
+
 
 				$('table.datatable').dataTable({
 				"order": [[0, "desc"]],
@@ -309,24 +309,24 @@ var html = "<h6>Block Share Breakdown</h6><table id='shareTable' class='table ta
 				"bLengthChange": false,
 				"searching": false
 			});
-			
+
 							 $('table.datatable2').dataTable({
 				"order": [[0, "asc"]],
 				"pageLength": 5,
 				"bLengthChange": false,
 				"searching": false
 			});
-		
-		
 
-			
+
+
+
 $("span#BTCP20K").text((totalPaidOut * (62500/20000)).toFixed(4));
 $("span#BTCP30K").text((totalPaidOut * (62500/30000)).toFixed(4));
 $("span#BTCP40K").text((totalPaidOut * (62500/40000)).toFixed(4));
 $("span#BTCP50K").text((totalPaidOut * (62500/50000)).toFixed(4));
-$("span#ZCLPercent").text(((totalPaidOut/totalPoolPayout)*100).toFixed(2));	
+$("span#ZCLPercent").text(((totalPaidOut/totalPoolPayout)*100).toFixed(2));
 $("span#ZCLMined").text(ZCLMined);
-$("span#BTCPNow").text((BTCPOwed).toFixed(4));    
+$("span#BTCPNow").text((BTCPOwed).toFixed(4));
 }
 
 
@@ -336,7 +336,7 @@ function rebuildWorkerDisplay() {
     var i = 0;
 	var rowcount = 0;
 	var totalCount = objectLength(statData.workers);
-	
+
     for (var w in statData.workers) {
         i++;
 		rowcount++;
@@ -355,8 +355,8 @@ function rebuildWorkerDisplay() {
 				rowcount = 0;
 			}
 		}
-		
-		
+
+
     }
 		$("#boxesWorkers").html($("#boxesWorkers").html()+html);
 
@@ -374,33 +374,33 @@ $.getJSON('/api/worker_stats?' + _miner, function(data) {
     updateStats();
 });
 
-		
-		
+
+
         $.getJSON('/api/payments', function(data) {
-			
+
 			$.getJSON('/api/stats', function(gStatsData) {
 			globalStats = gStatsData;
 			workerPaymentJson = data;
 			paymentList();
-		
+
 		});
-            
+
         });
-		
-				setInterval(function(){ 
+
+				setInterval(function(){
 				        $.getJSON('/api/payments', function(data) {
-			
+
 			$.getJSON('/api/stats', function(gStatsData) {
 			globalStats = gStatsData;
 			workerPaymentJson = data;
 			paymentList();
-		
+
 		});
-            
+
         });
-		}, 150000);	
-		
-		
+		}, 150000);
+
+
 		statsSource.addEventListener('message', function(e) {
     $.getJSON('/api/worker_stats?' + _miner, function(data) {
         statData = data;
@@ -423,4 +423,3 @@ $.getJSON('/api/worker_stats?' + _miner, function(data) {
         }
     });
 });
-

@@ -15,7 +15,7 @@
         border-radius: 5px;
         padding: 5px;
         margin-bottom: 18px;
-		
+
     }
     .chartLabel{
         font-size: 1.2em;
@@ -72,22 +72,16 @@
     .boxStatsList > div > div{
         padding: 3px;
     }
-	
+
 	#dropdown-menu > a > .fa{
     visibility:hidden;
 }
 	#dropdown-menu > a.selected > .fa{
     visibility:visible;
 }
-</style>	
+</style>
 
-	<!-- Breadcrumbs-->
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item">
-                    <a href="/">Home</a>
-                </li>
-                <li class="breadcrumb-item active">Dashboard</li>
-            </ol>
+
 			<div id="worker-error"></div>
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -104,7 +98,7 @@
 			<span class="form-inline my-2 my-lg-0 da-nav"><a href="#" class="da-nav" data-toggle="modal" data-target="#AddCoinModal" onclick="loadCoinDD();"><button type="button" class="btn btn-sm btn-outline-primary my-2 my-sm-0 da-nav"><i class="fa fa-fw fa-bitcoin"></i>Add Coin</button></a></span>
   </div>
 </nav>
-			
+
 	<div class="row">
 	<div class="col-md-12">
 	<ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
@@ -127,7 +121,7 @@
 
 			</div>
 
-			
+
 			    <!-- Add Rig Modal-->
     <div class="modal fade" id="AddRigModal" tabindex="-1" role="dialog" aria-labelledby="AddRigModalLabel" aria-hidden="true">
       <div class="modal-dialog dashboardmodal" role="document">
@@ -137,7 +131,7 @@
             <button class="close" type="button" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">x</span>
             </button>
-			
+
           </div>
           <div class="modal-body">
 		  			<div id="NoUrlProvided" class="alert alert-danger collapse" role="alert">No URL Provided</div>
@@ -165,7 +159,7 @@
         </div>
       </div>
     </div>
-	
+
 				    <!-- Add Address Modal-->
     <div class="modal fade" id="AddAddressModal" tabindex="-1" role="dialog" aria-labelledby="AddAddressModalLabel" aria-hidden="true">
       <div class="modal-dialog dashboardmodal" role="document">
@@ -188,7 +182,7 @@
       </div>
     </div>
 	</div>
-	
+
 				    <!-- Add Coin Modal-->
     <div class="modal fade" id="AddCoinModal" tabindex="-1" role="dialog" aria-labelledby="AddCoinModalLabel" aria-hidden="true">
       <div class="modal-dialog dashboardmodal" role="document">
@@ -216,7 +210,7 @@
   <input type="text" class="form-control" id="static-coin-quantity" aria-describedby="basic-addon3" placeholder="Enter Coin Amount">
 </div>
 		  </div>
-		  
+
 		  <div class="col-md-2">
 		  <div class="input-group input-group-sm">
  <select id="cmc-dropdown-menu" class="custom-select">
@@ -227,8 +221,8 @@
 		  <br/>
 		  <h6>Exchange Import</h6>
 		  <p style="font-weight: bold; text-decoration:underline">DO NOT enable trading for this key. Only read functionality.</p>
-		  
-		 
+
+
 		  		  <div class="row">
 		  <div class="col-md-5">
 		  <div class="input-group">
@@ -242,12 +236,12 @@
   <input type="text" class="form-control" id="exchange-secret" aria-describedby="basic-addon3" placeholder="Enter API Secret">
 </div>
 		  </div>
-		  
+
 		  <div class="col-md-2">
 		  <div class="input-group input-group-sm">
  <select id="supported-exchanges" class="custom-select">
  <option value="bittrex" selected>Bittrex</option>
- 
+
 </select>
 </div>
 </div>
