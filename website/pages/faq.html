@@ -1,12 +1,15 @@
 
 <div class="alert alert-warning" role="alert">
-  <strong> Dear Miners:</strong><br />
-  Thank you for your involvement in our donation program; it means alot to us!<br /><br />
 
-  We know that some users are unable to see mining stats for their address. This is normal, as we are experiencing some general trouble with the znomp platform. Rest be assured, your mining progress has been saved - we checked!<br /><br />
+<h4 class="alert-heading"> Dear Miners:</h4>
 
-  Mine along,<br>
-  The Bitcoin Private &amp; Zclassic Team
+We have switched to an auction system, you can read more about it <a href="https://redd.it/7txoej" target="_blank"> Here</a><br /><br />
+
+The amounts shown should be accurately reflected now, if it is still showing odd values there may be a browser or cloudflare cache issue, please try and use SHIFT + Refresh.<br /><br />
+
+Mine along,<br />
+The Bitcoin Private &amp; Zclassic Team
+
 </div>
 
 <div style="margin: 18px;">
@@ -15,19 +18,11 @@
   <br/>
   <div class="qa">
     <p class="q">
-      <b>Why do my stats not show how much ZCL I have currently mined?</b>
-    </p>
+
+      <b>Why Does my ZCL/BTCP Balance seem inaccurate for the time I have been mining?</b></p>
     <p class="q">
-      Currently the stats sections are being worked on to display proper values of BTCP for the amount of zcl that you have mined and donated. All work done in this pool is being saved into the database and the values on your stats pages will populate once
-      the code has been finalized to calculate your amount of BTCP earned based off of your shares mined x 1.25.
-    </p>
-    <p class="q">
-      <strong>Can I use a Z address to mine to this pool?</strong>
-    </p>
-    <p class="q">
-      No - You will need to use a transparent address for mining to the pool. Keep in mind this is how we will keep record of what you have mined and the amount of BTCP that you will get. You will need the private key to the address you mine with to receive your
-      BTCP after the fork.
-    </p>
+      The current blocks have to confirm fully ( After 100 Confirmations ) Then payments are processed and your balance will update accordingly. Please see the <a href="https://fund.zclassic.org/stats">Graph Stats</a> Page and look at current blocks found, blocks must be fully confirmed before payment processing occurs.</p>
+
     <p class="q">
       <strong>Can I use an exchange address to mine with?</strong>
     </p>
@@ -38,7 +33,21 @@
       <strong>Can I use an T (transparent) address from <a href="https://github.com/BTCP-community/electrum-zcl/releases/" target="_blank">Electrum</a> or <a href="https://github.com/michaelotis/eleos/releases" target="_blank">Eleos</a> to mine and receive my BTCP when the time comes?</strong>
     </p>
     <p class="q">
+
+      No - You will need to use an address that is in a wallet where you have control of the private key. Make sure you save this address and backup the private key, as you will need both to redeem your BTCP after the fork.
+    </p>
+    <p class="q">
+      <strong>Can I use an T (transparent) address from <a href="https://github.com/BTCP-community/electrum-zcl/releases/" target="_blank">Electrum</a> or <a href="https://github.com/michaelotis/eleos/releases" target="_blank">Eleos</a> to mine and receive my BTCP when the time comes?</strong>
+    </p>
+    <p class="q">
       <b>YES!</b> - Keep hold of your wallet files / seed words / private keys from our supported wallets. where you have control of the private key. Make sure you save this address and backup the private key, as you will need both to redeem your BTCP after the fork.
     </p>
+    <p class="q">
+      <strong>Why do I keep getting an Unauthorized or Authorization failed error message?</strong>
+    </p>
+    <p class="q">
+      You must to use a T address as the user in your mining program; you cannot use a Z address or an exchange address. Also make sure that the address is valid, as most authorization errors have been due to mistyping the address or case-sensitivity. Simply copy and paste whole T address for best results, and double-check your address. Your address can be in the format of ( T_address.workername ) for your miner.
+    </p>
+
   </div>
 </div>

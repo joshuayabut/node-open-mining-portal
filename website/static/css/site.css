@@ -10,6 +10,11 @@ body.sticky-footer {
   margin-bottom: 40px;
 }
 
+
+.form-control:focus {
+  border-color: #c17446 !important;
+  box-shadow: 0 0 0 0;
+}
 .card-title, .card-text, h5 {
   margin-bottom: 0px;
 }
@@ -32,7 +37,30 @@ body.sticky-footer {
 
 .badge {
   font-size: 100%;
+  font-weight: 500;
+}
 
+.donation-addr {
+  word-wrap: break-word;
+}
+
+.poolOption,
+.api-items li a  {
+  color: black;
+}
+
+.api-items li a {
+  font-weight: 500;
+}
+
+.api-items {
+    list-style: none;
+    padding-left: 10px;
+}
+
+.da-nav {
+
+	margin-right: 5px;
 }
 
 .badge-primary {
@@ -97,44 +125,45 @@ body.sticky-footer {
 }
 
 @media (min-width: 576px){
-  .fitSmall {
-    font-size: 11px;
-  }
+	.fitSmall {
+		font-size: 11px;
+	}
 
-  .dashboardmodal {
-    max-width:50%;
-  }
+	.dashboardmodal {
+	max-width:50%;
+}
 
-  #updatesDiv {
-    max-width:50%;
-    }}
+#updatesDiv {
+	max-width:50%;
+}}
 
-    @media only screen and (max-width: 575px)  {
-      .fitsmall {
-        font-size: 11px;
-      }
+@media only screen and (max-width: 575px)  {
+	.fitsmall {
+		font-size: 11px;
+	}
 
-      .da-nav {
-        width:100%;
-      }
+	.da-nav {
+		width:100%;
+	}
 
-      .ellipsis {
-        display:inline-block;
-        white-space: nowrap;
-        direction:rtl;
-        width:200px;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        -ms-text-overflow:ellipsis;
-      }
+.ellipsis {
+	display:inline-block;
+  white-space: nowrap;
+  direction:rtl;
+  width:200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -ms-text-overflow:ellipsis;
+}
 
-      .ellipsis-smaller {
-        display:inline-block;
-        white-space: nowrap;
-        direction:rtl;
-        width:175px;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        -ms-text-overflow:ellipsis;
-      }
-    }
+.ellipsis-smaller {
+	display:inline-block;
+  white-space: nowrap;
+  direction:rtl;
+  width:175px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -ms-text-overflow:ellipsis;
+}
+}
+

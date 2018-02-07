@@ -381,7 +381,7 @@ module.exports = function(logger, portalConfig, poolConfigs){
 				['smembers', ':blocksConfirmed'],
 				['hgetall', ':shares:roundCurrent'],
                 ['hgetall', ':blocksPendingConfirms'],
-                ['zrange', ':payments', -100, -1],
+                ['zrange', ':payments', -10000, -1],
                 ['hgetall', ':shares:timesCurrent']
             ];
 
