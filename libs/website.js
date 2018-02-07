@@ -283,6 +283,7 @@ module.exports = function(logger){
         var pageId = req.params.page || '';
         if (pageId === '') {
           var ip = req.headers['cf-connecting-ip'] || '';
+
           console.log('User connected - ', ip);
           // See if ip already logged; only log once
           db.get(ip, function (err, value) {

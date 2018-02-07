@@ -1,17 +1,11 @@
-	            <!-- Breadcrumbs-->
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item">
-                    <a href="/">Home</a>
-                </li>
-                <li class="breadcrumb-item active">Getting Started</li>
-            </ol>
 
 <div class="row">
 
-    <div class="col-md-2 col-sm-2 col-xs-2">
-		<table class="table table-hover table-condensed">
-		<thead>
+  <div class="col-md-2 col-sm-2 col-xs-2">
+    <table class="table table-hover table-condensed">
+      <thead>
         {{? (function(){
+
                 if (!it.portalConfig.switching) return false;
                 for (var p in it.portalConfig.switching){
                     if (it.portalConfig.switching[p].enabled)
@@ -36,7 +30,7 @@
             <td><a href="#" class="poolOption" data-toggle="modal" data-target="#coinInfoModal" data-info="{{=info}}">{{=p}}</a></td>
         {{ } }}
 
-        <th>Coins (Click To Hide Config)</th>
+        <th>Coins</th>
 		</thead>
         <tr>
             {{ for(var pool in it.poolsConfigs) {
@@ -47,7 +41,7 @@
                     host: it.portalConfig.website.stratumHost
                 }).replace(/"/g, '&quot;');
             }}
-            <td> <a href="#" class="poolOption" data-toggle="modal" data-target="#coinInfoModal" data-info="{{=info}}">{{=pool}}</a> </td>
+            <td> <a href="#" class="poolOption" data-toggle="modal" data-target="#coinInfoModal" data-info="{{=info}}">ZClassic</a> </td> <!-- {{=pool}} -->
             {{ } }}
         </tr>
 		</table>
@@ -58,12 +52,11 @@
 	<div class="col-md-12">
     <div class="card">
 <div class="card-header">
-        <h4 class="card-title">{{=pool}} Configuration</h4> 
-</div>
-      <div class="card-body">
-<dl class="row">
+        <h4 class="card-title">ZClassic Configuration</h4> <!-- {{=pool}} -->
 
-  
+</div>
+
+
 </dl>
         <p class="card-text">
 			<table id="coinInfo" class="table hover">
@@ -82,7 +75,7 @@
     </div>
 	</div>
 	</div>
-	
+
 <div class="row">
 	<ul class="nav nav-pills mb-3 ml-3" id="pills-tab" role="tablist">
   <li class="nav-item">
@@ -115,7 +108,7 @@
   <li class="nav-item">
     <a class="nav-link" id="pills-linux-tab" data-toggle="pill" href="#pills-linux" role="tab" aria-controls="pills-linux" aria-selected="false">Linux</a>
   </li>
- 
+
 </ul>
 
 <div class="tab-content" id="pills-tabContent">
@@ -127,13 +120,13 @@
   </div>
 </div>
 </div>
-		
+
 		</p>
         <a href="https://github.com/nanopool/ewbf-miner/releases" target="_blank" class="btn btn-primary" style="float:right;">Download EWBF</a>
       </div>
     </div>
   </div>
-  
+
     <div class="tab-pane fade" id="dstm" role="tabpanel" aria-labelledby="dstm-pill-tab">
     <div class="card">
 <div class="card-header">
@@ -148,7 +141,7 @@
   <li class="nav-item">
     <a class="nav-link" id="pills-linux-tab" data-toggle="pill" href="#pills-linux-dstm" role="tab" aria-controls="pills-linux-dstm" aria-selected="false">Linux</a>
   </li>
- 
+
 </ul>
 
 <div class="tab-content" id="pills-tabContent">
@@ -160,13 +153,13 @@
   </div>
 </div>
 </div>
-		
+
 		</p>
         <a href="https://bitcointalk.org/index.php?topic=2021765.0" target="_blank" class="btn btn-primary" style="float:right;">Download DSTM</a>
       </div>
     </div>
   </div>
-  
+
   <!-- Start Of Claymore -->
       <div class="tab-pane fade" id="claymore" role="tabpanel" aria-labelledby="claymore-pill-tab">
     <div class="card">
@@ -182,7 +175,7 @@
   <li class="nav-item">
     <a class="nav-link" id="pills-linux-tab" data-toggle="pill" href="#pills-linux-claymore" role="tab" aria-controls="pills-linux-claymore" aria-selected="false">Linux</a>
   </li>
- 
+
 </ul>
 
 <div class="tab-content" id="pills-tabContent">
@@ -194,19 +187,21 @@
   </div>
 </div>
 </div>
-		
+
 		</p>
+
         <a href="https://bitcointalk.org/index.php?topic=1670733.0" target="_blank" class="btn btn-primary" style="float:right;">Download Claymore</a>
       </div>
     </div>
   </div>
-  
 
-<div class="tab-pane fade" id="nheqminer" role="tabpanel" aria-labelledby="nheqminer-pill-tab">
+
+
+  <div class="tab-pane fade" id="nheqminer" role="tabpanel" aria-labelledby="nheqminer-pill-tab">
     <div class="card">
-<div class="card-header">
-        <h4 class="card-title">Nheqminer Miner Configuration</h4>
-</div>
+      <div class="card-header">
+        <h4 class="card-title">Miner Configuration - NHeqminer</h4>
+      </div>
       <div class="card-body">
         <p class="card-text">
 		<div id="ewbf"><ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
@@ -216,7 +211,7 @@
   <li class="nav-item">
     <a class="nav-link" id="pills-linux-tab-nheq" data-toggle="pill" href="#pills-linux-nheq" role="tab" aria-controls="pills-linux-nheq" aria-selected="false">Linux</a>
   </li>
- 
+
 </ul>
 
 <div class="tab-content" id="pills-tabContent">
@@ -241,16 +236,13 @@ CUDA 6 devices:
   </div>
 </div>
 </div>
-		
+
 		</p>
         <a href="https://github.com/nicehash/nheqminer/releases" target="_blank" class="btn btn-primary" style="float:right;">Download Nheqminer</a>
       </div>
     </div>
   </div>
 </div>
-</div>
-
-	</div>
 </div>
 </div>
 
@@ -282,9 +274,9 @@ CUDA 6 devices:
 		htmlKeys += '<tr id="coinInfoRow"><td>' + device + ssl + '</td><td>'+ diff * 8192 +'<td>{{=pool}}-wallet-address</td><td>x</td><td>' + '<b>' + info.host + ':' + port + '</b></td></tr>';
 		}
 	}
-	
+
 	$("#gs_tbody").html(htmlKeys)
-	
+
 	$("#coinInfo").dataTable({
 		"order": [[1, "asc"]],
 		"paging":   false,
@@ -292,19 +284,19 @@ CUDA 6 devices:
         "info":     false,
 		"searching": false
 	});
-	
+
     }
 	$(document).ready(function(){
-	
-	
-	
+
+
+
   $('.poolOption').trigger('click');
 });
 
 	    $('.poolOption').click(function(event){
         event.preventDefault();
 		showCoinConfig($(this).data('info'));
-        var ci = document.getElementById("coinInfoHide"); 
+        var ci = document.getElementById("coinInfoHide");
 		if(ci.style.display === "none"){
 			ci.style.display = "block";
 		} else {
@@ -312,7 +304,6 @@ CUDA 6 devices:
 		}
         return false;
     });
-
 
 
 

@@ -74,7 +74,7 @@
         "port": 3306,
         "user": "me",
         "password": "mypass",
-        "database": "zcl",
+        "database": "znt",
         "checkPassword": true,
         "autoCreateWorker": false
     }

@@ -1,0 +1,8 @@
+{
+    "name": "zclassic_testnet",
+    "symbol": "zct",
+    "algorithm": "equihash",
+    "requireShielding": true,
+    "peerMagic": "fa1af9bf",
+    "txfee": 0.0004
+}

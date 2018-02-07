@@ -1,17 +1,10 @@
-	            <!-- Breadcrumbs-->
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item">
-                    <a href="/">Home</a>
-                </li>
-                <li class="breadcrumb-item active">Worker Stats</li>
-            </ol>
 {{ function capitalizeFirstLetter(t){return t.charAt(0).toUpperCase()+t.slice(1)} }}
 {{ var i=0; for(var pool in it.stats.pools) { }}
 	<div class="row" style="margin-bottom:15px">
 		<div class="col-md-6">
 	            <h3>{{=capitalizeFirstLetter(it.stats.pools[pool].name)}} Top Miners</h3>
 				</div>
-				       <div class="col-md-6">				
+				       <div class="col-md-6">
 			<small style="float:right"><i class="fa fa-users"></i> <span id="statsMiners{{=pool}}">{{=it.stats.pools[pool].minerCount}}</span> Miners</small><br/>
 			<small style="float:right"><i class="fa fa-rocket"></i> <span id="statsWorkers{{=pool}}">{{=it.stats.pools[pool].workerCount}}</span> Workers</small><br/>
 			<small style="float:right"><i class="fa fa-cog"></i> <span id="statsWorkers{{=pool}}">{{=it.stats.pools[pool].shareCount}}</span> Shares</small>
@@ -31,16 +24,18 @@
                 {{ for(var worker in it.stats.pools[pool].miners) { }}
                    {{var workerstat = it.stats.pools[pool].miners[worker];}}
                     <tr class="pure-table-odd">
-                        <td><a class="ellipsis-smaller" href="/workers/{{!worker.split('.')[0]}}">{{!worker}}</a></td> 
+                        <td><a class="ellipsis-smaller" href="/workers/{{!worker.split('.')[0]}}">{{!worker}}</a></td>
                         <td>{{=Math.round(workerstat.currRoundShares * 100) / 100}}</td>
                         <td class="d-none d-sm-block">{{? workerstat.shares > 0}} {{=Math.floor(10000 * workerstat.shares / (workerstat.shares + workerstat.invalidshares)) / 100}}% {{??}} 0% {{?}}</td>
                         <td>{{=workerstat.hashrateString}}</td>
                     </tr>
-                {{ } }} 
+                {{ } }}
             </table>
     </div>
 {{ } }}
+
 <script>
+
 function formatHashrate(data) {
     var units = data.replace(/[\d\.]/g, '').toLowerCase();
     var multiplier = 1;
@@ -64,9 +59,9 @@ function formatHashrate(data) {
             'targets': -1
         }]
     }
-	
+
 	    $('#workers').DataTable(dataTableConfigs);
-		
+
 		$(document).ready(function() {
     $.extend($.fn.dataTable.ext.type.order, {
         'sol-asc': function(a, b) {
@@ -81,5 +76,4 @@ function formatHashrate(data) {
         }
     });
 	});
-
 </script>

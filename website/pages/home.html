@@ -69,7 +69,6 @@
         padding: 3px;
     }
 
-
 </style> <!-- <div class="row">''
 	<div class="col-md-12 col-xs-12" style="font-size: 12px;"> <div class="alert alert-primary alert-dismissable" role="alert">
 	<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a> <b>Thank you for everyone that participated in the block giveaway! [<a href="#" data-toggle="modal"
@@ -83,7 +82,6 @@ data-target="#giveawayModal">10 of 10 blocks found</a>]</b></div></div> </div> -
 
       <h6>Don't have a mining rig setup? Not a problem. Read here to see how you setup Nicehash online in under 10 minutes to mine ZCL. NO hardware setup required!
       More details on how to get started <a href="https://steemit.com/zclassic/@greensilver22/how-to-join-the-zcl-voluntary-miner-contribution-program-even-if-you-aren-t-a-miner" target="_blank">here.</a><br /><br /><h6>
-
 
       Mine along,<br />
       The Bitcoin Private &amp; Zclassic Team
@@ -163,6 +161,7 @@ id="statsCompletion{{=pool}}">{{=it.stats.pools[pool].blocks.confirmed}} of 4000
                 </div>
                 <div class="card-body">
 						<div class="progress">
+
   <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="{{=it.stats.pools[pool].blocks.confirmed}}" aria-valuemin="0" aria-valuemax="100"
 style="width: {{=(it.stats.pools[pool].blocks.confirmed/4000)*100}}%"></div> </div> </div>
                 </div>
@@ -172,12 +171,14 @@ style="width: {{=(it.stats.pools[pool].blocks.confirmed/4000)*100}}%"></div> </d
             <!-- Area Chart Example-->
             <div class="card mb-3">
                 <div class="card-header">
+
                     <i class="fa fa-area-chart"></i>Pool Hashrate&nbsp;<span class="badge badge-primary badge-pill" id="statsHashrate{{=pool}}">{{=it.stats.pools[pool].hashrateString}}</span>
                 </div>
                 <div class="card-body">
 					<div id="topCharts">
     <div class="chartWrapper">
         <div class="chartHolder"><svg id="poolHashrate"/></div>
+
     </div> </div>
                 </div>
             </div>
@@ -210,6 +211,7 @@ style="width: {{=(it.stats.pools[pool].blocks.confirmed/4000)*100}}%"></div> </d
             }
         });
     });
+
 </script>
 <script>
 

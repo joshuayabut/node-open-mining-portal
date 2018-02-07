@@ -1,8 +1,8 @@
-html, button, input, select, textarea, .pure-g [class *= "pure-u"], .pure-g-r [class *= "pure-u"]{
+html, button, input, select, textarea, .pure-g [class *= "pure-u"], .pure-g-r [class *= "pure-u"] {
     font-family: 'Open Sans', sans-serif;
 }
 
-html{
+html {
     background: #000;
     overflow-y: scroll;
 }
@@ -11,7 +11,7 @@ html{
     background-color: #000 !important;
 }
 
-body{
+body {
     display: flex;
     flex-direction: column;
     max-width: 1160px;
@@ -22,13 +22,13 @@ body{
     height: 100%;
 }
 
-header > .home-menu{
+header > .home-menu {
     background: inherit !important;
     height: 54px;
     display: flex;
 }
 
-header > .home-menu > a.pure-menu-heading, header > .home-menu > ul, header > .home-menu > ul > li{
+header > .home-menu > a.pure-menu-heading, header > .home-menu > ul, header > .home-menu > ul > li {
     display: flex !important;
     align-items: flex-end;
     margin-bottom: 5px;
@@ -36,29 +36,29 @@ header > .home-menu > a.pure-menu-heading, header > .home-menu > ul, header > .h
     line-height: normal !important;
 }
 
-header > .home-menu > a.pure-menu-heading{
+header > .home-menu > a.pure-menu-heading {
     color: white;
     font-size: 1.5em;
 }
 
-header > .home-menu > ul > li > a{
+header > .home-menu > ul > li > a {
     color: #ced4d9;
 }
 
-header > .home-menu > ul > li > a:hover, header > .home-menu > ul > li > a:focus{
+header > .home-menu > ul > li > a:hover, header > .home-menu > ul > li > a:focus {
     background: inherit !important;
 }
 
-header > .home-menu > ul > li > a:hover, header > .home-menu > ul > li.pure-menu-selected > a{
+header > .home-menu > ul > li > a:hover, header > .home-menu > ul > li.pure-menu-selected > a {
     color: white;
 }
 
-main{
+main {
     background-color: #ebf4fa;
     position: relative;
 }
 
-footer{
+footer {
     text-align: center;
     color: #b3b3b3;
     text-decoration: none;
@@ -67,11 +67,11 @@ footer{
     line-height: 24px;
 }
 
-footer a{
+footer a {
     color: #fff;
     text-decoration: none;
 }
 
-footer iframe{
+footer iframe {
     vertical-align: middle;
 }
