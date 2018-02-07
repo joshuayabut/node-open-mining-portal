@@ -9,7 +9,7 @@ var totalPaid;
 var totalShares;
 
 var globalStats;
-var workerPaymentJson;
+var pending;
 
 function getReadableHashRateString(hashrate) {
   hashrate = (hashrate * 2);
@@ -244,9 +244,6 @@ function addWorkerToDisplay(name, htmlSafeName, workerObj) {
     //htmlToAdd += '<p><i class="fa fa-money"></i> <small>Paid: <span id="statsPaid' + htmlSafeName + '">' + workerObj.paid + '</span></small></p>';
 	htmlToAdd += '</div></div></div>'
     return htmlToAdd;
-
-
-
 }
 
 function objectLength(obj) {
@@ -266,26 +263,31 @@ function toStandardizedDate(epoch) {
 }
 
 function paymentList() {
-	//Destory Datatables So New Information Can Be Populated
+
+ 	//Destory Datatables So New Information Can Be Populated
+
 	if($.fn.DataTable.isDataTable("#shareTable")){ $("#shareTable").DataTable().clear().destroy(); }
 	if($.fn.DataTable.isDataTable("#pendingBlocksTable")){ $("#pendingBlocksTable").DataTable().clear().destroy(); }
 
 	//Pending Blocks Section
 
-	var pendingHTML = "<h6 style='margin-bottom: 0px;'>Pending Blocks</h6><table id='pendingBlocksTable' class='table table-bordered table-sm text-center datatable2'><thead style='background:#343a40;color:white'><tr><th>Block</th><th>Date Mined</th><th>Mined By</th><th>Status</th></tr></thead><tbody>"
+	var pendingHTML = "<h6>Pending Blocks</h6><table id='pendingBlocksTable' class='table table-bordered table-sm text-center datatable2'><thead style='background:#343a40;color:white'><tr><th>Block</th><th>Date Mined</th><th class='d-none d-sm-block'>Mined By</th><th>Status</th></tr></thead><tbody>"
 
-	for(var i in workerPaymentJson){
-									for(var block in workerPaymentJson[i].pending.blocks){
-									if(!block){return}
-								var pendingBlockFinder = workerPaymentJson[i].pending.blocks[block].split(":")[3].split(".")[0]
-								var date = parseInt(workerPaymentJson[i].pending.blocks[block].split(":")[4]);
-								var txid = workerPaymentJson[i].pending.blocks[block].split(":")[1];
-								var blockid = workerPaymentJson[i].pending.blocks[block].split(":")[2];
-								var hex = workerPaymentJson[i].pending.blocks[block].split(":")[0];
-								var confirms = workerPaymentJson[i].pending.confirms[hex];
-								pendingHTML += '<tr><td><a href="https://zcl-explorer.com/insight/block/' + hex + '" target="_blank">' +  blockid + "</a></td><td>" + toStandardizedDate(date) + "</td><td>" + pendingBlockFinder + "</td><td><span style='color:red;'><i class='fa fa-spinner fa-spin'></i>&nbsp;" +  confirms + "</span></td></tr>";
+
+
+				for(var i in pending){
+					for(var block in pending[i].pending.blocks){
+						var getBlock = pending[i].pending.blocks[block];
+					var pendingBlockFinder = getBlock.split(":")[3].split(".")[0]
+					var date = parseInt(getBlock.split(":")[4]);
+					var txid = getBlock.split(":")[1];
+					var blockid = getBlock.split(":")[2];
+					var hex = getBlock.split(":")[0];
+					var confirms = pending[i].pending.confirms[hex];
+					pendingHTML += '<tr><td><a href="https://zcl-explorer.com/insight/block/' + hex + '" target="_blank">' +  blockid + "</a></td><td>" + toStandardizedDate(date) + "</td><td  class='d-none d-sm-block'><a href='/workers/" + pendingBlockFinder + "' target='_blank'>" + pendingBlockFinder + "</a></td><td><span style='color:red;'><i class='fa fa-spinner fa-spin'></i>&nbsp;" +  confirms + "</span></td></tr>";
 	}
-	}
+				}
+			
 
 				$("div#pendingBlocksDiv").html(pendingHTML);
 
@@ -300,35 +302,19 @@ function paymentList() {
 
 var ZCLMined = 0;
 
-var totalBlocks = globalStats.pools.zclassic.blocks.confirmed;
-var totalPaidOut = 0;
-var totalPoolPayout = totalBlocks * 12.5;
 
-var html = "<h6 style='margin-bottom: 0px;'>Block Share Breakdown</h6><table id='shareTable' class='table table-bordered table-sm text-center datatable'><thead style='background:#343a40;color:white'><tr><th>Block</th><th>Shares</th><th>Block Share %</th><th>ZCL Mined</th></tr></thead><tbody>"
+var html = "<h6>Block Share Breakdown</h6><table id='shareTable' class='table table-bordered table-sm text-center datatable'><thead style='background:#343a40;color:white'><tr><th>Block</th><th>Shares</th><th>Block Share %</th><th>ZCL Mined</th></tr></thead><tbody>"
 
-    for (var i in workerPaymentJson) {
-        for (var p in workerPaymentJson[i].payments) {
-			if(p > 4000){ return }
-			var totalMinerShares = workerPaymentJson[i].payments[p].shares;
-			var blockNum = workerPaymentJson[i].payments[p].blocks[0];
-			var blockWork = 0;
-					var blockWork = workerPaymentJson[i].payments[p].work[_miner];
-						if(blockWork){
-								html += "<tr><td>" +  blockNum + "</td><td>" + blockWork + "</td><td>" + (((blockWork/totalMinerShares)*100)).toFixed(2) + "</td><td>" +  (((blockWork / totalMinerShares) * 12.5)).toFixed(6) + "</td></tr>"
-								totalPaidOut += (blockWork / totalMinerShares) * 12.5;
-							}
-        }
-      }
-    }
-
-    ZCLMined = ((minerShares/totalShares) * totalPaidOut).toFixed(4);
-    if (!ZCLMined){
-      ZCLMined = 0;
-    }
-
+				for(var x in statData.minerShares){
+						var share = statData.minerShares[x];
+								html += "<tr><td>" +  share.blockNum + "</td><td>" + share.blockWork + "</td><td>" + (share.blockPercent).toFixed(2) + "</td><td>" +  (((share.blockPercent/100) * 12.5)).toFixed(6) + "</td></tr>"
+						}
 
 	html += "</tbody></table>"
 
+	var totalBlocks = globalStats.pools.zclassic.blocks.confirmed;
+	var totalPaidOut = statData.totalZCL;
+	var totalPoolPayout = totalBlocks * 12.5;
 	var BTCPOwed = 62500 * (totalPaidOut/totalPoolPayout);
 
 
@@ -338,9 +324,7 @@ var html = "<h6 style='margin-bottom: 0px;'>Block Share Breakdown</h6><table id=
 	}
 
 
-	$("div#shareTableDiv").html(html);
-
-
+ 	$("div#shareTableDiv").html(html);
 
 				$('table.datatable').dataTable({
 				"order": [[0, "desc"]],
@@ -395,9 +379,6 @@ function rebuildWorkerDisplay() {
 				rowcount = 0;
 			}
 		}
-
-
-
     }
   }
 
@@ -408,36 +389,16 @@ function rebuildWorkerDisplay() {
 nv.utils.windowResize(triggerChartUpdates);
 
 $.getJSON('/api/worker_stats?' + _miner, function(data) {
-  delete window.statData;
-  window.statData = data;
-  for (var w in statData.workers) {
-    _workerCount++;
-  }
-  buildChartData();
-  displayCharts();
-  rebuildWorkerDisplay();
-  updateStats();
-});
+				$.getJSON('/api/payments?pending', function(data) {
+			pending = data;
+				$.getJSON('/api/stats', function(gStatsData) {
+			globalStats = gStatsData;
+			paymentList();
+				});
+				});
 
-
-$.getJSON('/api/payments', function(data) {
-  $.getJSON('/api/stats', function(gStatsData) {
-    globalStats = gStatsData;
-    workerPaymentJson = data;
-    paymentList();
-  });
-});
-
-setInterval(function(){
-  paymentList(true);
-}, 60000);
-
-
-statsSource.addEventListener('message', function(e) {
-  $.getJSON('/api/worker_stats?' + _miner, function(data) {
-    statData = data;
-    var wc = 0;
-    var rebuilt = false;
+    delete window.statData;
+    window.statData = data;
     for (var w in statData.workers) {
       wc++;
     }
@@ -450,6 +411,13 @@ statsSource.addEventListener('message', function(e) {
     }
     rebuilt = (rebuilt || updateChartData());
     updateStats();
+
+
+});
+
+
+/* 		setInterval(function(){
+
     if (!rebuilt) {
       updateWorkerStats();
     }
@@ -484,7 +452,9 @@ statsSource.addEventListener('message', function(e) {
 
 
 		statsSource.addEventListener('message', function(e) {
+
     $.getJSON('/api/worker_stats?' + _miner, function(data) {
+
         statData = data;
         var wc = 0;
         var rebuilt = false;
@@ -503,6 +473,12 @@ statsSource.addEventListener('message', function(e) {
         if (!rebuilt) {
             updateWorkerStats();
         }
-    });
 
-});
+
+			$.getJSON('/api/stats', function(gStatsData) {
+			globalStats = gStatsData;
+			paymentList();
+				});
+    });
+},600000); */
+

@@ -118,6 +118,13 @@
 </div>
 </div>
 </div>
+
+<div class="alert alert-warning" role="alert">
+<h4 class="alert-heading"> Dear Miners:</h4>
+Your Earnings will not show until a block you have mined in gets more than 100 confirmations. The payment system triggers within 10 minutes after 100 confirmations for each block, your page will then show the added amount you were paid for that specific block only. If there is still pending blocks that you mined you will still have more payments pending.<br /><br />
+</div>
+
+
 <div class="row">
 	<div class="col-md-12 col-sm-12">
 		<table class="table table-bordered table-sm text-center">
@@ -148,11 +155,12 @@
 	</div>
 
 </div>
+
 <div class="row">
-	<div class="col-md-6 col-sm-6">
+	<div class="col-md-6 col-sm-12">
 		<div id="shareTableDiv"></div>
 		</div>
-		<div class="col-md-6 col-sm-6">
+		<div class="col-md-6 col-sm-12">
 		<div id="pendingBlocksDiv"></div>
 		</div>
 	</div>
@@ -165,7 +173,7 @@
 <script>
 	var _miner = "{{=String(it.stats.address).split(".")[0]}}";
 	var _workerCount = 0;
-	window.statsSource = new EventSource("/api/live_stats");
+	//window.statsSource = new EventSource("/api/live_stats");
     document.querySelector('main').appendChild(document.createElement('script')).src = '/static/js/miner_stats.js';
 
 

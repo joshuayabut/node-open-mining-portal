@@ -4,8 +4,6 @@ var poolHashrateChart;
 var statData;
 var poolKeys;
 
-
-
 function buildChartData(){
     var pools = {};
 
@@ -18,7 +16,7 @@ function buildChartData(){
     }
 
     for (var i = 0; i < statData.length; i++) {
-        var time = statData[i].time * 60000;
+        var time = statData[i].time * 1000;
 		for (var f = 0; f < poolKeys.length; f++){
             var pName = poolKeys[f];
             var a = pools[pName] = (pools[pName] || {
@@ -111,8 +109,8 @@ $.getJSON('/api/pool_stats', function(data){
     displayCharts();
 });
 
-statsSource.addEventListener('message', function(e){
-    var stats = JSON.parse(e.data);
+setInterval(function(){ 
+$.getJSON('/api/stats', function(stats){
     statData.push(stats);
 
     var newPoolAdded = (function(){
@@ -143,3 +141,4 @@ statsSource.addEventListener('message', function(e){
         triggerChartUpdates();
     }
 });
+},300000);

@@ -12,3 +12,4 @@ masf-entries-db
 *.save
 *.testnet
 *.pem
+traffic.txt

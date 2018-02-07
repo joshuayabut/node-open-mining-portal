@@ -162,12 +162,12 @@ div.tooltip {
 {{ var blockscomb = new Array; }}
 <div class="row">
 
-<table class="table table-small text-center h6">
+<table class="table table-small text-center h6" id="blockCountTable">
 <tr>
-	<td colspan="2" class="h5 text-center">{{=capitalizeFirstLetter(it.stats.pools[pool].name)}} Blocks Found</td></tr>
-
-            <tr><td style="width:50%"><i class="fa fa-cubes"></i> <span id="statsValidBlocks{{=pool}}">{{=it.stats.pools[pool].poolStats.validBlocks}} Blocks Found<br />(includes orphaned and pending)</span> </td>
-			<td style="width:50%"><i class="fa fa-money"></i> Paid: <span id="statsTotalPaid{{=pool}}">{{=(parseFloat(it.stats.pools[pool].poolStats.totalPaid)).toFixed(2)}} {{=it.stats.pools[pool].symbol}}</span> </small></td>
+	<td colspan="3" class="h5 text-center">{{=capitalizeFirstLetter(it.stats.pools[pool].name)}} Blocks Found</td></tr>
+            <tr><td style="width:33%"><i class="fa fa-cubes"></i> <span id="statsValidBlocks{{=pool}}">{{=it.stats.pools[pool].poolStats.validBlocks}} Blocks Found<br />(Total - includes orphaned and pending)</span> </td>
+              <td style="width:33%"><i class="fa fa-cubes"></i>  Blocks Found Today </td>
+			<td style="width:33%"><i class="fa fa-money"></i> Paid: <span id="statsTotalPaid{{=pool}}">{{=(parseFloat(it.stats.pools[pool].poolStats.totalPaid)).toFixed(2)}} {{=it.stats.pools[pool].symbol}}</span> </small></td>
 			</tr>
 			</table>
 </div>
@@ -246,6 +246,7 @@ div.tooltip {
 document.querySelector('main').appendChild(document.createElement('script')).src = '/static/js/stats.js';
 </script>
 
+
 <script>
 $(document).ready(function() {
   $('#blocksTable').DataTable({
@@ -274,14 +275,22 @@ $(function() {
   });
 });
 
-function getReadableNetworkHashRateString(hashrate){
-  hashrate = (hashrate * 1000000);
-  if (hashrate < 1000000)
-  return '0 Sol';
-  var byteUnits = [ ' Sol/s', ' KSol/s', ' MSol/s', ' GSol/s', ' TSol/s', ' PSol/s' ];
-  var i = Math.floor((Math.log(hashrate/1000) / Math.log(1000)) - 1);
-  hashrate = (hashrate/1000) / Math.pow(1000, i + 1);
-  return hashrate.toFixed(2) + byteUnits[i];
-}
+  setInterval(function(){
+		$.getJSON('/api/stats', function(stats){
+            for (var pool in stats.pools) {
+				$('#statsMiners' + pool).text(stats.pools[pool].minerCount);
+                $('#statsWorkers' + pool).text(stats.pools[pool].workerCount);
+                $('#statsHashrate' + pool).text(stats.pools[pool].hashrateString);
+				$('#statsHashrateAvg' + pool).text(getReadableHashRateString(calculateAverageHashrate(pool)));
+				$('#statsLuckDays' + pool).text(stats.pools[pool].luckDays);
+				$('#statsValidBlocks' + pool).text(stats.pools[pool].poolStats.validBlocks);
+				$('#statsTotalPaid' + pool).text((parseFloat(stats.pools[pool].poolStats.totalPaid)).toFixed(8));
+				$('#statsNetworkBlocks' + pool).text(stats.pools[pool].poolStats.networkBlocks);
+				$('#statsNetworkDiff' + pool).text(stats.pools[pool].poolStats.networkDiff);
+				$('#statsNetworkSols' + pool).text(getReadableNetworkHashRateString(stats.pools[pool].poolStats.networkSols));
+				$('#statsNetworkConnections' + pool).text(stats.pools[pool].poolStats.networkConnections);
+            }
+        });
+    },150000);
 
 </script>

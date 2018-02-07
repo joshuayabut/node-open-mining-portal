@@ -8,6 +8,9 @@ var redis = require('redis');
 
 var dot = require('dot');
 var express = require('express');
+var logger2 = require('express-logger');
+
+
 var bodyParser = require('body-parser');
 var compress = require('compression');
 
@@ -45,8 +48,8 @@ module.exports = function(logger){
         'stats.html': 'stats',
         'tbs.html': 'tbs',
         'workers.html': 'workers',
-        'api.html': 'api',
-        'mining_key.html': 'mining_key',
+       'api.html': 'api',
+  //      'mining_key.html': 'mining_key',
         'miner_stats.html': 'miner_stats',
         'faq.html': 'faq',
         'payments.html': 'payments'
@@ -128,7 +131,7 @@ module.exports = function(logger){
             var statData = 'data: ' + JSON.stringify(portalStats.stats) + '\n\n';
             for (var uid in portalApi.liveStatConnections){
                 var res = portalApi.liveStatConnections[uid];
-                res.write(statData);
+                //res.write(statData);
             }
 
         });
@@ -314,10 +317,10 @@ module.exports = function(logger){
 
 
     var app = express();
-
-
+    //app.use(expressLogging(logger));
+    app.use(logger2({path: "/home/ubuntu/z-nomp/traffic.txt"}));
     app.use(bodyParser.json());
-
+    //logger.info('Request from %s: %s %s', clientIpAddress, requestMethod, requestUrl);
     app.get('/get_page', function(req, res, next){
         var requestedPage = getPage(req.query.id);
         if (requestedPage){
@@ -390,4 +393,3 @@ module.exports = function(logger){
 
 
 };
-

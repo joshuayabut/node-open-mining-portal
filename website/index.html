@@ -24,7 +24,17 @@
 
 </head>
 <!-- <body class="fixed-nav sticky-footer bg-dark" id="page-top"> -->
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-111728706-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
 
+  gtag('config', 'UA-111728706-1');
+</script>
+
+<body class="fixed-nav bg-dark" id="page-top">
 
   <!-- Navigation-->
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
@@ -54,12 +64,6 @@
                         <span class="nav-link-text">Connection Information</span>
                     </a>
         </li>
-<!--                 <li class="nav-item {{? it.selected === 'contributions' }}active{{?}}"  title="contributions">
-                    <a class="nav-link" href="/contributions">
-                        <i class="fa fa-fw fa-area-chart"></i>
-                        <span class="nav-link-text">All Contributions</span>
-                    </a>
-                </li> -->
         <li class="nav-item {{? it.selected === 'stats' }}active{{?}}" title="Graph Stats">
           <a class="nav-link" href="/stats">
                         <i class="fa fa-fw fa-area-chart"></i>
@@ -91,12 +95,12 @@
                         <span class="nav-link-text">Support</span>
                     </a>
         </li>
-        <li class="nav-item {{? it.selected === 'payments' }}active{{?}}" title="Payments">
+<!--         <li class="nav-item {{? it.selected === 'payments' }}active{{?}}" title="Payments">
           <a class="nav-link" href="/payments">
                         <i class="fa fa-fw fa-money"></i>
                         <span class="nav-link-text">Payments</span>
                     </a>
-        </li>
+        </li> -->
         <li class="nav-item {{? it.selected === 'api' }}active{{?}}" title="API">
           <a class="nav-link" href="/api">
                         <i class="fa fa-fw fa-terminal"></i>
@@ -235,8 +239,9 @@ $(function () {
             </div>
 
             <div class="modal-body text-center">
-              See <a href="https://redd.it/7txoej" target="_blank"> Here</a> for auction information.
-
+            <!--  See <a href="https://redd.it/7txoej" target="_blank"> Here</a> for auction information.-->
+            <h6>You can donate directly to the ZClassic donation address</h6>
+ZClassic: <b>t1gsePJZ6ojJYygj3PWMGJfojPUoMd5AVfU</b><br><font size="2">Donations do not qualify for the Miner Program.</font>
             </div>
           </div>
 
@@ -471,47 +476,6 @@ $(function () {
         $('#TAC').modal('show');
       });
     }
-
-    if (!window.statsSource) {
-      window.statsSource = new EventSource("/api/live_stats");
-    }
-    statsSource.addEventListener('message', function(e) {
-      var stats = JSON.parse(e.data);
-      var pendingBlock = stats.pools.zclassic.pending["blocks"][0]
-      if (pendingBlock) {
-        var block = pendingBlock.split(":");
-      }
-      var blockNum = block[2];
-      var miner = block[3];
-      var date = (new Date(parseInt(block[4]))).toLocaleString();
-      var storedBlock = localStorage.vmlastBlockStored;
-
-	        function BlockNotify() {
-        Lobibox.notify('success', {
-          size: 'large',
-          iconSource: "fontAwesome",
-          icon: "fa fa-cube",
-          soundPath: '/static/sounds/',
-          title: 'Block Found!',
-          delay: false,
-          msg: '<b>Block:</b><span style="float:right">' + date + '</span><br>' + blockNum + '<br><b>Miner:</b><br>' + miner,
-          sound: 'coinDrop'
-        });
-
-      if (!storedBlock) {
-        localStorage.vmlastBlockStored = blockNum;
-        storedBlock = blockNum;
-      }
-      if (pendingBlock && storedBlock < blockNum) {
-        BlockNotify();
-        localStorage.vmlastBlockStored = blockNum;
-      }
-
-
-      }
-
-
-    });
   });
 </script>
 
