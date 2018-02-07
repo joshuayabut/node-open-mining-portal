@@ -164,7 +164,7 @@
       </div>
       <div class="card-body">
         <div class="progress">
-          <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="{{=it.stats.pools[pool].blocks.confirmed}}" aria-valuemin="0" aria-valuemax="100" style="width: {{=it.stats.pools[pool].blocks.confirmed/4000}}%"></div>
+          <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="{{=it.stats.pools[pool].blocks.confirmed}}" aria-valuemin="0" aria-valuemax="100" style="width: {{=(it.stats.pools[pool].blocks.confirmed/4000)*100}}%"></div>
         </div>
       </div>
     </div>
