@@ -1,4 +1,3 @@
-
 {{ function capitalizeFirstLetter(t){return t.charAt(0).toUpperCase()+t.slice(1)} }}
 {{ var i=0; for(var pool in it.stats.pools) { }}
 	<div class="row" style="margin-bottom:15px">
@@ -34,7 +33,9 @@
             </table>
     </div>
 {{ } }}
+
 <script>
+
 function formatHashrate(data) {
     var units = data.replace(/[\d\.]/g, '').toLowerCase();
     var multiplier = 1;
@@ -75,5 +76,4 @@ function formatHashrate(data) {
         }
     });
 	});
-
 </script>

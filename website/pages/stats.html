@@ -81,7 +81,6 @@ div.tooltip {
 #tooltip.hidden {
   opacity: 0;
 }
-
 .center-justified {
   text-align: justify;
   -moz-text-align-last: center;
@@ -92,8 +91,10 @@ div.tooltip {
   padding-bottom: 15px;
 
 
+
 }
 </style>
+
 
 <div class="row">
   <div class="col-md-12">
@@ -101,10 +102,11 @@ div.tooltip {
       <div class="chartWrapper">
         <div class="chartLabel">Pool Historical Hashrate</div>
         <div class="chartHolder"><svg id="poolHashrate"/></div>
+      </div>
     </div>
+  </div>
 </div>
-</div>
-</div>
+
 <div class="row rowpadding">
 {{ function capitalizeFirstLetter(t){return t.charAt(0).toUpperCase()+t.slice(1)} }}
 {{ function readableDate(a){
@@ -115,47 +117,46 @@ div.tooltip {
     day: "numeric", hour: "2-digit", minute: "2-digit"
 };
 	return date.toLocaleTimeString("en-us", options);
-
-} }}
-<div class="col-md-12 col-sm-12">
+  } }}
+  <div class="col-md-12 col-sm-12">
     {{ for(var pool in it.stats.pools) { }}
-	<div class="card text-center">
-  <div class="card-header bg-info text-white">
-    <h5>{{=capitalizeFirstLetter(it.stats.pools[pool].name)}} Pool Stats</h5>
-  </div>
-  <div class="card-block">
-    <p class="card-text">
-		<div class="boxStatsList">
-					<div class="col-md-2"><i class="fa fa-users"></i><span id="statsMiners{{=pool}}">{{=it.stats.pools[pool].minerCount}}</span> Miners</div>
-                    <div class="col-md-2"><i class="fa fa-rocket"></i><span id="statsWorkers{{=pool}}">{{=it.stats.pools[pool].workerCount}}</span> Workers</div>
-                    <div class="col-md-2"><i class="fa fa-tachometer"></i><span id="statsHashrate{{=pool}}">{{=it.stats.pools[pool].hashrateString}}</span> (Now)</div>
-					<div class="col-md-2"><i class="fa fa-tachometer"></i><span id="statsHashrateAvg{{=pool}}">...</span> (Avg)</div>
-					<div class="col-md-2"><i class="fa fa-gavel"></i>Luck: <span id="statsLuckDays{{=pool}}">{{=it.stats.pools[pool].luckDays}}</span> Days</div>
-                </div>
-	</p>
+    <div class="card text-center">
+      <div class="card-header bg-info text-white">
+        <h5>{{=capitalizeFirstLetter(it.stats.pools[pool].name)}} Pool Stats</h5>
+      </div>
+      <div class="card-block">
+        <p class="card-text">
+          <div class="boxStatsList">
+            <div class="col-md-2"><i class="fa fa-users"></i><span id="statsMiners{{=pool}}">{{=it.stats.pools[pool].minerCount}}</span> Miners</div>
+            <div class="col-md-2"><i class="fa fa-rocket"></i><span id="statsWorkers{{=pool}}">{{=it.stats.pools[pool].workerCount}}</span> Workers</div>
+            <div class="col-md-2"><i class="fa fa-tachometer"></i><span id="statsHashrate{{=pool}}">{{=it.stats.pools[pool].hashrateString}}</span> (Now)</div>
+            <div class="col-md-2"><i class="fa fa-tachometer"></i><span id="statsHashrateAvg{{=pool}}">...</span> (Avg)</div>
+            <div class="col-md-2"><i class="fa fa-gavel"></i>Luck: <span id="statsLuckDays{{=pool}}">{{=it.stats.pools[pool].luckDays}}</span> Days</div>
+          </div>
+        </p>
+      </div>
+    </div>
   </div>
 </div>
-	</div>
-	</div>
 <div class="row">
-		<div class="col-md-12 col-sm-12">
-	<div class="card text-center">
-  <div class="card-header bg-info text-white">
-    <h5>{{=capitalizeFirstLetter(it.stats.pools[pool].name)}} Network Stats</h5>
+  <div class="col-md-12 col-sm-12">
+    <div class="card text-center">
+      <div class="card-header bg-info text-white">
+        <h5>{{=capitalizeFirstLetter(it.stats.pools[pool].name)}} Network Stats</h5>
+      </div>
+      <div class="card-block">
+        <p class="card-text">
+          <div class="boxStatsList">
+            <div class="col-md-3"><i class="fa fa-cube" aria-hidden="true"></i><small>Block Height:</small> <span id="statsNetworkBlocks{{=pool}}">{{=it.stats.pools[pool].poolStats.networkBlocks}}</span></div>
+            <div class="col-md-3"><i class="fa fa-tachometer"></i><small>Network Hash/s: </small><span id="statsNetworkSols{{=pool}}">{{=it.stats.pools[pool].poolStats.networkSolsString}}</span></div>
+            <div class="col-md-3"><i class="fa fa-unlock-alt" aria-hidden="true"></i><small>Difficulty:</small> <span id="statsNetworkDiff{{=pool}}">{{=(parseFloat(it.stats.pools[pool].poolStats.networkDiff)).toFixed(0)}}</span></div>
+            <div class="col-md-3"><i class="fa fa-users"></i><small>Node Connections:</small> <span id="statsNetworkConnections{{=pool}}">{{=it.stats.pools[pool].poolStats.networkConnections}}</span></div>
+          </div>
+        </p>
+      </div>
+    </div>
   </div>
-  <div class="card-block">
-    <p class="card-text">
-                <div class="boxStatsList">
-                    <div class="col-md-3"><i class="fa fa-cube" aria-hidden="true"></i><small>Block Height:</small> <span id="statsNetworkBlocks{{=pool}}">{{=it.stats.pools[pool].poolStats.networkBlocks}}</span></div>
-                    <div class="col-md-3"><i class="fa fa-tachometer"></i><small>Network Hash/s: </small><span id="statsNetworkSols{{=pool}}">{{=it.stats.pools[pool].poolStats.networkSolsString}}</span></div>
-                    <div class="col-md-3"><i class="fa fa-unlock-alt" aria-hidden="true"></i><small>Difficulty:</small> <span id="statsNetworkDiff{{=pool}}">{{=(parseFloat(it.stats.pools[pool].poolStats.networkDiff)).toFixed(0)}}</span></div>
-					<div class="col-md-3"><i class="fa fa-users"></i><small>Node Connections:</small> <span id="statsNetworkConnections{{=pool}}">{{=it.stats.pools[pool].poolStats.networkConnections}}</span></div>
-                </div>
-	</p>
-  </div>
-</div>
-	</div>
-	{{ } }}
+  {{ } }}
 </div>
 {{ for(var pool in it.stats.pools) { }}
 {{ var blockscomb = new Array; }}
@@ -240,45 +241,47 @@ div.tooltip {
 
 {{ } }}
 </div>
+
 <script>
-    document.querySelector('main').appendChild(document.createElement('script')).src = '/static/js/stats.js';
+document.querySelector('main').appendChild(document.createElement('script')).src = '/static/js/stats.js';
 </script>
+
 <script>
-
-
 $(document).ready(function() {
   $('#blocksTable').DataTable({
-		"order": [[0, "desc"]]
+    "order": [[0, "desc"]]
+
+  });
+
+
+window.statsSource = new EventSource("/api/live_stats");
+$(function() {
+  statsSource.addEventListener('message', function (e) {
+    var stats = JSON.parse(e.data);
+    for (var pool in stats.pools) {
+      $('#statsMiners' + pool).text(stats.pools[pool].minerCount);
+      $('#statsWorkers' + pool).text(stats.pools[pool].workerCount);
+      $('#statsHashrate' + pool).text(stats.pools[pool].hashrateString);
+      $('#statsHashrateAvg' + pool).text(getReadableHashRateString(calculateAverageHashrate(pool)));
+      $('#statsLuckDays' + pool).text(stats.pools[pool].luckDays);
+      $('#statsValidBlocks' + pool).text(stats.pools[pool].poolStats.validBlocks);
+      $('#statsTotalPaid' + pool).text((parseFloat(stats.pools[pool].poolStats.totalPaid)).toFixed(8));
+      $('#statsNetworkBlocks' + pool).text(stats.pools[pool].poolStats.networkBlocks);
+      $('#statsNetworkDiff' + pool).text(stats.pools[pool].poolStats.networkDiff);
+      $('#statsNetworkSols' + pool).text(getReadableNetworkHashRateString(stats.pools[pool].poolStats.networkSols));
+      $('#statsNetworkConnections' + pool).text(stats.pools[pool].poolStats.networkConnections);
+    }
   });
 });
 
-	window.statsSource = new EventSource("/api/live_stats");
-    $(function() {
-        statsSource.addEventListener('message', function (e) {
-            var stats = JSON.parse(e.data);
-            for (var pool in stats.pools) {
-				$('#statsMiners' + pool).text(stats.pools[pool].minerCount);
-                $('#statsWorkers' + pool).text(stats.pools[pool].workerCount);
-                $('#statsHashrate' + pool).text(stats.pools[pool].hashrateString);
-				$('#statsHashrateAvg' + pool).text(getReadableHashRateString(calculateAverageHashrate(pool)));
-				$('#statsLuckDays' + pool).text(stats.pools[pool].luckDays);
-				$('#statsValidBlocks' + pool).text(stats.pools[pool].poolStats.validBlocks);
-				$('#statsTotalPaid' + pool).text((parseFloat(stats.pools[pool].poolStats.totalPaid)).toFixed(8));
-				$('#statsNetworkBlocks' + pool).text(stats.pools[pool].poolStats.networkBlocks);
-				$('#statsNetworkDiff' + pool).text(stats.pools[pool].poolStats.networkDiff);
-				$('#statsNetworkSols' + pool).text(getReadableNetworkHashRateString(stats.pools[pool].poolStats.networkSols));
-				$('#statsNetworkConnections' + pool).text(stats.pools[pool].poolStats.networkConnections);
-            }
-        });
-    });
+function getReadableNetworkHashRateString(hashrate){
+  hashrate = (hashrate * 1000000);
+  if (hashrate < 1000000)
+  return '0 Sol';
+  var byteUnits = [ ' Sol/s', ' KSol/s', ' MSol/s', ' GSol/s', ' TSol/s', ' PSol/s' ];
+  var i = Math.floor((Math.log(hashrate/1000) / Math.log(1000)) - 1);
+  hashrate = (hashrate/1000) / Math.pow(1000, i + 1);
+  return hashrate.toFixed(2) + byteUnits[i];
+}
 
-	function getReadableNetworkHashRateString(hashrate){
-		hashrate = (hashrate * 1000000);
-		if (hashrate < 1000000)
-			return '0 Sol';
-		var byteUnits = [ ' Sol/s', ' KSol/s', ' MSol/s', ' GSol/s', ' TSol/s', ' PSol/s' ];
-		var i = Math.floor((Math.log(hashrate/1000) / Math.log(1000)) - 1);
-		hashrate = (hashrate/1000) / Math.pow(1000, i + 1);
-		return hashrate.toFixed(2) + byteUnits[i];
-	}
 </script>

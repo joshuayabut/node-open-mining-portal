@@ -12,142 +12,143 @@ var globalStats;
 var workerPaymentJson;
 
 function getReadableHashRateString(hashrate) {
-    hashrate = (hashrate * 2);
-    if (hashrate < 1000000) {
-        return (Math.round(hashrate / 1000) / 1000).toFixed(2) + ' Sol/s';
-    }
-    var byteUnits = [' Sol/s', ' KSol/s', ' MSol/s', ' GSol/s', ' TSol/s', ' PSol/s'];
-    var i = Math.floor((Math.log(hashrate / 1000) / Math.log(1000)) - 1);
-    hashrate = (hashrate / 1000) / Math.pow(1000, i + 1);
-    return hashrate.toFixed(2) + byteUnits[i];
+  hashrate = (hashrate * 2);
+  if (hashrate < 1000000) {
+    return (Math.round(hashrate / 1000) / 1000).toFixed(2) + ' Sol/s';
+  }
+  var byteUnits = [' Sol/s', ' KSol/s', ' MSol/s', ' GSol/s', ' TSol/s', ' PSol/s'];
+  var i = Math.floor((Math.log(hashrate / 1000) / Math.log(1000)) - 1);
+  hashrate = (hashrate / 1000) / Math.pow(1000, i + 1);
+  return hashrate.toFixed(2) + byteUnits[i];
 }
 function timeOfDayFormat(timestamp) {
-    var dStr = d3.time.format('%I:%M %p')(new Date(timestamp));
-    if (dStr.indexOf('0') === 0)
-        dStr = dStr.slice(1);
-    return dStr;
+  var dStr = d3.time.format('%I:%M %p')(new Date(timestamp));
+  if (dStr.indexOf('0') === 0)
+  dStr = dStr.slice(1);
+  return dStr;
 }
 
 function getWorkerNameFromAddress(w) {
-	var worker = w;
-	if(w.includes("<script")){
-		return;
-	} else if (w.split(".").length > 1) {
-		worker = w.split(".")[1];
-		if (worker == null || worker.length < 1) {
-			worker = "noname";
-		}
-	} else {
-		worker = "noname";
-	}
-	return worker;
+  var worker = w;
+  if(w.includes("<script")){
+    return;
+  } else if (w.split(".").length > 1) {
+    worker = w.split(".")[1];
+    if (worker == null || worker.length < 1) {
+      worker = "noname";
+    }
+  } else {
+    worker = "noname";
+  }
+  return worker;
 }
 
 function buildChartData() {
-    var workers = {};
-    for (var w in statData.history) {
-        var worker = getWorkerNameFromAddress(w);
-		if(worker == null){
-			continue;
-		}
-        var a = workers[worker] = (workers[worker] || {
-            hashrate: []
-        });
-        for (var wh in statData.history[w]) {
-            a.hashrate.push([statData.history[w][wh].time * 1000, statData.history[w][wh].hashrate]);
-        }
-        if (a.hashrate.length > workerHistoryMax) {
-            workerHistoryMax = a.hashrate.length;
-        }
+  var workers = {};
+  for (var w in statData.history) {
+    var worker = getWorkerNameFromAddress(w);
+    if(worker == null){
+      continue;
     }
-    var i = 0;
-    workerHashrateData = [];
-    for (var worker in workers) {
-		if(worker == "undefined"){
-			continue;
-		}
-        workerHashrateData.push({
-            key: worker,
-            disabled: (i > Math.min((_workerCount - 1), 3)),
-            values: workers[worker].hashrate
-        });
-        i++;
+    var a = workers[worker] = (workers[worker] || {
+      hashrate: []
+    });
+    for (var wh in statData.history[w]) {
+      a.hashrate.push([statData.history[w][wh].time * 1000, statData.history[w][wh].hashrate]);
     }
+    if (a.hashrate.length > workerHistoryMax) {
+      workerHistoryMax = a.hashrate.length;
+    }
+  }
+  var i = 0;
+  workerHashrateData = [];
+  for (var worker in workers) {
+    if(worker == "undefined"){
+      continue;
+    }
+    workerHashrateData.push({
+      key: worker,
+      disabled: (i > Math.min((_workerCount - 1), 3)),
+      values: workers[worker].hashrate
+    });
+    i++;
+  }
 }
+
 function updateChartData() {
-    var workers = {};
-    for (var w in statData.history) {
-        var worker = getWorkerNameFromAddress(w);
-		if(worker == null){
-			continue;
-		}
-        for (var wh in statData.history[w]) {}
-        var foundWorker = false;
-        for (var i = 0; i < workerHashrateData.length; i++) {
-            if (workerHashrateData[i].key === worker) {
-                foundWorker = true;
-                if (workerHashrateData[i].values.length >= workerHistoryMax) {
-                    workerHashrateData[i].values.shift();
-                }
-                workerHashrateData[i].values.push([statData.history[w][wh].time * 1000, statData.history[w][wh].hashrate]);
-                break;
-            }
-        }
-        if (!foundWorker) {
-            var hashrate = [];
-            hashrate.push([statData.history[w][wh].time * 1000, statData.history[w][wh].hashrate]);
-            workerHashrateData.push({
-                key: worker,
-                values: hashrate
-            });
-            rebuildWorkerDisplay();
-            return true;
-        }
+  var workers = {};
+  for (var w in statData.history) {
+    var worker = getWorkerNameFromAddress(w);
+    if(worker == null){
+      continue;
     }
-    triggerChartUpdates();
-    return false;
+    for (var wh in statData.history[w]) {}
+    var foundWorker = false;
+    for (var i = 0; i < workerHashrateData.length; i++) {
+      if (workerHashrateData[i].key === worker) {
+        foundWorker = true;
+        if (workerHashrateData[i].values.length >= workerHistoryMax) {
+          workerHashrateData[i].values.shift();
+        }
+        workerHashrateData[i].values.push([statData.history[w][wh].time * 1000, statData.history[w][wh].hashrate]);
+        break;
+      }
+    }
+    if (!foundWorker) {
+      var hashrate = [];
+      hashrate.push([statData.history[w][wh].time * 1000, statData.history[w][wh].hashrate]);
+      workerHashrateData.push({
+        key: worker,
+        values: hashrate
+      });
+      rebuildWorkerDisplay();
+      return true;
+    }
+  }
+  triggerChartUpdates();
+  return false;
 }
 function calculateAverageHashrate(worker) {
-    var count = 0;
-    var total = 1;
-    var avg = 0;
-    for (var i = 0; i < workerHashrateData.length; i++) {
-        count = 0;
-        for (var ii = 0; ii < workerHashrateData[i].values.length; ii++) {
-            if (worker == null || workerHashrateData[i].key === worker) {
-                count++;
-                avg += parseFloat(workerHashrateData[i].values[ii][1]);
-            }
-        }
-        if (count > total)
-            total = count;
+  var count = 0;
+  var total = 1;
+  var avg = 0;
+  for (var i = 0; i < workerHashrateData.length; i++) {
+    count = 0;
+    for (var ii = 0; ii < workerHashrateData[i].values.length; ii++) {
+      if (worker == null || workerHashrateData[i].key === worker) {
+        count++;
+        avg += parseFloat(workerHashrateData[i].values[ii][1]);
+      }
     }
-    avg = avg / total;
-    return avg;
+    if (count > total)
+    total = count;
+  }
+  avg = avg / total;
+  return avg;
 }
 function triggerChartUpdates() {
-    workerHashrateChart.update();
+  workerHashrateChart.update();
 }
 function displayCharts() {
-    nv.addGraph(function() {
-        for (var i in workerHashrateData) {
-            workerHashrateData[i].disabled = false;
-        }
-        workerHashrateChart = nv.models.lineChart().margin({
-            left: 80,
-            right: 15
-        }).x(function(d) {
-            return d[0]
-        }).y(function(d) {
-            return d[1]
-        }).useInteractiveGuideline(true).clipEdge(true);
-        workerHashrateChart.xAxis.showMaxMin(false).tickFormat(timeOfDayFormat);
-        workerHashrateChart.yAxis.tickFormat(function(d) {
-            return getReadableHashRateString(d);
-        });
-        d3.select('#workerHashrate').datum(workerHashrateData).transition().duration(500).call(workerHashrateChart);
-        return workerHashrateChart;
+  nv.addGraph(function() {
+    for (var i in workerHashrateData) {
+      workerHashrateData[i].disabled = false;
+    }
+    workerHashrateChart = nv.models.lineChart().margin({
+      left: 80,
+      right: 15
+    }).x(function(d) {
+      return d[0]
+    }).y(function(d) {
+      return d[1]
+    }).useInteractiveGuideline(true).clipEdge(true);
+    workerHashrateChart.xAxis.showMaxMin(false).tickFormat(timeOfDayFormat);
+    workerHashrateChart.yAxis.tickFormat(function(d) {
+      return getReadableHashRateString(d);
     });
+    d3.select('#workerHashrate').datum(workerHashrateData).transition().duration(500).call(workerHashrateChart);
+    return workerHashrateChart;
+  });
 }
 function updateStats() {
     totalHash = statData.totalHash;
@@ -177,9 +178,30 @@ function updateStats() {
     totalShares = totalShares.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     $("#statsTotalShares").text(totalShares);
 
+
+function updateStats() {
+  totalHash = statData.totalHash;
+  totalPaid = statData.paid;
+  totalBal = statData.balance;
+  totalImmature = statData.immature;
+  var _blocktime = 250;
+  var _networkHashRate = parseFloat(statData.networkSols) * 1.2;
+  var _myHashRate = (totalHash / 1000000) * 2;
+  var luckDays = ((_networkHashRate / _myHashRate * _blocktime) / (24 * 60 * 60)).toFixed(3);
+  $("#statsHashrate").text(getReadableHashRateString(totalHash));
+  $("#statsHashrateAvg").text(getReadableHashRateString(calculateAverageHashrate(null)));
+  $("#statsLuckDays").text(luckDays);
+  $("#statsTotalImmature").text(totalImmature);
+  $("#statsTotalBal").text(totalBal);
+  $("#statsTotalPaid").text(totalPaid);
+  var totalShares = statData.totalShares;
+  var estimatedCoins = 0;
+  totalShares = totalShares.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  $("#statsTotalShares").text(totalShares);
 }
 
 function updateWorkerStats() {
+
     var i = 0;
     for (var w in statData.workers) {
         i++;
@@ -195,10 +217,20 @@ function updateWorkerStats() {
         //$("#statsBalance" + htmlSafeWorkerName).text(statData.workers[w].balance);
         $("#statsShares" + htmlSafeWorkerName).text(Math.round(statData.workers[w].currRoundShares * 100) / 100);
         $("#statsDiff" + htmlSafeWorkerName).text(statData.workers[w].diff);
+
     }
+    $("#statsHashrate" + htmlSafeWorkerName).text(getReadableHashRateString(statData.workers[w].hashrate));
+    $("#statsHashrateAvg" + htmlSafeWorkerName).text(getReadableHashRateString(calculateAverageHashrate(saneWorkerName)));
+    $("#statsLuckDays" + htmlSafeWorkerName).text(statData.workers[w].luckDays);
+    $("#statsPaid" + htmlSafeWorkerName).text(statData.workers[w].paid);
+    $("#statsBalance" + htmlSafeWorkerName).text(statData.workers[w].balance);
+    $("#statsShares" + htmlSafeWorkerName).text(Math.round(statData.workers[w].currRoundShares * 100) / 100);
+    $("#statsDiff" + htmlSafeWorkerName).text(statData.workers[w].diff);
+  }
 }
 
 function addWorkerToDisplay(name, htmlSafeName, workerObj) {
+
 	var htmlToAdd = "";
 
 
@@ -214,13 +246,14 @@ function addWorkerToDisplay(name, htmlSafeName, workerObj) {
     return htmlToAdd;
 
 
+
 }
 
 function objectLength(obj) {
   var result = 0;
   for(var prop in obj) {
     if (obj.hasOwnProperty(prop)) {
-    // or Object.prototype.hasOwnProperty.call(obj, prop)
+      // or Object.prototype.hasOwnProperty.call(obj, prop)
       result++;
     }
   }
@@ -228,12 +261,11 @@ function objectLength(obj) {
 }
 
 function toStandardizedDate(epoch) {
-	var utcDate = new Date(epoch);
-    return utcDate.toLocaleString();
+  var utcDate = new Date(epoch);
+  return utcDate.toLocaleString();
 }
 
 function paymentList() {
-
 	//Destory Datatables So New Information Can Be Populated
 	if($.fn.DataTable.isDataTable("#shareTable")){ $("#shareTable").DataTable().clear().destroy(); }
 	if($.fn.DataTable.isDataTable("#pendingBlocksTable")){ $("#pendingBlocksTable").DataTable().clear().destroy(); }
@@ -286,7 +318,14 @@ var html = "<h6 style='margin-bottom: 0px;'>Block Share Breakdown</h6><table id=
 								totalPaidOut += (blockWork / totalMinerShares) * 12.5;
 							}
         }
+      }
     }
+
+    ZCLMined = ((minerShares/totalShares) * totalPaidOut).toFixed(4);
+    if (!ZCLMined){
+      ZCLMined = 0;
+    }
+
 
 	html += "</tbody></table>"
 
@@ -331,6 +370,7 @@ $("span#BTCPNow").text((BTCPOwed).toFixed(4));
 
 
 function rebuildWorkerDisplay() {
+
 	$("#boxesWorkers").html("");
 	var html = '';
     var i = 0;
@@ -357,22 +397,64 @@ function rebuildWorkerDisplay() {
 		}
 
 
+
     }
-		$("#boxesWorkers").html($("#boxesWorkers").html()+html);
+  }
+
+  $("#boxesWorkers").html($("#boxesWorkers").html()+html);
 
 }
+
 nv.utils.windowResize(triggerChartUpdates);
+
 $.getJSON('/api/worker_stats?' + _miner, function(data) {
-    delete window.statData;
-    window.statData = data;
-    for (var w in statData.workers) {
-        _workerCount++;
-    }
-    buildChartData();
-    displayCharts();
-    rebuildWorkerDisplay();
-    updateStats();
+  delete window.statData;
+  window.statData = data;
+  for (var w in statData.workers) {
+    _workerCount++;
+  }
+  buildChartData();
+  displayCharts();
+  rebuildWorkerDisplay();
+  updateStats();
 });
+
+
+$.getJSON('/api/payments', function(data) {
+  $.getJSON('/api/stats', function(gStatsData) {
+    globalStats = gStatsData;
+    workerPaymentJson = data;
+    paymentList();
+  });
+});
+
+setInterval(function(){
+  paymentList(true);
+}, 60000);
+
+
+statsSource.addEventListener('message', function(e) {
+  $.getJSON('/api/worker_stats?' + _miner, function(data) {
+    statData = data;
+    var wc = 0;
+    var rebuilt = false;
+    for (var w in statData.workers) {
+      wc++;
+    }
+    if (_workerCount != wc) {
+      if (_workerCount > wc) {
+        rebuildWorkerDisplay();
+        rebuilt = true;
+      }
+      _workerCount = wc;
+    }
+    rebuilt = (rebuilt || updateChartData());
+    updateStats();
+    if (!rebuilt) {
+      updateWorkerStats();
+    }
+  });
+
 
 
 
@@ -422,4 +504,5 @@ $.getJSON('/api/worker_stats?' + _miner, function(data) {
             updateWorkerStats();
         }
     });
+
 });

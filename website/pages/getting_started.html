@@ -1,10 +1,11 @@
 
 <div class="row">
 
-    <div class="col-md-2 col-sm-2 col-xs-2">
-		<table class="table table-hover table-condensed">
-		<thead>
+  <div class="col-md-2 col-sm-2 col-xs-2">
+    <table class="table table-hover table-condensed">
+      <thead>
         {{? (function(){
+
                 if (!it.portalConfig.switching) return false;
                 for (var p in it.portalConfig.switching){
                     if (it.portalConfig.switching[p].enabled)
@@ -52,9 +53,8 @@
     <div class="card">
 <div class="card-header">
         <h4 class="card-title">ZClassic Configuration</h4> <!-- {{=pool}} -->
+
 </div>
-      <div class="card-body">
-<dl class="row">
 
 
 </dl>
@@ -189,17 +189,19 @@
 </div>
 
 		</p>
+
         <a href="https://bitcointalk.org/index.php?topic=1670733.0" target="_blank" class="btn btn-primary" style="float:right;">Download Claymore</a>
       </div>
     </div>
   </div>
 
 
-<div class="tab-pane fade" id="nheqminer" role="tabpanel" aria-labelledby="nheqminer-pill-tab">
+
+  <div class="tab-pane fade" id="nheqminer" role="tabpanel" aria-labelledby="nheqminer-pill-tab">
     <div class="card">
-<div class="card-header">
-        <h4 class="card-title">Nheqminer Miner Configuration</h4>
-</div>
+      <div class="card-header">
+        <h4 class="card-title">Miner Configuration - NHeqminer</h4>
+      </div>
       <div class="card-body">
         <p class="card-text">
 		<div id="ewbf"><ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
@@ -237,13 +239,11 @@ CUDA 6 devices:
 
 		</p>
         <a href="https://github.com/nanopool/nheqminer/releases" target="_blank" class="btn btn-primary" style="float:right;">Download Nheqminer</a>
+
       </div>
     </div>
   </div>
 </div>
-</div>
-
-	</div>
 </div>
 </div>
 
@@ -305,6 +305,7 @@ CUDA 6 devices:
 		}
         return false;
     });
+
 
 
 </script>

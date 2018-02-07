@@ -8,6 +8,7 @@
 };
 	return date.toLocaleTimeString("en-us", options);
 
+
 } }}
 {{ for(var pool in it.stats.pools) { }}
 <div class="row" style="margin-bottom:15px">
@@ -18,8 +19,9 @@
 
 		<div class="row">
 <table id="paymentTable" class="table table-small table-hover fitsmall">
-    <thead>
+  <thead>
     <tr>
+
         <th>Blocks</th>
         <th>Time</th>
         <th>Miners</th>
@@ -45,13 +47,20 @@
           <td>{{=it.stats.pools[pool].payments[p].miners}}</td>
           <td>{{=Math.round(it.stats.pools[pool].payments[p].shares)}}</td>
       </tr>
+
       {{ } }}
-  </table>
-</div>
+    </td>
+    <td>{{=readableDate(it.stats.pools[pool].payments[p].time)}}</td>
+    <td>{{=it.stats.pools[pool].payments[p].miners}}</td>
+    <td>{{=Math.round(it.stats.pools[pool].payments[p].shares)}}</td>
+    <td>{{=it.stats.pools[pool].payments[p].paid}} {{=it.stats.pools[pool].symbol}}</td>
+  </tr>
+  {{ } }}
+</table>
 <script>
 $(document).ready(function() {
   $('#paymentTable').DataTable({
-		"order": [[0, "desc"]]
+    "order": [[0, "desc"]]
   });
 });
 </script>

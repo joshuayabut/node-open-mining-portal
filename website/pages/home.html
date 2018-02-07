@@ -1,82 +1,82 @@
 <style>
-    #topCharts{
-        padding-left: 18px;
-		padding-right: 18px;
-		padding-top: 18px;
-		padding-bottom: 0px;
-    }
-    #topCharts > div > div > svg{
-        display: block;
-        height: 280px;
-    }
-    .chartWrapper{
-        border: solid 1px #c7c7c7;
-        border-radius: 5px;
-        padding: 5px;
-        margin-bottom: 18px;
-    }
-    .chartLabel{
-        font-size: 1.2em;
-        text-align: center;
-        padding: 4px;
-    }
+#topCharts{
+  padding-left: 18px;
+  padding-right: 18px;
+  padding-top: 18px;
+  padding-bottom: 0px;
+}
+#topCharts > div > div > svg{
+  display: block;
+  height: 280px;
+}
+.chartWrapper{
+  border: solid 1px #c7c7c7;
+  border-radius: 5px;
+  padding: 5px;
+  margin-bottom: 18px;
+}
+.chartLabel{
+  font-size: 1.2em;
+  text-align: center;
+  padding: 4px;
+}
 
-	#boxesWorkers {
-        margin: 0 9px;
-    }
-    #boxesWorkers > div {
-        display: flex;
-    }
-    #boxesWorkers > div > div {
-        flex: 1 1 auto;
-        margin: 0 9px 18px 9px;
-        padding: 10px;
-        display: flex;
-        flex-direction: column;
-    }
-    .boxLowerHeader{
-        font-size: 1.3em;
-        margin: 0 0 5px 10px;
-    }
+#boxesWorkers {
+  margin: 0 9px;
+}
+#boxesWorkers > div {
+  display: flex;
+}
+#boxesWorkers > div > div {
+  flex: 1 1 auto;
+  margin: 0 9px 18px 9px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+}
+.boxLowerHeader{
+  font-size: 1.3em;
+  margin: 0 0 5px 10px;
+}
 
-    #boxStatsLeft{
-        color: black;
-        background-color: #cccccc;
-    }
-    #boxStatsRight{
-		color: black;
-        background-color: #cccccc;
-    }
-    .boxStats{
-        color: white;
-    }
-    .boxStatsList{
-        display: flex;
-        flex-flow: row wrap;
-        justify-content: space-around;
-        opacity: 0.77;
-        margin-bottom: 5px;
-        flex: 1 1 auto;
-        align-content: center;
-    }
-    .boxStatsList i.fa{
-        height: 15px;
-        width: 33px;
-        text-align: center;
-    }
-    .boxStatsList > div{
-        padding: 5px 20px;
-    }
-    .boxStatsList > div > div{
-        padding: 3px;
-    }
+#boxStatsLeft{
+  color: black;
+  background-color: #cccccc;
+}
+#boxStatsRight{
+  color: black;
+  background-color: #cccccc;
+}
+.boxStats{
+  color: white;
+}
+.boxStatsList{
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-around;
+  opacity: 0.77;
+  margin-bottom: 5px;
+  flex: 1 1 auto;
+  align-content: center;
+}
+.boxStatsList i.fa{
+  height: 15px;
+  width: 33px;
+  text-align: center;
+}
+.boxStatsList > div{
+  padding: 5px 20px;
+}
+.boxStatsList > div > div{
+  padding: 3px;
+}
 
 </style>
 
 <!-- 	<div class="row">
-	<div class="col-md-12 col-xs-12" style="font-size: 12px;">
+<div class="col-md-12 col-xs-12" style="font-size: 12px;">
 <div class="alert alert-primary alert-dismissable" role="alert">
-	<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
 <b>Thank you for everyone that participated in the block giveaway! [<a href="#" data-toggle="modal" data-target="#giveawayModal">10 of 10 blocks found</a>]</b></div></div>
 </div>  -->
 
@@ -180,12 +180,26 @@
                 <div class="card-body">
 						<div class="progress">
   <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="{{=it.stats.pools[pool].blocks.confirmed}}" aria-valuemin="0" aria-valuemax="100" style="width: {{=it.stats.pools[pool].blocks.confirmed/4000}}%"></div>
+
 </div>
-</div>
-                </div>
-            </div>
-			</div>
+
+
 <div class="row">
+  <div class="col-md-12">
+    <div class="card mb-3">
+      <div class="card-header">
+        <i class="fa fa-area-chart"></i>&nbsp;Donation Progress&nbsp;<span class="badge badge-primary badge-pill" id="statsCompletion{{=pool}}">{{=it.stats.pools[pool].blocks.confirmed}} of 4000 Blocks ({{=it.stats.pools[pool].blocks.confirmed/4000}}%)</span>&nbsp;<span class="badge badge-primary badge-pill" id="statsCompletionPercentage{{=pool}}" style="float:right">Estimated Days Until Completion: {{=(it.stats.pools[pool].luckDays * (4000-it.stats.pools[pool].blocks.confirmed)).toFixed(2)}} Days</span>
+      </div>
+      <div class="card-body">
+        <div class="progress">
+          <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="{{=it.stats.pools[pool].blocks.confirmed}}" aria-valuemin="0" aria-valuemax="100" style="width: {{=(it.stats.pools[pool].blocks.confirmed/4000)*100}}%"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+
 	<div class="col-md-12">
             <!-- Area Chart Example-->
             <div class="card mb-3">
@@ -197,16 +211,14 @@
 					<div id="topCharts">
     <div class="chartWrapper">
         <div class="chartHolder"><svg id="poolHashrate"/></div>
+
     </div>
+  </div>
 </div>
-                </div>
-            </div>
-			</div>
-			</div>
 
 
 <script>
-    document.querySelector('main').appendChild(document.createElement('script')).src = '/static/stats.js';
+document.querySelector('main').appendChild(document.createElement('script')).src = '/static/stats.js';
 </script>
 
 <script>
@@ -244,4 +256,5 @@
             }
         });
     });
+
 </script>

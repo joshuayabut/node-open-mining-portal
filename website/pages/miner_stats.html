@@ -87,16 +87,18 @@
 }
 
 
+<div id="worker-error"></div>
+
 </style>
 
 			<div id="worker-error"></div>
-
 
 <div class="row fitsmall">
 <div class="col-md-12 col-sm-12">
 <div id="topCharts">
     <div class="chartWrapper">
         <div class="chartLabel">
+
 			<!--<div style="float:left; padding-right: 18px;"><i class="fa fa-users"></i><span id="statsWorkers">...</span></div>-->
 			<div style="float:left; margin-right: 9px;">{{=String(it.stats.address).split(".")[0]}}</div>
 			<div style="float:right; padding-left: 18px;"><small><i class="fa fa-tachometer"></i> <span id="statsHashrateAvg">...</span> (Avg)</small></div>
@@ -111,6 +113,7 @@
 			<div style="float:left; padding-top: 9px; padding-left: 18px; padding-right: 18px;display:none;"><i class="fa fa-money"></i> Bal: <span id="statsTotalBal">...</span> </div>
 			<div style="padding-top: 9px; padding-left: 18px;"><i class="fa fa-money"></i> Paid: <span id="statsTotalPaid">...</span>  </div>  -->
 		</div>
+
     </div>
 </div>
 </div>
@@ -143,6 +146,7 @@
 
 
 	</div>
+
 </div>
 <div class="row">
 	<div class="col-md-6 col-sm-6">
@@ -163,6 +167,7 @@
 	var _workerCount = 0;
 	window.statsSource = new EventSource("/api/live_stats");
     document.querySelector('main').appendChild(document.createElement('script')).src = '/static/js/miner_stats.js';
+
 
 
 </script>

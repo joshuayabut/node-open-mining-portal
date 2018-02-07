@@ -1,20 +1,20 @@
 body.fixed-nav {
-    padding-top: 70px;
+  padding-top: 70px;
 }
 
 .content-wrapper {
-    min-height: calc(100vh - 70px) !important;
-	}
+  min-height: calc(100vh - 70px) !important;
+}
 
 body.sticky-footer {
-    margin-bottom: 40px;
+  margin-bottom: 40px;
 }
+
 
 .form-control:focus {
   border-color: #c17446 !important;
   box-shadow: 0 0 0 0;
 }
-
 .card-title, .card-text, h5 {
   margin-bottom: 0px;
 }
@@ -64,36 +64,64 @@ body.sticky-footer {
 }
 
 .badge-primary {
-	background-color: #c17446 !important;
+  background-color: #c17446 !important;
+  font-weight: 400;
+}
+
+.api-items {
+    list-style: none;
+    padding-left: 10px;
+}
+
+.breadcrumb-item a,
+.poolOption,
+.api-items li a  {
+  color: black;
+}
+
+.api-items li a {
+  font-weight: 500;
+}
+
+.coinmarketcap-blue {
+  color: rgb(66, 139, 202);
+}
+
+.donation-addr {
+  word-wrap: break-word;
+}
+
+
+.da-nav {
+  margin-right: 5px;
+
 }
 
 .bg-info {
-	background-color: #c17446 !important;
+  background-color: #c17446 !important;
 }
 
 .fade.show {
-    display: unset !important;
+  display: unset !important;
 }
 
 .fade {
-    display: none !important;
+  display: none !important;
 }
 
-
-
 .dashboardmodal span {
-	font-size:12px;
+  font-size:12px;
 }
 
 @media (min-width: 992px) {
-#mainNav .navbar-collapse .navbar-sidenav {
+  #mainNav .navbar-collapse .navbar-sidenav {
     margin-top: 76px !important;
-}
+  }
 
-.giveawayModal {
+  .giveawayModal {
     width: 50%;
     max-width: 100%;
-}
+  }
 }
 
 @media (min-width: 576px){
@@ -138,3 +166,4 @@ body.sticky-footer {
   -ms-text-overflow:ellipsis;
 }
 }
+
