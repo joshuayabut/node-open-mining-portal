@@ -33,6 +33,8 @@ http://zclassic.miningspeed.com Custom frontend and 0% fee
 
 https://zpool.it 0.5% fee
 
+http://zcash.pool.nocroom.com USA POOL
+
 http://miningpool.io/
 
 Usage
