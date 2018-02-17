@@ -4,8 +4,6 @@ var poolHashrateChart;
 var statData;
 var poolKeys;
 
-
-
 function buildChartData(){
     var pools = {};
 
@@ -111,8 +109,8 @@ $.getJSON('/api/pool_stats', function(data){
     displayCharts();
 });
 
-statsSource.addEventListener('message', function(e){
-    var stats = JSON.parse(e.data);
+setInterval(function(){ 
+$.getJSON('/api/stats', function(stats){
     statData.push(stats);
 
     var newPoolAdded = (function(){
@@ -143,3 +141,4 @@ statsSource.addEventListener('message', function(e){
         triggerChartUpdates();
     }
 });
+},300000);

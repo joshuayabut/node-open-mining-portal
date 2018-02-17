@@ -24,7 +24,17 @@
 
 </head>
 <!-- <body class="fixed-nav sticky-footer bg-dark" id="page-top"> -->
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-111728706-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
 
+  gtag('config', 'UA-111728706-1');
+</script>
+
+<body class="fixed-nav bg-dark" id="page-top">
 
   <!-- Navigation-->
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
@@ -40,93 +50,77 @@
             <span class="nav-link-text">Home</span>
           </a>
         </li>
-        <!--
-        <li class="nav-item {{? it.selected === 'dashboard' }}active{{?}}"  title="Dashboard">
-        <a class="nav-link" href="/dashboard">
-        <i class="fa fa-fw fa-dashboard"></i>
-        <span class="nav-link-text">Dashboard</span>
-      </a>
-    </li>
-  -->
 
-  <li class="nav-item {{? it.selected === 'getting_started' }}active{{?}}"  title="Getting Started">
-    <a class="nav-link" href="/getting_started">
-      <i class="fa fa-fw fa-check"></i>
-      <span class="nav-link-text">Getting Started</span>
-    </a>
-  </li>
-  <li class="nav-item {{? it.selected === 'stats' }}active{{?}}"  title="Graph Stats">
-    <a class="nav-link" href="/stats">
-      <i class="fa fa-fw fa-area-chart"></i>
-      <span class="nav-link-text">Graph Stats</span>
-    </a>
-  </li>
-  <li class="nav-item {{? it.selected === 'tbs' }}active{{?}}"  title="Table Stats">
-    <a class="nav-link" href="/tbs">
-      <i class="fa fa-fw fa-globe"></i>
-      <span class="nav-link-text">Global Stats</span>
-    </a>
-  </li>
-  <li class="nav-item {{? it.selected === 'workers' }}active{{?}}"  title="Workers">
-    <a class="nav-link" href="/workers">
-      <i class="fa fa-fw fa-wrench"></i>
-      <span class="nav-link-text">Worker Stats</span>
-    </a>
-  </li>
-  <li class="nav-item {{? it.selected === 'payments' }}active{{?}}" title="Payments">
-    <a class="nav-link" href="/payments">
-      <i class="fa fa-fw fa-money"></i>
-      <span class="nav-link-text">Payments</span>
-    </a>
-  </li>
-  <li class="nav-item {{? it.selected === 'api' }}active{{?}}"  title="API">
-    <a class="nav-link" href="/api">
-      <i class="fa fa-fw fa-terminal"></i>
-      <span class="nav-link-text">API</span>
-    </a>
-  </li>
-  <li class="nav-item" title="Support">
-    <a class="nav-link" href="http://www.discord.gg/RNenQfx" target="_blank">
-      <i class="fa fa-fw fa-life-ring"></i>
-      <span class="nav-link-text">Support</span>
-    </a>
-  </li>
-  <li class="nav-item" title="Donate">
-    <a class="nav-link" data-toggle="modal" data-target="#donateModal">
-      <i class="fa fa-fw fa-share"></i>
-      <span class="nav-link-text">Donate</span>
-    </a>
-  </li>
-  <li class="nav-item" title="Terms & Conditions">
-    <a class="nav-link" data-toggle="modal" data-target="#TAC">
-      <i class="fa fa-fw fa-gavel"></i>
-      <span class="nav-link-text">Terms & Conditions</span>
-    </a>
-  </li>
-</ul>
+        <!--                                            <li class="nav-item {{? it.selected === 'dashboard' }}active{{?}}"  title="Dashboard">
+                    <a class="nav-link" href="/dashboard">
+                        <i class="fa fa-fw fa-dashboard"></i>
+                        <span class="nav-link-text">Dashboard</span>
+                    </a>
+                </li> -->
 
-<ul class="navbar-nav sidenav-toggler">
-  <li class="nav-item">
-    <a class="nav-link text-center" id="sidenavToggler">
-      <i class="fa fa-fw fa-angle-left"></i>
-    </a>
-  </li>
-</ul>
+        <li class="nav-item {{? it.selected === 'getting_started' }}active{{?}}" title="Connection Information">
+          <a class="nav-link" href="/getting_started">
+                        <i class="fa fa-fw fa-check"></i>
+                        <span class="nav-link-text">Connection Information</span>
+                    </a>
+        </li>
+        <li class="nav-item {{? it.selected === 'stats' }}active{{?}}" title="Graph Stats">
+          <a class="nav-link" href="/stats">
+                        <i class="fa fa-fw fa-area-chart"></i>
+                        <span class="nav-link-text">Graph Stats</span>
+                    </a>
+        </li>
+        <li class="nav-item {{? it.selected === 'tbs' }}active{{?}}" title="Table Stats">
+          <a class="nav-link" href="/tbs">
+                        <i class="fa fa-fw fa-globe"></i>
+                        <span class="nav-link-text">Global Stats</span>
+                    </a>
+        </li>
+        <li class="nav-item {{? it.selected === 'workers' }}active{{?}}" title="Workers">
+          <a class="nav-link" href="/workers">
+                        <i class="fa fa-fw fa-wrench"></i>
+                        <span class="nav-link-text">Worker Stats</span>
+                    </a>
+        </li>
 
-<ul class="navbar-nav ml-auto">
-  <li class="nav-item">
-    <form class="form-inline my-2 my-lg-0 mr-lg-2">
-      <div class="input-group">
-        <input class="form-control minersearchinput" type="text" placeholder="Miner Address:"  onkeypress="return searchKeyPress(event);">
-        <span class="input-group-btn">
-          <button class="btn btn-primary minersearchbtn" type="button">
-            <i class="fa fa-search"></i>
-          </button>
-        </span>
-      </div>
-    </form>
-  </li>
-</ul>
+        <li class="nav-item" title="FAQ">
+          <a class="nav-link" href="/faq">
+                        <i class="fa fa-fw fa-question-circle"></i>
+                        <span class="nav-link-text">FAQ</span>
+                    </a>
+        </li>
+        <li class="nav-item" title="Support">
+          <a class="nav-link" href="http://www.discord.gg/RNenQfx" target="_blank">
+                        <i class="fa fa-fw fa-life-ring"></i>
+                        <span class="nav-link-text">Support</span>
+                    </a>
+        </li>
+<!--         <li class="nav-item {{? it.selected === 'payments' }}active{{?}}" title="Payments">
+          <a class="nav-link" href="/payments">
+                        <i class="fa fa-fw fa-money"></i>
+                        <span class="nav-link-text">Payments</span>
+                    </a>
+        </li> -->
+        <li class="nav-item {{? it.selected === 'api' }}active{{?}}" title="API">
+          <a class="nav-link" href="/api">
+                        <i class="fa fa-fw fa-terminal"></i>
+                        <span class="nav-link-text">API</span>
+                    </a>
+        </li>
+        <li class="nav-item" title="Donate">
+          <a class="nav-link" data-toggle="modal" data-target="#donateModal">
+                        <i class="fa fa-fw fa-share"></i>
+                        <span class="nav-link-text">Donate</span>
+                    </a>
+        </li>
+        <li class="nav-item" title="Terms &amp; Conditions">
+          <a class="nav-link" data-toggle="modal" data-target="#TAC">
+                        <i class="fa fa-fw fa-gavel"></i>
+                        <span class="nav-link-text">Terms & Conditions</span>
+                    </a>
+        </li>
+      </ul>
+
 
 </div>
 </nav>
@@ -244,11 +238,10 @@ $(function () {
               </h5>
             </div>
 
-            <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
-              <div class="card-body">
-                <p>The Parties hereby agree that the purpose of the Program is to incentivize the miners of the ZClassic (ZCL) cryptocurrency coin to directly contribute any ZCL coins mined in connection with this Program and deposit said mined ZCL coins into a secure electrum wallet account in the custody of an appointed Bitcoin Private Governed Treasury Fund (the "<b>Fund</b>”).</p>
-
-              </div>
+            <div class="modal-body text-center">
+            <!--  See <a href="https://redd.it/7txoej" target="_blank"> Here</a> for auction information.-->
+            <h6>You can donate directly to the ZClassic donation address</h6>
+ZClassic: <b>t1gsePJZ6ojJYygj3PWMGJfojPUoMd5AVfU</b><br><font size="2">Donations do not qualify for the Miner Program.</font>
             </div>
           </div>
 
@@ -279,9 +272,14 @@ $(function () {
                 </h5>
               </div>
 
-              <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
-                <div class="card-body">
-                  <p>For purposes of transparency, the BTCP Community shall have the authority and discretion to appoint five (5) council members to the Governed Treasury Fund. The council shall be comprised of three (3) members of the BTCP Community and two (2) ZClassic Miners.
+
+                  <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+                    <div class="card-body">
+                      <p>The Parties further acknowledge that in consideration for the contributions of the ZClassic Miners, each participating miner will receive a minimum of 1.25 BTCP for each ZCL coin contributed and deposited into the Fund (the “Miner Reward”). The Miner Reward will be issued to the contributing ZClassic Miners, after the Fork Date, for each ZCL contributed to the Fund up to 50,000 ZCL or the aggregate amount of ZCL contributed by ZClassic Miners on the eve prior to the Fork Date, whichever event takes place sooner. The BTCP blockchain developers have developed a protocol on the blockchain that will code the fork such that these Miner Rewards are generated on the Fork Date and sent directly to the ZClassic Miners who contributed to the Fund pursuant to this Agreement.</p>
+                    </div>
+                  </div>
+                </div>
+
 
                     Two or more members from the Fund shall also hold keys to the Electrum Wallet to further the BTCP Community goal of transparency and security.</p>
                   </div>
@@ -469,57 +467,15 @@ $(function () {
                 // Dismiss Modal
                 $('#TAC').modal('hide')
 
-                // Re-enable buttons
-                $('#tosAccept').attr('disabled', false)
-                $('#tosDecline').attr('disabled', false)
 
-                localStorage.ZCLAccept = true;
-                console.log('Done.')
-              })
-            })
-          }
+  $(document).ready(function() {
+    // Check whether either localStorage has this machine ok'd
+    // We could also re-check whether this connector's ip has already been logged, but no reason
+    if (localStorage.ZCLAccept == "false" || localStorage.ZCLAccept == "" || localStorage.ZCLAccept == null) {
+      $(window).on('load', function() {
+        $('#TAC').modal('show');
+      });
+    }
+  });
+</script>
 
-          $(document).ready(function() {
-            // Check whether either localStorage has this machine ok'd
-            // We could also re-check whether this connector's ip has already been logged, but no reason
-            if(localStorage.ZCLAccept == "false" || localStorage.ZCLAccept == "" || localStorage.ZCLAccept == null){
-              $(window).on('load',function(){
-                //$('#TAC').modal('show');
-              });
-            }
-
-            if (!window.statsSource) { window.statsSource=new EventSource("/api/live_stats"); }
-            statsSource.addEventListener('message', function (e) {
-              var stats = JSON.parse(e.data);
-              var pendingBlock = stats.pools.zclassic.pending["blocks"][0]
-              var block = pendingBlock.split(":");
-              var blockNum = block[2];
-              var miner = block[3];
-              var date = (new Date(parseInt(block[4]))).toLocaleString();
-
-              var storedBlock = localStorage.vmlastBlockStored;
-              if (!storedBlock) {
-                localStorage.vmlastBlockStored = blockNum;
-                storedBlock = blockNum;
-              }
-              if (pendingBlock && storedBlock < blockNum) {
-                BlockNotify();
-                localStorage.vmlastBlockStored = blockNum;
-              }
-
-              function BlockNotify() {
-                Lobibox.notify('success', {
-                  size: 'large',
-                  iconSource: "fontAwesome",
-                  icon: "fa fa-cube",
-                  soundPath: '/static/sounds/',
-                  title: 'Block Found!',
-                  delay: false,
-                  msg: '<b>Block:</b><span style="float:right">' + date + '</span><br>' + blockNum + '<br><b>Miner:</b><br>' + miner,
-                  sound: 'newblock'
-                });
-              }
-
-            });
-          });
-          </script>
