@@ -362,7 +362,7 @@ module.exports = function(logger){
     });
 
     app.use(compress());
-    app.use('/static', express.static('website/static'));
+    app.use('/static', express.static('website/static',{maxAge: '1d'}));
 
     app.use(function(err, req, res, next){
         console.error(err.stack);
