@@ -1,94 +1,79 @@
-<style>
-    #bottomNotes {
-        display: block;
-        padding-left: 18px;
-        padding-right: 18px;
-        padding-bottom: 18px;
-    }
-    #topPool {
-        padding-top: 18px;
-        padding-left: 18px;
-        padding-right: 18px;
-    }
-    #topPool > div > div > svg {
-        display: block;
-        height: 280px;
-    }
-    .poolWrapper {
-        border: solid 1px #c7c7c7;
-        border-radius: 5px;
-        padding: 5px;
-        margin-bottom: 18px;
-    }
-    .poolLabel {
-        font-size: 1.2em;
-        text-align: center;
-        padding: 4px;
-    }
-    .poolMinerTable {
-
-    }
-    table {
-        width: 100%;
-    }
-</style>
-<script type="text/javascript"> 
-function searchKeyPress(e)
-{
-    // look for window.event in case event isn't passed in
-    e = e || window.event;
-    if (e.keyCode == 13)
-    {
-        document.getElementById('btnSearch').click();
-        return false;
-    }
-    return true;
-}
-        $(document).ready(function(){
-                $('.btn-lg').click(function(){
-                        window.location = "workers/" + $('.input-lg').val();
-                });
-        });
-</script>
 {{ function capitalizeFirstLetter(t){return t.charAt(0).toUpperCase()+t.slice(1)} }}
 {{ var i=0; for(var pool in it.stats.pools) { }}
-<div id="topPool">
-    <div class="poolWrapper">
-        <div class="poolLabel">
-			<span style="float:right; margin-bottom: 8px;">
-				<small>Miner Lookup: 
-				<input type="text" class="form-control input-lg" onkeypress="return searchKeyPress(event);">
-				<span class="input-group-btn">
-						<button class="btn btn-default btn-lg" type="button">Lookup</button>
-				</span>
-				</small>
-			</span>					
-            {{=capitalizeFirstLetter(it.stats.pools[pool].name)}} Top Miners &nbsp;&nbsp;
-			<small><i class="fa fa-users"></i> <span id="statsMiners{{=pool}}">{{=it.stats.pools[pool].minerCount}}</span> Miners &nbsp;&nbsp;
-			<i class="fa fa-rocket"></i> <span id="statsWorkers{{=pool}}">{{=it.stats.pools[pool].workerCount}}</span> Workers &nbsp;&nbsp;
-			<i class="fa fa-cog"></i> <span id="statsWorkers{{=pool}}">{{=it.stats.pools[pool].shareCount}}</span> Shares </small>
+	<div class="row" style="margin-bottom:15px">
+		<div class="col-md-6">
+	            <h3>{{=capitalizeFirstLetter(it.stats.pools[pool].name)}} Top Miners</h3>
+				</div>
+				       <div class="col-md-6">
+			<small style="float:right"><i class="fa fa-users"></i> <span id="statsMiners{{=pool}}">{{=it.stats.pools[pool].minerCount}}</span> Miners</small><br/>
+			<small style="float:right"><i class="fa fa-rocket"></i> <span id="statsWorkers{{=pool}}">{{=it.stats.pools[pool].workerCount}}</span> Workers</small><br/>
+			<small style="float:right"><i class="fa fa-cog"></i> <span id="statsWorkers{{=pool}}">{{=it.stats.pools[pool].shareCount}}</span> Shares</small>
 		</div>
-        <div class="poolMinerTable">
-            <table class="pure-table">
+		</div>
+
+		<div class="row">
+            <table id="workers" class="table table-condensed table-hover fitsmall">
                 <thead>
                 <tr>
                     <th>Address</th>
                     <th>Shares</th>
-                    <th>Efficiency</th>
+                    <th class="d-none d-sm-block">Efficiency</th>
                     <th>Hashrate</th>
                 </tr>
                 </thead>
                 {{ for(var worker in it.stats.pools[pool].miners) { }}
                    {{var workerstat = it.stats.pools[pool].miners[worker];}}
                     <tr class="pure-table-odd">
-                        <td><a href="/workers/{{=worker.split('.')[0]}}">{{=worker}}</a></td> 
+                        <td><a class="ellipsis-smaller" href="/workers/{{!worker.split('.')[0]}}">{{!worker}}</a></td>
                         <td>{{=Math.round(workerstat.currRoundShares * 100) / 100}}</td>
-                        <td>{{? workerstat.shares > 0}} {{=Math.floor(10000 * workerstat.shares / (workerstat.shares + workerstat.invalidshares)) / 100}}% {{??}} 0% {{?}}</td>
+                        <td class="d-none d-sm-block">{{? workerstat.shares > 0}} {{=Math.floor(10000 * workerstat.shares / (workerstat.shares + workerstat.invalidshares)) / 100}}% {{??}} 0% {{?}}</td>
                         <td>{{=workerstat.hashrateString}}</td>
                     </tr>
-                {{ } }} 
+                {{ } }}
             </table>
-        </div>
     </div>
-</div>
 {{ } }}
+
+<script>
+
+function formatHashrate(data) {
+    var units = data.replace(/[\d\.]/g, '').toLowerCase();
+    var multiplier = 1;
+    if (units === ' sol/s' || units === ' Sol/s') {
+        multiplier = 1;
+    } else if (units === ' ksol/s' || units === ' KSol/s') {
+        multiplier = 1000;
+    } else {
+		multiplier = 100000;
+	}
+    return parseFloat(data) * multiplier;
+}
+    var dataTableConfigs = {
+        autoWidth: false,
+        order: [],
+        pageLength: 25,
+        responsive: true,
+        stateSave: false,
+        columnDefs: [{
+            'type': 'sol',
+            'targets': -1
+        }]
+    }
+
+	    $('#workers').DataTable(dataTableConfigs);
+
+		$(document).ready(function() {
+    $.extend($.fn.dataTable.ext.type.order, {
+        'sol-asc': function(a, b) {
+            a = formatHashrate(a);
+            b = formatHashrate(b);
+            return ((a < b) ? -1 : ((a > b) ? 1 : 0));
+        },
+        'sol-desc': function(a, b) {
+            a = formatHashrate(a);
+            b = formatHashrate(b);
+            return ((a < b) ? 1 : ((a > b) ? -1 : 0));
+        }
+    });
+	});
+</script>

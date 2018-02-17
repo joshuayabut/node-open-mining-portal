@@ -1,0 +1,378 @@
+<style>
+
+    #topCharts{
+        padding-left: 18px;
+		padding-right: 18px;
+		<!-- padding-top: 18px; -->
+		padding-bottom: 0px;
+		width: 100%;
+    }
+    #topCharts > div > div > svg{
+        display: block;
+        height: 280px;
+    }
+    .chartWrapper{
+        border: solid 1px #c7c7c7;
+        border-radius: 5px;
+        padding: 5px;
+        margin-bottom: 18px;
+
+    }
+    .chartLabel{
+        font-size: 1.2em;
+        text-align: center;
+        padding: 4px;
+    }
+
+	#boxesWorkers {
+        margin: 0 9px;
+    }
+    #boxesWorkers > div {
+        display: flex;
+    }
+    #boxesWorkers > div > div {
+        flex: 1 1 auto;
+        margin: 0 9px 18px 9px;
+        padding: 10px;
+        display: flex;
+        flex-direction: column;
+    }
+    .boxLowerHeader{
+        font-size: 1.3em;
+        margin: 0 0 5px 10px;
+    }
+
+    #boxStatsLeft{
+        color: black;
+        background-color: #cccccc;
+    }
+    #boxStatsRight{
+		color: black;
+        background-color: #cccccc;
+    }
+    .boxStats{
+        color: white;
+    }
+    .boxStatsList{
+        display: flex;
+        flex-flow: row wrap;
+        justify-content: space-around;
+        opacity: 0.77;
+        margin-bottom: 5px;
+        flex: 1 1 auto;
+        align-content: center;
+    }
+    .boxStatsList i.fa{
+        height: 15px;
+        width: 33px;
+        text-align: center;
+    }
+    .boxStatsList > div{
+        padding: 5px 20px;
+    }
+    .boxStatsList > div > div{
+        padding: 3px;
+    }
+
+	#dropdown-menu > a > .fa{
+    visibility:hidden;
+
+}
+.boxStatsList > div > div{
+  padding: 3px;
+}
+
+</style>
+
+
+			<div id="worker-error"></div>
+
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="/dashboard">Your Dashboard</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#DashboardActions" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle Dashboard Actions">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="DashboardActions">
+    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+    </ul>
+    <span class="form-inline my-2 my-lg-0 da-nav"><a href="#" class="da-nav" data-toggle="modal" data-target="#AddRigModal"><button type="button" class="btn btn-sm btn-outline-primary my-2 my-sm-0 da-nav"><i class="fa fa-fw fa-server"></i>Add Rig</button></a></span>
+    <span class="form-inline my-2 my-lg-0 da-nav"><a href="#" class="da-nav" data-toggle="modal" data-target="#AddAddressModal"><button type="button" class="btn btn-sm btn-outline-primary my-2 my-sm-0 da-nav"><i class="fa fa-fw fa-address-book-o"></i>Add Address</button></a></span>
+    <span class="form-inline my-2 my-lg-0 da-nav"><a href="#" class="da-nav" data-toggle="modal" data-target="#AddCoinModal" onclick="loadCoinDD();"><button type="button" class="btn btn-sm btn-outline-primary my-2 my-sm-0 da-nav"><i class="fa fa-fw fa-bitcoin"></i>Add Coin</button></a></span>
+  </div>
+</nav>
+
+
+	<div class="row">
+	<div class="col-md-12">
+	<ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+  <li class="nav-item">
+    <a class="nav-link active" id="stats-pill-tab" data-toggle="pill" href="#stats" role="tab" aria-controls="stats" aria-selected="true">Your Stats</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" id="miners-pill-tab" data-toggle="pill" href="#miners" role="tab" aria-controls="miners" aria-selected="false">Your Miners</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" id="coins-pill-tab" data-toggle="pill" href="#coins" role="tab" aria-controls="coins" aria-selected="false">Your Coins</a>
+  </li>
+</ul>
+</div>
+</div>
+
+
+<div class="row">
+  <div class="col-md-12">
+    <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+      <li class="nav-item">
+        <a class="nav-link active" id="stats-pill-tab" data-toggle="pill" href="#stats" role="tab" aria-controls="stats" aria-selected="true">Your Stats</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" id="miners-pill-tab" data-toggle="pill" href="#miners" role="tab" aria-controls="miners" aria-selected="false">Your Miners</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" id="coins-pill-tab" data-toggle="pill" href="#coins" role="tab" aria-controls="coins" aria-selected="false">Your Coins</a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<div class="tab-content" id="miner-tabContent">
+
+  <div class="fitsmall" id="dashboard"></div>
+
+
+			    <!-- Add Rig Modal-->
+    <div class="modal fade" id="AddRigModal" tabindex="-1" role="dialog" aria-labelledby="AddRigModalLabel" aria-hidden="true">
+      <div class="modal-dialog dashboardmodal" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="LoginModalLabel">Add New Rig</h5>
+            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">x</span>
+            </button>
+
+          </div>
+          <div class="modal-body">
+		  			<div id="NoUrlProvided" class="alert alert-danger collapse" role="alert">No URL Provided</div>
+					<div id="NoMSProvided" class="alert alert-danger collapse" role="alert">No Miner Software Selected</div>
+					<div class="alert alert-primary" style="font-size:12px" role="alert">EWBF Miner and DSTM Miner are both supported. Please research how to turn on your respective miner's API function and open your ports.</div>
+		  <div class="input-group input-group-sm"><span>EWBF URL & Port</span>
+<div class="input-group">
+  <span class="input-group-addon" id="basic-addon3">127.0.0.1:42000</span>
+  <input id="MinerRigURL" type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3">
+  </div>
+  &nbsp;
+ <select id="MinerSoftwareSelect" class="custom-select">
+  <option selected>Miner Software</option>
+  <option value="1">EWBF</option>
+  <option value="2">DSTM</option>
+  <option value="3" disabled>Claymore</option>
+</select>
+</div>
+
+
+<!-- Add Rig Modal-->
+<div class="modal fade" id="AddRigModal" tabindex="-1" role="dialog" aria-labelledby="AddRigModalLabel" aria-hidden="true">
+  <div class="modal-dialog dashboardmodal" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="LoginModalLabel">Add New Rig</h5>
+        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">x</span>
+        </button>
+
+      </div>
+      <div class="modal-body">
+        <div id="NoUrlProvided" class="alert alert-danger collapse" role="alert">No URL Provided</div>
+        <div id="NoMSProvided" class="alert alert-danger collapse" role="alert">No Miner Software Selected</div>
+        <div class="alert alert-primary" style="font-size:12px" role="alert">EWBF Miner and DSTM Miner are both supported. Please research how to turn on your respective miner's API function and open your ports.</div>
+        <div class="input-group input-group-sm"><span>EWBF URL & Port</span>
+          <div class="input-group">
+            <span class="input-group-addon" id="basic-addon3">127.0.0.1:42000</span>
+            <input id="MinerRigURL" type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3">
+          </div>
+          &nbsp;
+          <select id="MinerSoftwareSelect" class="custom-select">
+            <option selected>Miner Software</option>
+            <option value="1">EWBF</option>
+            <option value="2">DSTM</option>
+            <option value="3" disabled>Claymore</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+				    <!-- Add Address Modal-->
+    <div class="modal fade" id="AddAddressModal" tabindex="-1" role="dialog" aria-labelledby="AddAddressModalLabel" aria-hidden="true">
+      <div class="modal-dialog dashboardmodal" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="LoginModalLabel">Add New Address</h5>
+            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">x</span>
+            </button>
+          </div>
+          <div class="modal-body">    <div class="input-group">
+      <input id="BTCZAddress" type="text" class="form-control" placeholder="Your BitcoinZ Address" aria-label="Your BitcoinZ Address">
+
+
+          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Add Address Modal-->
+  <div class="modal fade" id="AddAddressModal" tabindex="-1" role="dialog" aria-labelledby="AddAddressModalLabel" aria-hidden="true">
+    <div class="modal-dialog dashboardmodal" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="LoginModalLabel">Add New Address</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">x</span>
+          </button>
+        </div>
+        <div class="modal-body">    <div class="input-group">
+          <input id="BTCZAddress" type="text" class="form-control" placeholder="Your BitcoinZ Address" aria-label="Your BitcoinZ Address">
+
+        </div>
+        <div class="modal-footer">
+          <button id="BTCZAddress" class="btn btn-primary" class="btn btn-primary" href="#"  onclick="execAddress();">Add Address</a>
+            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+          </div>
+        </div>
+      </div>
+    </div>
+	</div>
+
+				    <!-- Add Coin Modal-->
+    <div class="modal fade" id="AddCoinModal" tabindex="-1" role="dialog" aria-labelledby="AddCoinModalLabel" aria-hidden="true">
+      <div class="modal-dialog dashboardmodal" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="LoginModalLabel">Add New Coin</h5>
+            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">x</span>
+            </button>
+
+
+  <!-- Add Coin Modal-->
+  <div class="modal fade" id="AddCoinModal" tabindex="-1" role="dialog" aria-labelledby="AddCoinModalLabel" aria-hidden="true">
+    <div class="modal-dialog dashboardmodal" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="LoginModalLabel">Add New Coin</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">x</span>
+          </button>
+        </div>
+        <div id="addcoins" class="modal-body">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="alert alert-primary alert-dismissable" role="alert">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <b>Please enter a static coin amount OR enter a coin address and select the coin from the dropdown menu. If entering a coin address, you will be required to enter the url to the coin's explorer balance API</b>
+              </div>
+            </div>
+          </div>
+          <div id="addcoins" class="modal-body">
+
+		  <div class="row">
+		  <div class="col-md-12">
+		   <div class="alert alert-primary alert-dismissable" role="alert">
+	<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+<b>Please enter a static coin amount OR enter a coin address and select the coin from the dropdown menu. If entering a coin address, you will be required to enter the url to the coin's explorer balance API</b>
+</div> </div></div><br/>
+		  <h6>Single Coin Import</h6>
+		  <div class="row">
+		  <div class="col-md-10">
+		  <div class="input-group">
+  <span class="input-group-addon" id="basic-addon3">Static Coin Amount</span>
+  <input type="text" class="form-control" id="static-coin-quantity" aria-describedby="basic-addon3" placeholder="Enter Coin Amount">
+</div>
+		  </div>
+
+		  <div class="col-md-2">
+		  <div class="input-group input-group-sm">
+ <select id="cmc-dropdown-menu" class="custom-select">
+</select>
+</div>
+</div>
+		  </div>
+		  <br/>
+		  <h6>Exchange Import</h6>
+		  <p style="font-weight: bold; text-decoration:underline">DO NOT enable trading for this key. Only read functionality.</p>
+
+
+		  		  <div class="row">
+		  <div class="col-md-5">
+		  <div class="input-group">
+  <span class="input-group-addon" id="basic-addon3">Exchange API Key</span>
+  <input type="text" class="form-control" id="exchange-key" aria-describedby="basic-addon3" placeholder="Enter API Key">
+</div>
+		  </div>
+		  		  <div class="col-md-5">
+		  <div class="input-group">
+  <span class="input-group-addon" id="basic-addon3">Exchange API Secret</span>
+  <input type="text" class="form-control" id="exchange-secret" aria-describedby="basic-addon3" placeholder="Enter API Secret">
+</div>
+		  </div>
+
+		  <div class="col-md-2">
+		  <div class="input-group input-group-sm">
+ <select id="supported-exchanges" class="custom-select">
+ <option value="bittrex" selected>Bittrex</option>
+
+</select>
+</div>
+</div>
+		  </div>
+		  </div>
+          <div class="modal-footer">
+		  <button class="btn btn-primary" id="AddCoin" class="btn btn-primary" onclick="alert('Under Development');">Add Coin</a>
+           <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-primary" id="AddCoin" class="btn btn-primary" onclick="alert('Under Development');">Add Coin</button>
+          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-primary" id="AddCoin" class="btn btn-primary" onclick="alert('Under Development');">Add Coin</a>
+          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+
+  document.querySelector('main').appendChild(document.createElement('script')).src = '/static/js/dashboard.js';
+
+  var _miner = localStorage.vmAddress;
+  var _workerCount = 0;
+  window.statsSource = new EventSource("/api/live_stats");
+  document.querySelector('main').appendChild(document.createElement('script')).src = '/static/js/miner_stats.js';
+  document.querySelector('main').appendChild(document.createElement('script')).src = '/static/js/customViciousWS.js';
+
+  $(document).ready(function() {
+
+    if(!window.statsSource){window.statsSource=new EventSource("/api/live_stats");}
+    statsSource.addEventListener('message', function (e) {
+      var stats = JSON.parse(e.data);
+      for (algo in stats.algos) {
+        $('#statsMiners' + algo).text(stats.algos[algo].workers);
+        $('#statsHashrate' + algo).text(stats.algos[algo].hashrateString);
+      }
+      for (var pool in stats.pools) {
+        $('#statsMiners' + pool).text(stats.pools[pool].workerCount);
+        $('#statsHashrate' + pool).text(stats.pools[pool].hashrateString);
+      }
+    });
+</script>
+

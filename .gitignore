@@ -3,3 +3,13 @@ node_modules/
 config.json
 pool_configs/*.json
 !pool_configs/zclassic_example.json
+dump.rdb
+masf-entries-db
+*.crt
+*.key
+*.rdb
+*.bak
+*.save
+*.testnet
+*.pem
+traffic.txt

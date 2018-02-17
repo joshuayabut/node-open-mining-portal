@@ -31,9 +31,20 @@ module.exports = function(logger, portalConfig, poolConfigs){
                 break;
             case 'payments':
                 var poolBlocks = [];
-                for(var pool in portalStats.stats.pools) {
-                    poolBlocks.push({name: pool, pending: portalStats.stats.pools[pool].pending, payments: portalStats.stats.pools[pool].payments});
+				if (req.url.indexOf("?")>0) {
+				var url_parms = req.url.split("?");
+				if (url_parms.length > 0) {
+					if(url_parms[1] === "pending"){
+					for(var pool in portalStats.stats.pools) {
+                    poolBlocks.push({name: pool, pending: portalStats.stats.pools[pool].pending});
+					}
                 }
+				}
+				} else {
+/*                 for(var pool in portalStats.stats.pools) {
+                    poolBlocks.push({name: pool, pending: portalStats.stats.pools[pool].pending, payments: portalStats.stats.pools[pool].payments});
+                } */
+				}
                 res.header('Content-Type', 'application/json');
                 res.end(JSON.stringify(poolBlocks));
                 return;
@@ -43,6 +54,7 @@ module.exports = function(logger, portalConfig, poolConfigs){
 				var url_parms = req.url.split("?");
 				if (url_parms.length > 0) {
 					var history = {};
+
 					var workers = {};
 					var address = url_parms[1] || null;
 					//res.end(portalStats.getWorkerStats(address));
@@ -56,6 +68,9 @@ module.exports = function(logger, portalConfig, poolConfigs){
 								var totalHash = parseFloat(0.0);
 								var totalShares = shares;
 								var networkSols = 0;
+								var totalZCL = 0;
+								var minerShares = [];
+								
 								for (var h in portalStats.statHistory) {
 									for(var pool in portalStats.statHistory[h].pools) {
 										for(var w in portalStats.statHistory[h].pools[pool].workers){
@@ -72,6 +87,23 @@ module.exports = function(logger, portalConfig, poolConfigs){
 										//console.log(portalStats.statHistory[h].time);
 									}
 								}
+								
+								for(var pool in portalStats.stats.pools) {
+									//console.log(portalStats.stats.pools[pool].payments);
+									for(var p in portalStats.stats.pools[pool].payments){
+									var totalMinerShares = portalStats.stats.pools[pool].payments[p].shares;
+									var blockNum = portalStats.stats.pools[pool].payments[p].blocks[0];
+									var blockWork = 0;
+									var time = portalStats.stats.pools[pool].payments[p].blocks[0].time;
+									var blockWork = portalStats.stats.pools[pool].payments[p].work[address];
+										if(blockWork){
+											var percent = (blockWork / totalMinerShares) * 100;
+											minerShares.push({time: time, blockNum: blockNum, blockWork: blockWork, blockPercent: percent});
+											totalZCL += (blockWork / totalMinerShares) * 12.5;
+								}
+								}
+								}
+								
 								for(var pool in portalStats.stats.pools) {
 								  for(var w in portalStats.stats.pools[pool].workers){
 									  if (w.startsWith(address)) {
@@ -89,7 +121,7 @@ module.exports = function(logger, portalConfig, poolConfigs){
 									  }
 								  }
 								}
-								res.end(JSON.stringify({miner: address, totalHash: totalHash, totalShares: totalShares, networkSols: networkSols, immature: balances.totalImmature, balance: balances.totalHeld, paid: balances.totalPaid, workers: workers, history: history}));
+								res.end(JSON.stringify({miner: address, totalZCL: totalZCL, minerShares: minerShares, totalHash: totalHash, totalShares: totalShares, networkSols: networkSols, immature: balances.totalImmature, balance: balances.totalHeld, paid: balances.totalPaid, workers: workers, history: history}));
 							});
 						});
 					} else {
@@ -103,19 +135,7 @@ module.exports = function(logger, portalConfig, poolConfigs){
 				}
                 return;
             case 'live_stats':
-                res.writeHead(200, {
-                    'Content-Type': 'text/event-stream',
-                    'Cache-Control': 'no-cache',
-                    'Connection': 'keep-alive'
-                });
-                res.write('\n');
-                var uid = Math.random().toString();
-                _this.liveStatConnections[uid] = res;
-			res.flush();
-                req.on("close", function() {
-                    delete _this.liveStatConnections[uid];
-                });
-                return;
+				return;
             default:
                 next();
         }

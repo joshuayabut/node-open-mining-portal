@@ -2,8 +2,9 @@
     #topCharts{
         padding-left: 18px;
 		padding-right: 18px;
-		padding-top: 18px;
+		<!-- padding-top: 18px; -->
 		padding-bottom: 0px;
+		width: 100%;
     }
     #topCharts > div > div > svg{
         display: block;
@@ -14,14 +15,13 @@
         border-radius: 5px;
         padding: 5px;
         margin-bottom: 18px;
+
     }
     .chartLabel{
         font-size: 1.2em;
         text-align: center;
         padding: 4px;
-    }
-    .chartHolder{
-
+        font-weight: 600;
     }
 
 	#boxesWorkers {
@@ -74,12 +74,32 @@
         padding: 3px;
     }
 
+	#dropdown-menu > a > .fa{
+    visibility:hidden;
+}
+	#dropdown-menu > a.selected > .fa{
+    visibility:visible;
+}
+
+#shareTableDiv > div,
+#pendingBlocksDiv > div {
+  padding: 0px;
+}
+
+
+<div id="worker-error"></div>
+
 </style>
 
+			<div id="worker-error"></div>
+
+<div class="row fitsmall">
+<div class="col-md-12 col-sm-12">
 <div id="topCharts">
     <div class="chartWrapper">
         <div class="chartLabel">
-			<!--<div style="float:left; padding-right: 18px;"><i class="fa fa-users"></i><span id="statsWorkers">...</span></div>-->			
+
+			<!--<div style="float:left; padding-right: 18px;"><i class="fa fa-users"></i><span id="statsWorkers">...</span></div>-->
 			<div style="float:left; margin-right: 9px;">{{=String(it.stats.address).split(".")[0]}}</div>
 			<div style="float:right; padding-left: 18px;"><small><i class="fa fa-tachometer"></i> <span id="statsHashrateAvg">...</span> (Avg)</small></div>
 			<div style="float:right; padding-left: 18px;"><small><i class="fa fa-tachometer"></i> <span id="statsHashrate">...</span> (Now)</small></div>
@@ -87,19 +107,75 @@
 		</div>
 		<div class="chartHolder"><svg id="workerHashrate" /></div>
 		<div>
-			<div style="float:right; padding-top: 9px; padding-right: 18px;"><i class="fa fa-cog"></i> Shares: <span id="statsTotalShares">...</span></div>
-			<div style="float:left; padding-top: 9px; padding-left: 18px; padding-right: 18px;"><i class="fa fa-money"></i> Immature: <span id="statsTotalImmature">...</span> </div>
-			<div style="float:left; padding-top: 9px; padding-left: 18px; padding-right: 18px;"><i class="fa fa-money"></i> Bal: <span id="statsTotalBal">...</span>  </div>
-			<div style="padding-top: 9px; padding-left: 18px;"><i class="fa fa-money"></i> Paid: <span id="statsTotalPaid">...</span>  </div>
+
+		<div style="float:right; padding-top: 9px; padding-right: 18px;"><i class="fa fa-cog"></i> Shares: <span id="statsTotalShares">...</span></div>
+			<!-- <div style="float:left; padding-top: 9px; padding-left: 18px; padding-right: 18px;"><i class="fa fa-money"></i> Immature: <span id="statsTotalImmature">...</span></div>
+			<div style="float:left; padding-top: 9px; padding-left: 18px; padding-right: 18px;display:none;"><i class="fa fa-money"></i> Bal: <span id="statsTotalBal">...</span> </div>
+			<div style="padding-top: 9px; padding-left: 18px;"><i class="fa fa-money"></i> Paid: <span id="statsTotalPaid">...</span>  </div>  -->
 		</div>
+
     </div>
 </div>
+</div>
+</div>
 
-<div id="boxesWorkers"> </div>
+<div class="alert alert-warning" role="alert">
+<h4 class="alert-heading"> Dear Miners:</h4>
+Your Earnings will not show until a block you have mined in gets more than 100 confirmations. The payment system triggers within 10 minutes after 100 confirmations for each block, your page will then show the added amount you were paid for that specific block only. If there is still pending blocks that you mined you will still have more payments pending.<br /><br />
+</div>
+
+
+<div class="row">
+	<div class="col-md-12 col-sm-12">
+		<table class="table table-bordered table-sm text-center">
+			<h6>Total Bitcoin Private Earnings</h6>
+			<thead style="background:#343a40;color:white">
+				<th>ZCL Donated So Far</th>
+				<th>% Of Total Pool</th>
+				<th>BTCP Earned If Program Ended Right Now</th>
+			</thead>
+			<td style="width:33%"><span id="ZCLMined">0</span> ZCL</td>
+			<td style="width:33%"><span id="ZCLPercent">0</span>%</td>
+			<td style="width:33%"><span id="BTCPNow">0</span> BTCP</td>
+		</table>
+				<table class="table table-bordered table-sm text-center">
+			<thead style="background:#343a40;color:white">
+				<th>BTCP Earned (Pool Donated 20k ZCL)</th>
+				<th>BTCP Earned (Pool Donated 30k ZCL)</th>
+				<th>BTCP Earned (Pool Donated 40k ZCL)</th>
+				<th>BTCP Earned (Pool Donated 50k ZCL)</th>
+			</thead>
+					<td style="width:25%"><span id="BTCP20K">0</span> BTCP</td>
+			<td style="width:25%"><span id="BTCP30K">0</span> BTCP</td>
+			<td style="width:25%"><span id="BTCP40K">0</span> BTCP</td>
+			<td style="width:25%"><span id="BTCP50K">0</span> BTCP</td>
+		</table>
+
+
+	</div>
+
+</div>
+
+<div class="row">
+	<div class="col-md-6 col-sm-12">
+		<div id="shareTableDiv"></div>
+		</div>
+		<div class="col-md-6 col-sm-12">
+		<div id="pendingBlocksDiv"></div>
+		</div>
+	</div>
+
+
+	<div id="boxesWorkers" class="text-center fitsmall">
+	</div>
+
 
 <script>
 	var _miner = "{{=String(it.stats.address).split(".")[0]}}";
 	var _workerCount = 0;
-	window.statsSource = new EventSource("/api/live_stats");
-    document.querySelector('main').appendChild(document.createElement('script')).src = '/static/miner_stats.js';
+	//window.statsSource = new EventSource("/api/live_stats");
+    document.querySelector('main').appendChild(document.createElement('script')).src = '/static/js/miner_stats.js';
+
+
+
 </script>

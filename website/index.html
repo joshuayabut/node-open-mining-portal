@@ -1,95 +1,481 @@
-<!doctype html>
-
+<!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="utf-8">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <link rel="icon" href="/static/images/favicon.ico">
+  <title>ZClassic Donation Pool</title>
+  <!-- Bootstrap core CSS-->
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
 
-    <link rel="icon" type="image/png" href="/static/favicon.png"/>
-
-    <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
-
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.min.css">
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.1/normalize.min.css">
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/pure/0.4.2/pure-min.css">
-
-    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
-
-    <script src="//cdnjs.cloudflare.com/ajax/libs/d3/3.4.5/d3.min.js"></script>
-    <script src="/static/nvd3.js"></script>
-    <link rel="stylesheet" href="/static/nvd3.css">
-
-    <script src="/static/main.js"></script>
-    <link rel="stylesheet" href="/static/style.css">
-
-    <title>z-nomp</title>
+  <!-- Custom fonts for this template-->
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+  <!-- Page level plugin CSS-->
+  <link href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap4.min.css" rel="stylesheet">
+  <!-- Custom styles for this template-->
+  <link href="/static/css/sb-admin.css" rel="stylesheet">
+  <link rel="stylesheet" href="/static/css/nvd3.css">
+  <link rel="stylesheet" href="/static/css/site.css">
+  <link rel="stylesheet" href="/static/css/lobibox.css">
 
 </head>
+<!-- <body class="fixed-nav sticky-footer bg-dark" id="page-top"> -->
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-111728706-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
 
-<body>
+  gtag('config', 'UA-111728706-1');
+</script>
 
-<header>
-    <div class="home-menu pure-menu pure-menu-open pure-menu-horizontal">
+<body class="fixed-nav bg-dark" id="page-top">
 
-        <a class="pure-menu-heading hot-swapper" href="/"><i class="fa fa-home"></i>&nbsp;z-nomp</a>
+  <!-- Navigation-->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
+    <a class="navbar-brand" href="/"><img src="/static/images/logo.png"></a>
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+      <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
+        <li class="nav-item {{? it.selected === '' }}active{{?}}"  title="Home">
+          <a class="nav-link" href="/">
+            <i class="fa fa-fw fa-home"></i>
+            <span class="nav-link-text">Home</span>
+          </a>
+        </li>
 
-        <ul>
-            <li class="{{? it.selected === 'getting_started' }}pure-menu-selected{{?}}">
-                <a class="hot-swapper" href="/getting_started">
-                    <i class="fa fa-rocket"></i>&nbsp;
-                    Getting Started
-                </a>
-            </li>
-            <li class="{{? it.selected === 'stats' }}pure-menu-selected{{?}}">
-                <a class="hot-swapper" href="/stats">
-                    <i class="fa fa-bar-chart-o"></i>&nbsp;
-                    Graph Stats
-                </a>
-            </li>
-            <li class="{{? it.selected === 'tbs' }}pure-menu-selected{{?}}">
-                <a class="hot-swapper" href="/tbs">
-                    <i class="fa fa-table"></i>&nbsp;
-                    Tab Stats
-                </a>
-            </li>
-            <li class="{{? it.selected === 'workers' }}pure-menu-selected{{?}}">
-                <a class="hot-swapper" href="/workers">
-                    <i class="fa fa-cogs"></i>&nbsp;
-                    Workers Stats
-                </a>
-            </li>
-            <li class="{{? it.selected === 'api' }}pure-menu-selected{{?}}">
-                <a class="hot-swapper" href="/api">
-                    <i class="fa fa-code"></i>&nbsp;
-                    API
-                </a>
-            </li>
-        </ul>
+        <!--                                            <li class="nav-item {{? it.selected === 'dashboard' }}active{{?}}"  title="Dashboard">
+                    <a class="nav-link" href="/dashboard">
+                        <i class="fa fa-fw fa-dashboard"></i>
+                        <span class="nav-link-text">Dashboard</span>
+                    </a>
+                </li> -->
+
+        <li class="nav-item {{? it.selected === 'getting_started' }}active{{?}}" title="Connection Information">
+          <a class="nav-link" href="/getting_started">
+                        <i class="fa fa-fw fa-check"></i>
+                        <span class="nav-link-text">Connection Information</span>
+                    </a>
+        </li>
+        <li class="nav-item {{? it.selected === 'stats' }}active{{?}}" title="Graph Stats">
+          <a class="nav-link" href="/stats">
+                        <i class="fa fa-fw fa-area-chart"></i>
+                        <span class="nav-link-text">Graph Stats</span>
+                    </a>
+        </li>
+        <li class="nav-item {{? it.selected === 'tbs' }}active{{?}}" title="Table Stats">
+          <a class="nav-link" href="/tbs">
+                        <i class="fa fa-fw fa-globe"></i>
+                        <span class="nav-link-text">Global Stats</span>
+                    </a>
+        </li>
+        <li class="nav-item {{? it.selected === 'workers' }}active{{?}}" title="Workers">
+          <a class="nav-link" href="/workers">
+                        <i class="fa fa-fw fa-wrench"></i>
+                        <span class="nav-link-text">Worker Stats</span>
+                    </a>
+        </li>
+
+        <li class="nav-item" title="FAQ">
+          <a class="nav-link" href="/faq">
+                        <i class="fa fa-fw fa-question-circle"></i>
+                        <span class="nav-link-text">FAQ</span>
+                    </a>
+        </li>
+        <li class="nav-item" title="Support">
+          <a class="nav-link" href="http://www.discord.gg/RNenQfx" target="_blank">
+                        <i class="fa fa-fw fa-life-ring"></i>
+                        <span class="nav-link-text">Support</span>
+                    </a>
+        </li>
+<!--         <li class="nav-item {{? it.selected === 'payments' }}active{{?}}" title="Payments">
+          <a class="nav-link" href="/payments">
+                        <i class="fa fa-fw fa-money"></i>
+                        <span class="nav-link-text">Payments</span>
+                    </a>
+        </li> -->
+        <li class="nav-item {{? it.selected === 'api' }}active{{?}}" title="API">
+          <a class="nav-link" href="/api">
+                        <i class="fa fa-fw fa-terminal"></i>
+                        <span class="nav-link-text">API</span>
+                    </a>
+        </li>
+        <li class="nav-item" title="Donate">
+          <a class="nav-link" data-toggle="modal" data-target="#donateModal">
+                        <i class="fa fa-fw fa-share"></i>
+                        <span class="nav-link-text">Donate</span>
+                    </a>
+        </li>
+        <li class="nav-item" title="Terms &amp; Conditions">
+          <a class="nav-link" data-toggle="modal" data-target="#TAC">
+                        <i class="fa fa-fw fa-gavel"></i>
+                        <span class="nav-link-text">Terms & Conditions</span>
+                    </a>
+        </li>
+      </ul>
+
+
+</div>
+</nav>
+
+
+<!-- Bootstrap core JavaScript-->
+
+
+<script src="/static/vendor/jquery/jquery.min.js"></script>
+<!-- Core plugin JavaScript-->
+<script src="/static/js/bootstrap.bundle.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/popper.js/1.13.0/umd/popper.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/d3/3.4.5/d3.min.js"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+
+<!-- Page level plugin JavaScript-->
+
+<script src="/static/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+<!-- Custom scripts for all pages-->
+<script src="/static/js/sb-admin.min.js"></script>
+<!-- Custom scripts for this page-->
+<!-- <script src="/static/js/sb-admin-datatables.min.js"></script> -->
+<script src="/static/js/nvd3.js"></script>
+<script src="//cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+<script src="//cdn.datatables.net/1.10.16/js/dataTables.bootstrap4.min.js"></script>
+<script src="/static/js/lobibox.js"></script>
+
+<script type="text/javascript">
+
+function searchKeyPress(e)
+{
+  // look for window.event in case event isn't passed in
+  e = e || window.event;
+  if (e.keyCode == 13)
+  {
+
+    document.getElementById('btnSearch').click();
+    return false;
+  }
+  return true;
+
+$(document).ready(function(){
+  $('.minersearchbtn').click(function(){
+    window.location = "/workers/" + $('.minersearchinput').val();
+  });
+});
+</script>
+<div class="content-wrapper">
+  <div class="container-fluid">
+    <main>
+      <div class="row">
+        <div class="col-md-12 col-xs-12" style="font-size: 12px;">
+          {{=it.page}}
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<!-- Scroll to Top Button-->
+<a class="scroll-to-top rounded" href="#page-top">
+  <i class="fa fa-angle-up"></i>
+</a>
+
+<script>
+$(function () {
+  $('.btn-pop').popover({
+    container: 'body'
+  })
+})
+</script>
+
+<!-- Donate Modal-->
+<div class="modal fade" id="donateModal" tabindex="-1" role="dialog" aria-labelledby="donateModalLabel" aria-hidden="true" >
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body text-center">
+        <h6>You may also donate directly to the ZClassic donation address (no BTCP will be rewarded):</h6>
+        <p><b class="donation-addr">t1gsePJZ6ojJYygj3PWMGJfojPUoMd5AVfU</b></p>
+      </div>
     </div>
-</header>
+  </div>
+</div>
 
-<main>
-    {{=it.page}}
-</main>
-
-
-<footer>
-
-    <div>
-        This site is powered by the open source <a target="_blank" href="https://github.com/joshuayabut/z-nomp/">z-nomp</a>
-        project created by Joshua Yabut and the Zclassic Community and is licensed under the <a href="https://en.wikipedia.org/wiki/MIT_License">MIT License</a>
+<!-- Disclaimer Modal -->
+<div class="modal fade" id="TAC" tabindex="-1" role="dialog" aria-labelledby="tacModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="tacModalLabel">Terms and Conditions</h5>
+        <!--
+        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">x</span>
+      </button>-->
     </div>
-    <div>
-        <i class="fa fa-heart"></i>&nbsp; Support this project by donating&nbsp;<i class="fa fa-btc"></i>&nbsp;BTC: 18vHMxVzotQ9EPyESrf7Z1hNM9AwJeVHgD
-    </div>
-    <div id="communityFooter">
-        Community&nbsp;<i class="fa fa-comment"></i>&nbsp;: &nbsp;<a target="_blank" href="https://zclassic.herokuapp.com">#zclassic IRC</a>
-        &nbsp;&nbsp;|&nbsp;&nbsp;
-        <a target="_blank" href="http://reddit.com/r/zclassic">/r/zclassic</a>
-        &nbsp;&nbsp;|&nbsp;&nbsp;
-        <iframe src="http://ghbtns.com/github-btn.html?user=joshuayabut&repo=z-nomp&type=watch&count=true" allowtransparency="true" frameborder="0" scrolling="0" width="140" height="20"></iframe>
-    </div>
+    <div class="modal-body" style="font-size:10px">
+      <div class="text-center"><img src="/static/images/BTCP.png"/ style="width:20%"></div>
+      <br/>
+      <h6 class="text-center">VOLUNTARY MINER CONTRIBUTION PROGRAM AGREEMENT</h6>
 
-</footer>
+      <p>This Voluntary Miner Contribution Program Agreement (the "<b>Agreement</b>"), by and between Bitcoin Private Developer Community LLC ("<b>BTCP Community</b>”), a domestic limited liability company existing and operating under the laws of the State of Nevada and the ZClassic Mining Community (the "<b>ZClassic Miners</b>”) (collectively referred to hereinafter as the "<b>Parties</b>”) shall set forth the terms and conditions governing the Voluntary Miner Contribution Program (the "<b>Program</b>").
 
-</body>
-</html>
+        The Parties hereby acknowledge the Bitcoin Private cryptocurrency asset will come into existence after a snapshot of the ZClassic platform takes place (hereinafter referred to the "Fork Date”), at which point, any holders of the ZCL coin will see a 1 to 1 ratio of Bitcoin Private ("<b>BTCP</b>”);
+
+        The Parties further acknowledge that the purpose of this Program is to set forth a bargained-for exchange between the BTCP Community and the ZClassic Miners through a voluntary mining contribution platform, the terms and conditions of which are set forth as follows;</p>
+
+        <div id="accordion">
+          <div class="card">
+            <div class="card-header" id="headingOne" style="padding:unset !important;">
+              <h5 class="mb-0">
+                <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                  1. ZClassic Miner Contribution
+                </button>
+              </h5>
+            </div>
+
+            <div class="modal-body text-center">
+            <!--  See <a href="https://redd.it/7txoej" target="_blank"> Here</a> for auction information.-->
+            <h6>You can donate directly to the ZClassic donation address</h6>
+ZClassic: <b>t1gsePJZ6ojJYygj3PWMGJfojPUoMd5AVfU</b><br><font size="2">Donations do not qualify for the Miner Program.</font>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header" id="headingTwo" style="padding:unset !important;">
+              <h5 class="mb-0">
+                <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                  2.	BTCP Community Consideration
+                </button>
+              </h5>
+            </div>
+
+            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+              <div class="card-body">
+                <p>The Parties further acknowledge that in consideration for the contributions of the ZClassic Miners, each participating miner will receive 1.25 BTCP for each ZCL coin contributed and deposited into the Fund (the "Miner Reward”). The Miner Reward will be issued to the contributing ZClassic Miners, after the Fork Date, for each ZCL contributed to the Fund up to 50,000 ZCL or the aggregate amount of ZCL contributed by ZClassic Miners on the eve prior to the Fork Date, whichever event takes place sooner.
+
+                  The BTCP blockchain developers have developed a protocol on the blockchain that will code the fork such that these Miner Rewards are generated on the Fork Date and sent directly to the ZClassic Miners who contributed to the Fund pursuant to this Agreement.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="card-header" id="headingThree" style="padding:unset !important;">
+                <h5 class="mb-0">
+                  <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                    3. Private Key Designation
+                  </button>
+                </h5>
+              </div>
+
+
+                  <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+                    <div class="card-body">
+                      <p>The Parties further acknowledge that in consideration for the contributions of the ZClassic Miners, each participating miner will receive a minimum of 1.25 BTCP for each ZCL coin contributed and deposited into the Fund (the “Miner Reward”). The Miner Reward will be issued to the contributing ZClassic Miners, after the Fork Date, for each ZCL contributed to the Fund up to 50,000 ZCL or the aggregate amount of ZCL contributed by ZClassic Miners on the eve prior to the Fork Date, whichever event takes place sooner. The BTCP blockchain developers have developed a protocol on the blockchain that will code the fork such that these Miner Rewards are generated on the Fork Date and sent directly to the ZClassic Miners who contributed to the Fund pursuant to this Agreement.</p>
+                    </div>
+                  </div>
+                </div>
+
+
+                    Two or more members from the Fund shall also hold keys to the Electrum Wallet to further the BTCP Community goal of transparency and security.</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="card">
+                <div class="card-header" id="headingFour" style="padding:unset !important;">
+                  <h5 class="mb-0">
+                    <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                      4. The Goals of the Fund
+                    </button>
+                  </h5>
+                </div>
+
+                <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordion">
+                  <div class="card-body">
+                    <p>The ZCL coins mined and contributed directly to the Fund will be strictly used for those expenses incurred in-connection with the Bitcoin Private fork. The BTCP Community is required to pay fees and expenses including, but not limited to, those fees incurred in having BTCP listed on multiple exchanges, fees paid to BTCP developers, marketing teams, administrators, and legal counsel.
+
+                      At the time of the drafting of this Agreement, the BTCP Community estimates the following breakdown with respect to the allocation of the Fund’s expenses:
+                      a.	40% of the Fund towards expenses incurred to have BTCP listed on multiple exchanges;
+                      b.	25% of the Fund towards remuneration of the BTCP Development Team;
+                      c.	20% of the Fund towards the General and Administrative tasks; and
+                      d.	15% of the Fund towards remuneration of the BTCP Marketing Team.</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="card">
+                  <div class="card-header" id="headingFive" style="padding:unset !important;">
+                    <h5 class="mb-0">
+                      <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+                        5. Disclaimer
+                      </button>
+                    </h5>
+                  </div>
+
+                  <div id="collapseFive" class="collapse" aria-labelledby="headingFive" data-parent="#accordion">
+                    <div class="card-body">
+                      <p>The Parties hereto fully acknowledge and understand that the date and time of the Fork Date of ZClassic is subject to change. The Parties further acknowledge that, in the unforeseeable event that the ZClassic fork does not occur (thus rendering Bitcoin Private nonexistent), any and all assets in the Fund that were contributed by ZClassic Miners ("Residual Assets”) will be remitted back to the ZClassic Miners. For purposes of this Article 5, "Residual Assets” shall be the total number of ZClassic coins contributed to the Fund by ZClassic Miners, less those ZCL coins used by the BTCP Community pursuant to the terms and conditions set forth herein.
+
+                        Any and all fees or costs related to the transaction and/or transfer of ZCL back to the ZClassic Miners will be incurred by the ZClassic Miners.</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="card">
+                    <div class="card-header" id="headingSix" style="padding:unset !important;">
+                      <h5 class="mb-0">
+                        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
+                          6. Warranties and Representations
+                        </button>
+                      </h5>
+                    </div>
+
+                    <div id="collapseSix" class="collapse" aria-labelledby="headingSix" data-parent="#accordion">
+                      <div class="card-body">
+                        <p>Each Party warrants and represents to the other Party that it has, and so long as this Agreement remains in force, will continue to have, full legal capacity, right, power and authority to execute and perform all its obligations as stipulated under this Agreement.
+                          The Parties hereby warrant and represent that each Party has and/or will obtain and maintain all necessary rights and permits under this Agreement and shall comply with all rules & regulations, where applicable, as set forth by any governmental and regulatory bodies to the extent they are required.
+                          Each Party hereby represents that it has full power and authority to enter into and perform this Agreement, and neither Party knows of any agreements, contracts, promises or undertakings which would prevent its full execution and performance of the Agreement.
+                          Parties shall perform the responsibilities and services with reasonable skill and diligence.</p>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="card">
+                      <div class="card-header" id="headingSeven" style="padding:unset !important;">
+                        <h5 class="mb-0">
+                          <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseSeven" aria-expanded="false" aria-controls="collapseSeven">
+                            7. Indemnification
+                          </button>
+                        </h5>
+                      </div>
+
+                      <div id="collapseSeven" class="collapse" aria-labelledby="headingSeven" data-parent="#accordion">
+                        <div class="card-body">
+                          <p>Both Parties shall defend, hold harmless and fully indemnify each other against all liabilities, losses, costs, expenses and unreasonable claims.
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="card">
+                      <div class="card-header" id="headingEight" style="padding:unset !important;">
+                        <h5 class="mb-0">
+                          <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseEight" aria-expanded="false" aria-controls="collapseEight">
+                            8. Confidentiality
+                          </button>
+                        </h5>
+                      </div>
+
+                      <div id="collapseEight" class="collapse" aria-labelledby="headingEight" data-parent="#accordion">
+                        <div class="card-body">
+                          <p>Each Party and its affiliates understand and acknowledge the terms and conditions of this Agreement are confidential. From time to time during the performance of this Agreement each Party may also receive certain information from the other Party marked confidential. Neither Party nor its affiliates will, without the express written consent of the other, disclose any confidential information disclosed by one Party to the other and designated confidential to any third party, nor to any employees, contractors, vendors, consultants or affiliates other than those employees who have an actual need to know such information in order to perform their duties. The Parties acknowledge and agree that this Agreement may not be made publicly available or available to third-parties.
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+
+
+                    <div class="card">
+                      <div class="card-header" id="headingNine" style="padding:unset !important;">
+                        <h5 class="mb-0">
+                          <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseNine" aria-expanded="false" aria-controls="collapseNine">
+                            9. Miscellaneous
+                          </button>
+                        </h5>
+                      </div>
+
+                      <div id="collapseNine" class="collapse" aria-labelledby="headingNine" data-parent="#accordion">
+                        <div class="card-body">
+                          <ol type="a">
+                            <li><b>Amendment.</b>  Except as provided by law or otherwise set forth herein, this Agreement may be modified or amended only by a written instrument which evidences the approval of the council of the Fund by way of a 3/5 	quorum, to extent, however, that said Amendments are in the best interest of the Program as a whole.</li>
+
+                            <li><b>Interpretation.</b>  Whenever the context may require, any noun or pronoun used herein shall include the corresponding masculine, feminine or neuter forms, and the singular form of nouns, pronouns and verbs shall include the plural and vice versa.</li>
+
+                            <li><b>Severability.</b>  Each provision of this Agreement shall be considered severable and if for any reason any provision or provisions hereof are determined to be invalid and contrary to existing or future law, such invalidity shall not impair the operation or affect those portions of this Agreement which are valid, and this Agreement shall remain in full force and effect and shall be construed and enforced in all respects as if such invalid or unenforceable provision or provisions had been omitted.</li>
+
+                            <li><b>Burden and Benefit Upon Successors.</b>  Except as expressly provided otherwise herein, this Agreement is binding upon, and inures to the benefit of, the parties hereto and their respective heirs, executors, administrators, personal and legal representatives, successors and assigns.</li>
+
+                            <li><b>Further Assurances.</b>  Each Party hereby agrees that it shall hereafter execute and deliver such further instruments, provide all information and take or forbear such further acts and things as may be reasonably required or useful to carry out the intent and purpose of this Agreement and as are not inconsistent with the terms hereof.</li>
+
+                            <li><b>Counterparts.</b>  This Agreement may be executed in any number of counterparts, each of which shall be an original but all of which together will constitute one instrument, binding upon all parties hereto, notwithstanding that all of such parties may not have executed the same counterpart.</li>
+
+                            <li><b>Venue.</b>  The courts of the State of New York shall have exclusive jurisdiction to hear any suit involving this Agreement, and exclusive venue for any such action shall lie in New York County, New York.  Each Member hereby irrevocably submits to personal jurisdiction of such court.</li>
+
+                            <li><b>Intellectual Property.</b> Except for rights expressly granted under this agreement, nothing in this agreement will function to transfer any of either Party’s Intellectual Property rights to the other party, and the Party’s shall jointly retain exclusive interest in and ownership of the Intellectual Property developed after the execution of this Agreement. Unless otherwise agreed to by the Parties in a separate writing, the rights to any Intellectual Property created by any of the Parties prior to the execution of this Agreement, or developed outside the scope of this agreement, shall be solely and exclusively owned by the creating Party.</li>
+                            <br/>
+                            <p><b>WHILE THE BITCOIN PRIVATE DEVELOPER COMMUNITY HAS IMPLEMENTED POWERFUL SECURITY MEASURES FOR THE SAFE STORAGE OF ZCLASSIC COINS CONTRIBUTED BY PARTICIPATING ZCLASSIC MINERS, THERE HAVE BEEN INCIDENTS OF DIGITAL CURRENCY THEFT AND ZCLASSIC REMAINS A POTENTIAL TARGET FOR HACKERS. ZCLASSIC THAT ARE LOST OR STOLEN CANNOT BE REPLACED, AS TRANSACTIONS ARE IRREVOCABLE. DESPITE THE DILIGENT EFFORTS PUT FORTH BY THE BITCOIN PRIVATE DEVELOPER COMMUNITY TO PROTECT ITS WALLET ASSETS, IT WOULD BE IRRESPONSIBLE AND UNLAWFUL TO GUARANTEE WITH 100% CERTAINTY THAT THE NETWORK IS ENTIRELY SAFEGUARDED FROM FRAUD, BUSINESS FAILURE, HACKERS, MALWARE, OR GOVERNMENT-MANDATED REGULATION. WHILE THE BITCOIN PRIVATE DEVELOPER COMMUNITY IS CONFIDENT THAT THESE RISKS ARE MINIMAL AND EXTREMELY UNLIKELY, LIKE MOST OTHER CRYPTOCURRENCIES, IT IS IMPORTANT THAT ALL PARTICIPATING MINERS AVAIL THEMSELVES TO THESE POTENTIAL RISKS.</b>
+                            </p>
+                          </ol>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" id="tosAccept" class="btn btn-primary" data-dismiss="modal" onclick="TOSAccept();">Accept</button>
+                    <button type="button" id="tosDecline" class="btn btn-danger" onclick="window.location.href='https://zclassic.org'">Decline</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </body>
+
+          </html>
+
+          <script>
+          function gatherUserEntry(cb) {
+            $.get("https://ipinfo.io", function(res) {
+              if (!res) { return cb(Error('Failed to GET from IPInfo')) }
+              let o = { date: new Date(), ip: res.ip }
+              console.log(o.date.toUTCString())
+              console.log("User IP address: " + o.ip);
+
+              //localStorage.Timestamp = o.date
+              //localStorage.IpAddress = o.ip
+              return cb(null, o)
+            }, "jsonp");
+          }
+
+          function saveEntry(o, cb) {
+            var protocol = location.protocol;
+            var slashes = protocol.concat("//");
+            var host = slashes.concat(window.location.hostname);
+
+            $.post(host + ":8443/entry", o, function(res) {
+              //if (!res) { return cb(Error('Failed to POST to our srv')) }
+              console.log(res)
+
+              return cb(null, res)
+            });
+          }
+
+          function TOSAccept(){
+            // Disable buttons
+            $('#tosAccept').attr('disabled', true)
+            $('#tosDecline').attr('disabled', true)
+
+            gatherUserEntry(function(err, r1) {
+              if (err || !r1) { console.log(err); return; }
+              saveEntry(r1, function(err, r2) {
+                if (err) { console.log(err); return; }
+
+                // Dismiss Modal
+                $('#TAC').modal('hide')
+
+
+  $(document).ready(function() {
+    // Check whether either localStorage has this machine ok'd
+    // We could also re-check whether this connector's ip has already been logged, but no reason
+    if (localStorage.ZCLAccept == "false" || localStorage.ZCLAccept == "" || localStorage.ZCLAccept == null) {
+      $(window).on('load', function() {
+        $('#TAC').modal('show');
+      });
+    }
+  });
+</script>
+

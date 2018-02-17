@@ -25,6 +25,6 @@ $(function(){
         }, 0);
     });
 
-    window.statsSource = new EventSource("/api/live_stats");
+//    window.statsSource = new EventSource("/api/live_stats");
 
 });

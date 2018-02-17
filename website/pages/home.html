@@ -1,33 +1,32 @@
 <style>
-    #boxWelcome{
-        background-color: #0eafc7;
-        color: white;
-        margin: 18px;
+    #topCharts{
+        padding-left: 18px;
+		padding-right: 18px;
+		padding-top: 18px;
+		padding-bottom: 0px;
     }
-    #logoImg{
-        height: 285px;
-        margin: 55px;
+    #topCharts > div > div > svg{
+        display: block;
+        height: 280px;
     }
-    #welcomeText{
-        font-size: 2.7em;
-        margin: 50px 18px 10px 18px;
+    .chartWrapper{
+        border: solid 1px #c7c7c7;
+        border-radius: 5px;
+        padding: 5px;
+        margin-bottom: 18px;
     }
-    #welcomeItems{
-        list-style-type: none;
-        font-size: 1.3em;
-        padding: 0 !important;
-        margin: 0 0 0 18px !important;
+    .chartLabel{
+        font-size: 1.2em;
+        text-align: center;
+        padding: 4px;
     }
-    #welcomeItems > li{
-        margin: 30px !important;
-    }
-    #boxesLower {
+	#boxesWorkers {
         margin: 0 9px;
     }
-    #boxesLower > div {
+    #boxesWorkers > div {
         display: flex;
     }
-    #boxesLower > div > div {
+    #boxesWorkers > div > div {
         flex: 1 1 auto;
         margin: 0 9px 18px 9px;
         padding: 10px;
@@ -38,13 +37,13 @@
         font-size: 1.3em;
         margin: 0 0 5px 10px;
     }
-
-
     #boxStatsLeft{
-        background-color: #b064e1;
+        color: black;
+        background-color: #cccccc;
     }
     #boxStatsRight{
-        background-color: #10bb9c;
+		color: black;
+        background-color: #cccccc;
     }
     .boxStats{
         color: white;
@@ -70,71 +69,159 @@
         padding: 3px;
     }
 
+</style> <!-- <div class="row">''
+	<div class="col-md-12 col-xs-12" style="font-size: 12px;"> <div class="alert alert-primary alert-dismissable" role="alert">
+	<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a> <b>Thank you for everyone that participated in the block giveaway! [<a href="#" data-toggle="modal"
+data-target="#giveawayModal">10 of 10 blocks found</a>]</b></div></div> </div> -->
+      <!-- Icon Cards-->
 
-</style>
+      <div class="alert alert-warning" role="alert">
+      <h4 class="alert-heading"> Dear Miners:</h4>
+      <h6>Welcome to the official ZClassic/Bitcoin Private Voluntary Miner Donation Program. Our unique system gives miners the ability to earn up to 10-15 Bitcoin Private per ZCL mined,
+      with a guaranteed minimum of 1.25 BTCP per ZCL mined. More details on this auction style set up can be found <a href="https://redd.it/7txoej" target="_blank">here.</a><br /><br /><h6>
 
+      <h6>Don't have a mining rig setup? Not a problem. Read here to see how you setup Nicehash online in under 10 minutes to mine ZCL. NO hardware setup required!
+      More details on how to get started <a href="https://steemit.com/zclassic/@greensilver22/how-to-join-the-zcl-voluntary-miner-contribution-program-even-if-you-aren-t-a-miner" target="_blank">here.</a><br /><br /><h6>
 
-<div class="pure-g-r" id="boxWelcome">
-    <div class="pure-u-1-3">
-        <img id="logoImg" src="/static/logo.svg">
+      Mine along,<br />
+      The Bitcoin Private &amp; Zclassic Team
     </div>
-    <div class="pure-u-2-3">
-        <div id="welcomeText">Welcome to the future of mining</div>
-        <ul id="welcomeItems">
-            <li>Low fees</li>
-            <li>High performance Node.js backend</li>
-            <li>User friendly mining client</li>
-            <li>Multi-coin / multi-pool</li>
-        </ul>
-    </div>
-</div>
 
-<div class="pure-g-r" id="boxesLower">
-
-    <div class="pure-u-1-2">
-        <div class="boxStats" id="boxStatsLeft">
-            <div class="boxLowerHeader">Global Stats</div>
-            <div class="boxStatsList">
-                {{ for(var algo in it.stats.algos) { }}
-                <div>
-                    <div><i class="fa fa-flask"></i>{{=algo}}</div>
-                    <div><i class="fa fa-users"></i><span id="statsMiners{{=algo}}">{{=it.stats.algos[algo].workers}}</span> Miners</div>
-                    <div><i class="fa fa-tachometer"></i><span id="statsHashrate{{=algo}}">{{=it.stats.algos[algo].hashrateString}}</span></div>
+      <div class="row">
+	  <div class="col-xl-3 col-sm-6 mb-3 text-center">
+		<ul class="list-group text-justify">
+		  <li class="list-group-item"><b>Donation Pool Info</b></li>
+  <li class="list-group-item d-flex justify-content-between align-items-center">
+    <span style="font-size:13px; width:100%;"><i class="fa fa-fw fa-money"></i>&nbsp;100% Donation To ZCL Treasury Until 50,000 ZCL Reached</span>
+  </li>
+  <li class="list-group-item d-flex justify-content-between align-items-center">
+    <span style="font-size:13px; width:100%;"><i class="fa fa-fw fa-gavel"></i>&nbsp;<a href="https://redd.it/7txoej" target="_blank">Auction Style Payout</a>, Payout Type: PPLNT</span>
+  </li>
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+    <span style="font-size:13px; width:100%;"><i class="fa fa-fw fa-flash"></i>&nbsp;View Your BTCP Total In Your Miner Page</span>
+  </li>
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+    <span style="font-size:13px; width:100%;"><i class="fa fa-fw fa-exchange"></i><b>&nbsp;BTCP Payout Will Be <span style="text-decoration:underline">After</span> The Fork</b></span>
+  </li> </ul>
+      </div>
+        <div class="col-xl-3 col-sm-6 mb-3">
+		{{ function capitalizeFirstLetter(t){return t.charAt(0).toUpperCase()+t.slice(1)} }}
+		<ul class="list-group">{{ for(var pool in it.stats.pools) { }}
+		  <li class="list-group-item"><b>Pool Statistics</b></li>
+  <li class="list-group-item d-flex justify-content-between align-items-center">
+    <span style="font-size:13px"><i class="fa fa-fw fa-group"></i>&nbsp;Total Pool Miners / Workers</span>
+    <span class="badge badge-primary badge-pill" id="statsMiners{{=pool}}">{{=it.stats.pools[pool].minerCount}} Miners / {{=it.stats.pools[pool].workerCount}} Workers</span>
+  </li>
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+    <span style="font-size:13px"><i class="fa fa-fw fa-cubes"></i>&nbsp;Total Confirmed Blocks Mined (Pending)</span>
+    <span class="badge badge-primary badge-pill" id="statsBlocksConfirmed{{=pool}}"><span id="confirmedBlocks">{{=it.stats.pools[pool].blocks.confirmed}}</span> Blocks (<span
+id="pendingBlocks">{{=it.stats.pools[pool].blocks.pending}}</span>)</span>
+  </li>
+  <li class="list-group-item d-flex justify-content-between align-items-center">
+    <span style="font-size:13px"><i class="fa fa-fw fa-tachometer"></i>&nbsp;Total Pool Hashrate</span>
+    <span class="badge badge-primary badge-pill" id="statsHashrate{{=pool}}">{{=it.stats.pools[pool].hashrateString}}</span>
+  </li>
+      <li class="list-group-item d-flex justify-content-between align-items-center">
+    <span style="font-size:13px"><i class="fa fa-fw fa-flash"></i>&nbsp;Luck</span>
+    <span class="badge badge-primary badge-pill" id="statsLuckDays{{=pool}}">{{=it.stats.pools[pool].luckDays}} Days</span>
+  </li> </ul>
+      </div>
+        <div class="col-xl-3 col-sm-6 mb-3">
+		<ul class="list-group">
+		  <li class="list-group-item"><b>{{=capitalizeFirstLetter(it.stats.pools[pool].name)}} Network Statistics</b></li>
+  <li class="list-group-item d-flex justify-content-between align-items-center">
+    <span style="font-size:13px"><i class="fa fa-fw fa-cube"></i>&nbsp;Block Height</span>
+    <span class="badge badge-primary badge-pill" id="statsNetworkBlocks{{=pool}}">{{=it.stats.pools[pool].poolStats.networkBlocks}}</span>
+  </li>
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+    <span style="font-size:13px"><i class="fa fa-tachometer"></i>&nbsp; Network Hash/s:</span>
+	<span class="badge badge-primary badge-pill" id="statsNetworkSols{{=pool}}">{{=it.stats.pools[pool].poolStats.networkSolsString}}</span>
+  </li>
+  <li class="list-group-item d-flex justify-content-between align-items-center">
+    <span style="font-size:13px"><i class="fa fa-unlock-alt" aria-hidden="true"></i>&nbsp; Difficulty:</span>
+	<span class="badge badge-primary badge-pill" id="statsNetworkDiff{{=pool}}">{{=(parseFloat(it.stats.pools[pool].poolStats.networkDiff)).toFixed(0)}}</span>
+  </li>
+      <li class="list-group-item d-flex justify-content-between align-items-center">
+    <span style="font-size:13px"><i class="fa fa-users"></i>&nbsp; Node Connections:</span>
+	<span class="badge badge-primary badge-pill" id="statsNetworkConnections{{=pool}}">{{=it.stats.pools[pool].poolStats.networkConnections}}</span>
+  </li> </ul> {{ } }}
+      </div>
+	  	  	  	          <div class="col-xl-3 col-sm-6 mb-3">
+			  	  <script type="text/javascript" src="https://files.coinmarketcap.com/static/widget/currency.js"></script><div class="coinmarketcap-currency-widget"
+data-currency="zclassic" data-base="USD" data-secondary="BTC" data-ticker="true" data-rank="true" data-marketcap="true" data-volume="true" data-stats="USD" data-statsticker="false"></div>
+			  </div>
+          </div>
+		 <div class="row">
+			<div class="col-md-12">
+			            <div class="card mb-3">
+                <div class="card-header">
+                    <i class="fa fa-area-chart"></i>&nbsp;Donation Progress&nbsp;<span class="badge badge-primary badge-pill"
+id="statsCompletion{{=pool}}">{{=it.stats.pools[pool].blocks.confirmed}} of 4000 Blocks ({{=((it.stats.pools[pool].blocks.confirmed/4000)*100).toFixed(2)}}%)</span>
+                    &nbsp;<span class="badge badge-primary badge-pill" id="statsCompletionPercentage{{=pool}}" style="float:right">Donation End date, February 28th 2018.</span>
                 </div>
-                {{ } }}
-            </div>
-        </div>
-    </div>
+                <div class="card-body">
+						<div class="progress">
 
-    <div class="pure-u-1-2">
-        <div class="boxStats" id="boxStatsRight">
-            <div class="boxLowerHeader">Pools / Coins</div>
-            <div class="boxStatsList">
-                {{ for(var pool in it.stats.pools) { }}
-                <div>
-                    <div><i class="fa fa-dot-circle-o"></i>{{=pool}}</div>
-                    <div><i class="fa fa-users"></i><span id="statsMiners{{=pool}}">{{=it.stats.pools[pool].workerCount}}</span> Miners</div>
-                    <div><i class="fa fa-tachometer"></i><span id="statsHashrate{{=pool}}">{{=it.stats.pools[pool].hashrateString}}</span></div>
+  <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="{{=it.stats.pools[pool].blocks.confirmed}}" aria-valuemin="0" aria-valuemax="100"
+style="width: {{=(it.stats.pools[pool].blocks.confirmed/4000)*100}}%"></div> </div> </div>
                 </div>
-                {{ } }}
             </div>
-        </div>
-    </div>
+			</div> <div class="row">
+	<div class="col-md-12">
+            <!-- Area Chart Example-->
+            <div class="card mb-3">
+                <div class="card-header">
 
-</div>
+                    <i class="fa fa-area-chart"></i>Pool Hashrate&nbsp;<span class="badge badge-primary badge-pill" id="statsHashrate{{=pool}}">{{=it.stats.pools[pool].hashrateString}}</span>
+                </div>
+                <div class="card-body">
+					<div id="topCharts">
+    <div class="chartWrapper">
+        <div class="chartHolder"><svg id="poolHashrate"/></div>
 
-<script>
-    $(function() {
-        statsSource.addEventListener('message', function (e) {
-            var stats = JSON.parse(e.data);
+    </div> </div>
+                </div>
+            </div>
+			</div>
+			</div> <script>
+    document.querySelector('main').appendChild(document.createElement('script')).src = '/static/js/stats.js'; </script> <script>
+    $(document).ready(function() {
+
+		$.getJSON('/api/stats', function(stats) {
             for (algo in stats.algos) {
                 $('#statsMiners' + algo).text(stats.algos[algo].workers);
-                $('#statsHashrate' + algo).text(stats.algos[algo].hashrateString);
+                $('span#statsHashrate' + algo).text(stats.algos[algo].hashrateString);
             }
             for (var pool in stats.pools) {
-                $('#statsMiners' + pool).text(stats.pools[pool].workerCount);
-                $('#statsHashrate' + pool).text(stats.pools[pool].hashrateString);
+                $('#statsMiners' + pool).text(stats.pools[pool].minerCount + " Miners / " + stats.pools[pool].workerCount + " Workers");
+                $('span#statsHashrate' + pool).text(stats.pools[pool].hashrateString);
+				var confirmedBlocks = stats.pools[pool].blocks.confirmed;
+				var percentage = ((confirmedBlocks/4000) * 100).toFixed(2);
+				var daysUntilCompletion = (stats.pools[pool].luckDays * (4000 - confirmedBlocks)).toFixed(2);
+				$('span#statsCompletion' + pool).text(confirmedBlocks + " of 4000 Blocks (" + percentage + "%)");
+				$('span#statsCompletionPercentage' + pool).text("Donation End date, Feburary 28th 2018.")
+								var confirmed = $("span#confirmedBlocks").text();
+				var pending = $("span#pendingBlocks").text();
+				if(confirmed != stats.pools[pool].blocks.confirmed){
+					$("span#confirmedBlocks").text(stats.pools[pool].blocks.confirmed);
+				}
+								if(pending != stats.pools[pool].blocks.pending){
+					$("span#pendingBlocks").text(stats.pools[pool].blocks.pending);
+				}
             }
         });
     });
+
+</script>
+<script>
+
+$(document).ready(function() {
+    var blink = $('#blink_me');
+function runIt() {
+ blink.animate({opacity:'+=1'}, 250);
+ blink.animate({opacity:'-=0.9'}, 250, runIt);
+}
+    runIt();
+});
+
 </script>

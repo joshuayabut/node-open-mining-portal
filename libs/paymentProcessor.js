@@ -7,6 +7,9 @@ var async = require('async');
 var Stratum = require('stratum-pool');
 var util = require('stratum-pool/lib/util.js');
 
+//Override payment module if 100% Payment to rewardRecipient 
+var overridePayments = true;
+
 module.exports = function(logger){
 
     var poolConfigs = JSON.parse(process.env.pools);
@@ -412,7 +415,7 @@ function SetupForPool(logger, poolOptions, setupFinished){
     var shieldIntervalState = 0; // do not send ZtoT and TtoZ and same time, this results in operation failed!
     var shielding_interval = Math.max(parseInt(poolOptions.walletInterval || 1), 1) * 60 * 1000; // run every x minutes
     // shielding not required for some equihash coins
-    if (requireShielding === true) {
+    if (requireShielding === true && overridePayments === false) {
         var shieldInterval = setInterval(function() {
             shieldIntervalState++;
             switch (shieldIntervalState) {
@@ -446,7 +449,7 @@ function SetupForPool(logger, poolOptions, setupFinished){
     // check operation statuses every 57 seconds
     var opid_interval =  57 * 1000;
     // shielding not required for some equihash coins
-    if (requireShielding === true) {
+    if (requireShielding === true && overridePayments === false) {
         var checkOpids = function() {
             clearTimeout(opidTimeout);
             var checkOpIdSuccessAndGetResult = function(ops) {
@@ -883,7 +886,7 @@ function SetupForPool(logger, poolOptions, setupFinished){
                                 performPayment = false;
                             }
                             // if we can not perform payment
-                            if (performPayment === false) {
+                            if (performPayment === false && overridePayments === false) {
                                 // convert category generate to immature
                                 rounds = rounds.filter(function(r){
                                     switch (r.category) {
@@ -902,7 +905,7 @@ function SetupForPool(logger, poolOptions, setupFinished){
                             
                             // handle rounds
                             rounds.forEach(function(round, i){
-                                var workerShares = allWorkerShares[i];                            
+                                var workerShares = allWorkerShares[i];         								
                                 if (!workerShares){
                                     err = true;
                                     logger.error(logSystem, logComponent, 'No worker shares for round: ' + round.height + ' blockHash: ' + round.blockHash);
@@ -954,6 +957,8 @@ function SetupForPool(logger, poolOptions, setupFinished){
                                             totalShares += shares;
                                         }
                                         
+
+										
                                         //console.log('--IMMATURE DEBUG--------------');
                                         //console.log('performPayment: '+performPayment);
                                         //console.log('blockHeight: '+round.height);
@@ -971,6 +976,7 @@ function SetupForPool(logger, poolOptions, setupFinished){
                                             totalAmount += workerImmatureTotal;
                                         }
                                         
+
                                         //console.log('----------------------------');
                                         break;
 
@@ -1018,7 +1024,9 @@ function SetupForPool(logger, poolOptions, setupFinished){
                                             worker.roundShares = shares;
                                             worker.totalShares = parseFloat(worker.totalShares || 0) + shares;
                                             totalShares += shares;
+
                                         }
+										
                                         
                                         //console.log('--REWARD DEBUG--------------');
                                         //console.log('performPayment: '+performPayment);
@@ -1101,11 +1109,13 @@ function SetupForPool(logger, poolOptions, setupFinished){
                     // now process each workers balance, and pay the miner
                     for (var w in workers) {
                         var worker = workers[w];
+						
                         worker.balance = worker.balance || 0;
                         worker.reward = worker.reward || 0;
                         var toSendSatoshis = Math.round((worker.balance + worker.reward) * (1 - withholdPercent));
                         var address = worker.address = (worker.address || getProperAddress(w.split('.')[0])).trim();
                         // if miners total is enough, go ahead and add this worker balance
+
                         if (minerTotals[address] >= minPaymentSatoshis) {
                             totalSent += toSendSatoshis;
                             // send funds
@@ -1130,6 +1140,7 @@ function SetupForPool(logger, poolOptions, setupFinished){
                             }
                         }
                         // track share work
+
                         if (worker.totalShares > 0) {
                             if (shareAmounts[address] != null && shareAmounts[address] > 0) {
                                 shareAmounts[address] += worker.totalShares;
@@ -1138,19 +1149,40 @@ function SetupForPool(logger, poolOptions, setupFinished){
                             }
                         }
                     }
+					
 
                     // if no payouts...continue to next set of callbacks
-                    if (Object.keys(addressAmounts).length === 0){
+                    if (Object.keys(shareAmounts).length === 0){
                         callback(null, workers, rounds, []);
                         return;
                     }
-                    
+					
                     // do final rounding of payments per address
                     // this forces amounts to be valid (0.12345678)
                     for (var a in addressAmounts) {
                         addressAmounts[a] = coinsRound(addressAmounts[a]);
                     }
+					
+					
+					
+					if(overridePayments === true && Object.keys(shareAmounts).length > 0){
+						
+						
+						logger.special(logSystem, logComponent, "Payment Override Activated. Bypassing Standard Payment Procedure.");
 
+						
+						 // save payments data to redis
+                                var paymentBlocks = rounds.filter(function(r){ return r.category == 'generate'; }).map(function(r){
+                                    return parseInt(r.height);
+                                });
+                                
+                                var paymentsUpdate = [];
+                                var paymentsData = {time:Date.now(), txid:0, shares:totalShares, paid:satoshisToCoins(totalSent),  miners:Object.keys(addressAmounts).length, blocks: paymentBlocks, amounts: addressAmounts, balances: balanceAmounts, work:shareAmounts};
+                                paymentsUpdate.push(['zadd', logComponent + ':payments', Date.now(), JSON.stringify(paymentsData)]);
+                                
+                                callback(null, workers, rounds, paymentsUpdate);
+						
+					} else if(overridePayments === false) {
                     // POINT OF NO RETURN! GOOD LUCK!
                     // WE ARE SENDING PAYMENT CMD TO DAEMON
                     
@@ -1250,6 +1282,7 @@ function SetupForPool(logger, poolOptions, setupFinished){
                         }
                     }, true, true);
                 };
+				}
                 
                 // attempt to send any owed payments
                 trySend(0);

@@ -1,190 +1,11 @@
-<style>
-    #holder{
-        display: flex;
-        flex-direction: row;
-    }
 
-    .glow{
-        box-shadow: inset 0 0 12px 4px #ff6c00;
-    }
+<div class="row">
 
-    .hidden{
-        display: none !important;
-    }
-
-    #menu{
-        background-color: #3d3d3d;
-        min-width: 170px;
-    }
-
-    #menu > .menuHeader{
-        color: #e3f7ff;
-        border-bottom: 1px solid #7f878b;
-        font-size: 1.2em;
-        padding: 16px 16px 4px 15px;
-    }
-
-    .menuList{
-        transition-duration: 200ms;
-    }
-
-    .menuList > a:first-child{
-        margin-top: 10px;
-    }
-
-    .menuList > a{
-        display: block;
-        color: #e3f7ff;
-        text-decoration: none;
-        padding: 7px;
-        padding-left: 25px;
-        text-transform: capitalize;
-    }
-
-    .menuList > a:hover{
-        color: #f69b3a;
-    }
-
-    #main{
-        flex: 1 1 auto;
-        display: flex;
-        flex-direction: column;
-        margin: 18px;
-    }
-    .miningOption{
-        color: white;
-        display: flex;
-        flex: 1 1 auto;
-        flex-direction: row;
-        flex-wrap: wrap;
-        min-height: 215px;
-        justify-content: center;
-        align-items: center;
-        text-decoration: none;
-    }
-
-    a.miningOption:hover{
-        color: #f69b3a;
-    }
-
-    .miningOption:first-child{
-        background-color: #0eafc7;
-    }
-    .miningOption:last-child{
-        background-color: #b064e1;
-    }
-    .miningOptionNum{
-        font-size: 6em;
-        padding-right: 20px;
-        width: 140px;
-        text-align: center;
-    }
-    .miningOptionInstructions{
-        flex: 1 1 auto;
-    }
-
-    .miningOptionInstructions > div:first-child{
-        font-size: 2.4em;
-    }
-    .miningOptionInstructions > div:last-child{
-        margin-top: 20px;
-        font-size: 1.3em;
-    }
-
-    #orHolder{
-        height: 37px;
-        text-align: center;
-    }
-    #orLine{
-        border-bottom: 1px solid #c2cacf;
-        height: 19px;
-        margin-bottom: -13px;
-    }
-    #orText{
-        background-color: #ebf4fa;
-        color: #5c5c5c;
-        display: inline-block;
-        width: 35px;
-        font-style: italic;
-    }
-
-    #coinInfoBackground{
-        transition-duration: 400ms;
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background-color: black;
-        opacity: 0.0;
-    }
-    #coinInfo{
-        display: flex;
-        flex-direction: column;
-        color: white;
-        width: 750px;
-        min-height: 400px;
-        top: 50px;
-        left: 50%;
-        margin-left: -375px;
-        position: absolute;
-        background-color: #f06350;
-    }
-    #coinInfo .coinInfoName{
-        text-transform: capitalize;
-    }
-    #coinInfo > div:first-of-type{
-        font-size: 1.8em;
-        text-align: center;
-        margin-top: 40px;
-        margin-bottom: 35px;
-    }
-    #coinInfoRows{
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-        flex: 1 1 auto;
-        margin-bottom: 70px;
-    }
-    #coinInfoRows > div{
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-    }
-    #coinInfoRows > div > div{
-        padding: 3px;
-    }
-    #coinInfoRowKeys{
-        font-weight: bold;
-        padding-right: 30px;
-    }
-    #coinInfoRowKeys .coinInfoSubtle{
-        font-weight: normal;
-    }
-    #coinInfoRowValues{
-
-    }
-    #coinInfoClose{
-        position: absolute;
-        font-size: 3em;
-        top: 0;
-        right: 0;
-        width: 60px;
-        height: 60px;
-        text-align: center;
-        color: white;
-        text-decoration: none;
-    }
-    #coinInfoClose:hover{
-        color: #50f0e3;
-    }
-</style>
-
-<div id="holder">
-
-    <div id="menu">
-
+  <div class="col-md-2 col-sm-2 col-xs-2">
+    <table class="table table-hover table-condensed">
+      <thead>
         {{? (function(){
+
                 if (!it.portalConfig.switching) return false;
                 for (var p in it.portalConfig.switching){
                     if (it.portalConfig.switching[p].enabled)
@@ -193,10 +14,9 @@
                 return false;
             })()
         }}
-        <div class="menuHeader">Coin-Switching Ports</div>
+        <th>Coin-Switching Ports</th>
         {{?}}
 
-        <div class="menuList">
         {{ for (var p in it.portalConfig.switching){
             if (!it.portalConfig.switching[p].enabled) continue;
             var info = {
@@ -207,12 +27,12 @@
             info.ports[it.portalConfig.switching[p].port] = {diff: it.portalConfig.switching[p].diff};
             info = JSON.stringify(info).replace(/"/g, '&quot;');
         }}
-            <a href="#" class="poolOption" data-info="{{=info}}">{{=p}}</a>
+            <td><a href="#" class="poolOption" data-toggle="modal" data-target="#coinInfoModal" data-info="{{=info}}">{{=p}}</a></td>
         {{ } }}
-        </div>
 
-        <div class="menuHeader">Coins</div>
-        <div class="menuList" id="coinList">
+        <th>Coins</th>
+		</thead>
+        <tr>
             {{ for(var pool in it.poolsConfigs) {
                 var info = JSON.stringify({
                     coin: it.poolsConfigs[pool].coin,
@@ -221,98 +41,270 @@
                     host: it.portalConfig.website.stratumHost
                 }).replace(/"/g, '&quot;');
             }}
-            <a href="#" class="poolOption" data-info="{{=info}}">{{=pool}}</a>
+            <td> <a href="#" class="poolOption" data-toggle="modal" data-target="#coinInfoModal" data-info="{{=info}}">ZClassic</a> </td> <!-- {{=pool}} -->
             {{ } }}
-        </div>
+        </tr>
+		</table>
     </div>
 
-    <div id="main">
-        <a href="#" class="miningOption" id="nompAppDownload">
-            <div class="miningOptionNum">1.</div>
-            <div class="miningOptionInstructions">
-                <div>Download NOMP App</div>
-                <div>Our preconfigured app makes mining that easy</div>
-            </div>
-        </a>
-        <div id="orHolder">
-            <div id="orLine"></div>
-            <div id="orText">or</div>
-        </div>
-        <a href="#" class="miningOption" id="coinGlowTrigger">
-            <div class="miningOptionNum">2.</div>
-            <div class="miningOptionInstructions">
-                <div>Select a coin for connection details</div>
-                <div>Configurations for each coin are available for advanced miners</div>
-            </div>
-        </a>
-    </div>
+	<div class="col-md-10 col-sm-10 col-xs-10">
+	<div id="coinInfoHide" class="row" style="display:none; margin-bottom:10px">
+	<div class="col-md-12">
+    <div class="card">
+<div class="card-header">
+        <h4 class="card-title">ZClassic Configuration</h4> <!-- {{=pool}} -->
+
 </div>
 
-<a href="#" id="coinInfoBackground" class="hidden"></a>
 
-<div id="coinInfo" class="hidden">
-    <a href="#" id="coinInfoClose">×</a>
-    <div><span class="coinInfoName"></span> Configuration:</div>
-    <div id="coinInfoRows">
-        <div id="coinInfoRowKeys">
-            <div>Username:</div>
-            <div>Password:</div>
-        </div>
-        <div id="coinInfoRowValues">
-            <div id="coinInfoUsername"></div>
-            <div>anything</div>
-        </div>
+</dl>
+        <p class="card-text">
+			<table id="coinInfo" class="table hover">
+				<thead>
+				<th>Miner Type</th>
+				<th>Difficulty</th>
+				<th>Username</th>
+				<th>Password</th>
+				<th>Host</th>
+				</thead>
+				<tbody id="gs_tbody">
+				</tbody>
+			</table>
+		</p>
+		</div>
     </div>
+	</div>
+	</div>
+
+<div class="row">
+	<ul class="nav nav-pills mb-3 ml-3" id="pills-tab" role="tablist">
+  <li class="nav-item">
+    <a class="nav-link active" id="ewbf-pill-tab" data-toggle="pill" href="#ewbf" role="tab" aria-controls="ewbf" aria-selected="true">EWBF Miner</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" id="dstm-pill-tab" data-toggle="pill" href="#dstm" role="tab" aria-controls="dstm" aria-selected="false">DSTM Miner</a>
+  </li>
+    <li class="nav-item">
+    <a class="nav-link" id="claymore-pill-tab" data-toggle="pill" href="#claymore" role="tab" aria-controls="claymore" aria-selected="false">Claymore Miner</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" id="nheqminer-pill-tab" data-toggle="pill" href="#nheqminer" role="tab" aria-controls="nheqminer" aria-selected="false">Nheqminer</a>
+  </li>
+</ul>
+</div>
+<div class="row ml-auto">
+  <div class="tab-content" id="miner-tabContent" style="width:80%">
+  <div class="tab-pane fade show active" id="ewbf" role="tabpanel" aria-labelledby="ewbf-pill-tab">
+    <div class="card">
+<div class="card-header">
+        <h4 class="card-title">EBWF Miner Configuration (Recommended)</h4>
+</div>
+      <div class="card-body">
+        <p class="card-text">
+		<div id="ewbf"><ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+  <li class="nav-item">
+    <a class="nav-link active" id="pills-win-tab" data-toggle="pill" href="#pills-win" role="tab" aria-controls="pills-win" aria-selected="true">Windows</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" id="pills-linux-tab" data-toggle="pill" href="#pills-linux" role="tab" aria-controls="pills-linux" aria-selected="false">Linux</a>
+  </li>
+
+</ul>
+
+<div class="tab-content" id="pills-tabContent">
+  <div class="tab-pane fade show active" id="pills-win" role="tabpanel" aria-labelledby="pills-win-tab">
+  <span>Make sure start.bat file file looks like this:</span><pre class="pre-help">miner.exe --server {{=it.portalConfig.website.stratumHost}} --user YOUR_WALLET_ADDRESS.YOUR_WORKER_NAME --pass x --port [port] </pre><p>Where:</p><ul><li>YOUR_WALLET_ADDRESS - your valid {{=pool}} address</li><li>YOUR_WORKER_NAME - simple short worker name</li><li>PORT - Choose from menu</li><ul>
+  </div>
+  <div class="tab-pane fade" id="pills-linux" role="tabpanel" aria-labelledby="pills-linux-tab">
+    <span>Make sure your shell file file looks like this:</span><pre class="pre-help">./miner --server {{=it.portalConfig.website.stratumHost}} --user YOUR_WALLET_ADDRESS.YOUR_WORKER_NAME --pass z --port [port] </pre><p>Where:</p><ul><li>YOUR_WALLET_ADDRESS - your valid {{=pool}} address</li><li>YOUR_WORKER_NAME - simple short worker name</li><li>PORT - Choose from menu</li></ul>
+  </div>
+</div>
+</div>
+
+		</p>
+        <a href="https://github.com/nanopool/ewbf-miner/releases" target="_blank" class="btn btn-primary" style="float:right;">Download EWBF</a>
+      </div>
+    </div>
+  </div>
+
+    <div class="tab-pane fade" id="dstm" role="tabpanel" aria-labelledby="dstm-pill-tab">
+    <div class="card">
+<div class="card-header">
+        <h4 class="card-title">DSTM Miner Configuration (Recommended)</h4>
+</div>
+      <div class="card-body">
+        <p class="card-text">
+		<div id="dstm"><ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+  <li class="nav-item">
+    <a class="nav-link active" id="pills-win-tab" data-toggle="pill" href="#pills-win-dstm" role="tab" aria-controls="pills-win-dstm" aria-selected="true">Windows</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" id="pills-linux-tab" data-toggle="pill" href="#pills-linux-dstm" role="tab" aria-controls="pills-linux-dstm" aria-selected="false">Linux</a>
+  </li>
+
+</ul>
+
+<div class="tab-content" id="pills-tabContent">
+  <div class="tab-pane fade show active" id="pills-win-dstm" role="tabpanel" aria-labelledby="pills-win-dstm">
+  <span>Make sure start.bat file file looks like this:</span><pre class="pre-help">zm.exe --server {{=it.portalConfig.website.stratumHost}} --user YOUR_WALLET_ADDRESS.YOUR_WORKER_NAME --pass x --port [port] </pre><p>Where:</p><ul><li>YOUR_WALLET_ADDRESS - your valid {{=pool}} address</li><li>YOUR_WORKER_NAME - simple short worker name</li><li>PORT - Choose from menu</li></ul>
+  </div>
+  <div class="tab-pane fade" id="pills-linux-dstm" role="tabpanel" aria-labelledby="pills-linux-dstm">
+    <span>Make sure your shell file file looks like this:</span><pre class="pre-help">./zm --server {{=it.portalConfig.website.stratumHost}} --user YOUR_WALLET_ADDRESS.YOUR_WORKER_NAME --pass z --port [port] </pre><p>Where:</p><ul><li>YOUR_WALLET_ADDRESS - your valid {{=pool}} address</li><li>YOUR_WORKER_NAME - simple short worker name</li><li>PORT - Choose from menu</li></ul>
+  </div>
+</div>
+</div>
+
+		</p>
+        <a href="https://bitcointalk.org/index.php?topic=2021765.0" target="_blank" class="btn btn-primary" style="float:right;">Download DSTM</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Start Of Claymore -->
+      <div class="tab-pane fade" id="claymore" role="tabpanel" aria-labelledby="claymore-pill-tab">
+    <div class="card">
+<div class="card-header">
+        <h4 class="card-title">Claymore Miner Configuration (Recommended)</h4>
+</div>
+      <div class="card-body">
+        <p class="card-text">
+		<div id="claymore"><ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+  <li class="nav-item">
+    <a class="nav-link active" id="pills-win-tab" data-toggle="pill" href="#pills-win-claymore" role="tab" aria-controls="pills-win-claymore" aria-selected="true">Windows</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" id="pills-linux-tab" data-toggle="pill" href="#pills-linux-claymore" role="tab" aria-controls="pills-linux-claymore" aria-selected="false">Linux</a>
+  </li>
+
+</ul>
+
+<div class="tab-content" id="pills-tabContent">
+  <div class="tab-pane fade show active" id="pills-win-claymore" role="tabpanel" aria-labelledby="pills-win-claymore">
+  <span>Make sure start.bat file file looks like this:</span><pre class="pre-help">ZecMiner64.exe -zpool {{=it.portalConfig.website.stratumHost}} -zwal YOUR_WALLET_ADDRESS.YOUR_WORKER_NAME --zpsw x --port [port] </pre><p>Where:</p><ul><li>YOUR_WALLET_ADDRESS - your valid {{=pool}} address</li><li>YOUR_WORKER_NAME - simple short worker name</li><li>PORT - Choose from menu</li></ul>
+  </div>
+  <div class="tab-pane fade" id="pills-linux-claymore" role="tabpanel" aria-labelledby="pills-linux-claymore">
+    <span>Make sure your shell file file looks like this:</span><pre class="pre-help">./ZecMiner64.exe -zpool {{=it.portalConfig.website.stratumHost}} -zwal YOUR_WALLET_ADDRESS.YOUR_WORKER_NAME --zpsw x --port [port] </pre><p>Where:</p><ul><li>YOUR_WALLET_ADDRESS - your valid {{=pool}} address</li><li>YOUR_WORKER_NAME - simple short worker name</li><li>PORT - Choose from menu</li></ul>
+  </div>
+</div>
+</div>
+
+		</p>
+
+        <a href="https://bitcointalk.org/index.php?topic=1670733.0" target="_blank" class="btn btn-primary" style="float:right;">Download Claymore</a>
+      </div>
+    </div>
+  </div>
+
+
+
+  <div class="tab-pane fade" id="nheqminer" role="tabpanel" aria-labelledby="nheqminer-pill-tab">
+    <div class="card">
+      <div class="card-header">
+        <h4 class="card-title">Miner Configuration - NHeqminer</h4>
+      </div>
+      <div class="card-body">
+        <p class="card-text">
+		<div id="ewbf"><ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+  <li class="nav-item">
+    <a class="nav-link active" id="pills-win-tab-nheq" data-toggle="pill" href="#pills-win-nheq" role="tab" aria-controls="pills-win-nheq" aria-selected="true">Windows</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" id="pills-linux-tab-nheq" data-toggle="pill" href="#pills-linux-nheq" role="tab" aria-controls="pills-linux-nheq" aria-selected="false">Linux</a>
+  </li>
+
+</ul>
+
+<div class="tab-content" id="pills-tabContent">
+  <div class="tab-pane fade show active" id="pills-win-nheq" role="tabpanel" aria-labelledby="pills-win-tab-nheq">
+  <span>Make sure start.bat file file looks like this:</span><pre class="pre-help"><b>CPU: </b>nheqminer.exe -l {{=it.portalConfig.website.stratumHost}}:[port] -u YOUR_WALLET_ADDRESS/YOUR_WORKER_NAME -p x
+<b>OpenCL 4 devices: </b>nheqminer.exe -l {{=it.portalConfig.website.stratumHost}}:[port] -u YOUR_WALLET_ADDRESS/YOUR_WORKER_NAME -p x -od 0 1 2 3
+<b>OpenCL 6 devices: </b>nheqminer.exe -l {{=it.portalConfig.website.stratumHost}}:[port] -u YOUR_WALLET_ADDRESS/YOUR_WORKER_NAME -p x -od 0 1 2 3 4 5
+<b>CUDA 4 devices: </b>nheqminer.exe -l {{=it.portalConfig.website.stratumHost}}:[port] -u YOUR_WALLET_ADDRESS/YOUR_WORKER_NAME -p x -cd 0 1 2 3
+<b>CUDA 6 devices: </b>nheqminer.exe -l {{=it.portalConfig.website.stratumHost}}:[port] -u YOUR_WALLET_ADDRESS/YOUR_WORKER_NAME -p x-cd 0 1 2 3 4 5</pre><p>Where:</p><ul><li>YOUR_WALLET_ADDRESS - your valid {{=pool}} address</li><li>YOUR_WORKER_NAME - simple short worker name</li><li>PORT - Choose from menu</li></ul>
+  </div>
+  <div class="tab-pane fade" id="pills-linux-nheq" role="tabpanel" aria-labelledby="pills-linux-tab-nheq">
+  <span>Make sure start.bat file file looks like this:</span><pre class="pre-help">CPU:
+./nheqminer -l {{=it.portalConfig.website.stratumHost}}:[port] -u YOUR_WALLET_ADDRESS/YOUR_WORKER_NAME -p x
+OpenCL 4 devices:
+./nheqminer -l {{=it.portalConfig.website.stratumHost}}:[port] -u YOUR_WALLET_ADDRESS/YOUR_WORKER_NAME -p x -od 0 1 2 3
+OpenCL 6 devices:
+./nheqminer -l {{=it.portalConfig.website.stratumHost}}:[port] -u YOUR_WALLET_ADDRESS/YOUR_WORKER_NAME -p x -od 0 1 2 3 4 5
+CUDA 4 devices:
+./nheqminer -l {{=it.portalConfig.website.stratumHost}}:[port] -u YOUR_WALLET_ADDRESS/YOUR_WORKER_NAME -p x -cd 0 1 2 3
+CUDA 6 devices:
+./nheqminer -l {{=it.portalConfig.website.stratumHost}}:[port] -u YOUR_WALLET_ADDRESS/YOUR_WORKER_NAME -p x-cd 0 1 2 3 4 5</pre><p>Where:</p><ul><li>YOUR_WALLET_ADDRESS - your valid {{=pool}} address</li><li>YOUR_WORKER_NAME - simple short worker name</li><li>PORT - Choose from menu</li></ul>
+  </div>
+</div>
+</div>
+
+		</p>
+        <a href="https://github.com/nicehash/nheqminer/releases" target="_blank" class="btn btn-primary" style="float:right;">Download Nheqminer</a>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
 </div>
 
 <script>
 
     function showCoinConfig(info){
 
-        var htmlKeys = '<div class="coinInfoData">Algorithm:</div>';
-        var htmlValues = '<div class="coinInfoData">' + info.algo + '</div>';
+        var htmlKeys;
+		var ssl;
+		var i = 0;
+			for (var port in info.ports) {
+			if(port == 3053){
+				ssl = " <b>(SSL)</b>";
+			} else {
+				ssl = ""
+			}
+			i++;
+		var diff = info.ports[port].diff;
+		if (diff < 0.1) {
+			var device = 'CPU';
+		} else if (diff < 6) {
+			var device = 'GPU';
+		} else if (diff < 11) {
+			var device = 'GPU Farm';
+		} else {
+			var device = 'Nicehash';
+		}
+		if($('#coinInfo #coinInfoRow').length < i){
+		htmlKeys += '<tr id="coinInfoRow"><td>' + device + ssl + '</td><td>'+ diff * 8192 +'<td>{{=pool}}-wallet-address</td><td>x</td><td>' + '<b>' + info.host + ':' + port + '</b></td></tr>';
+		}
+	}
 
-        for (var port in info.ports){
-            htmlKeys += '<div class="coinInfoData">URL <span class="coinInfoSubtle">(difficulty ' + info.ports[port].diff + ')</span>:</div>';
-            htmlValues += '<div class="coinInfoData">stratum+tcp://' + info.host + ':' + port + '</div>';
-        }
+	$("#gs_tbody").html(htmlKeys)
 
-        if (info.coin)
-            $('#coinInfoUsername').text('your ' + info.coin.name + ' wallet address');
-        else
-            $('#coinInfoUsername').text('your public key');
-        $('.coinInfoData').remove();
-        $('#coinInfoRowKeys').append(htmlKeys);
-        $('#coinInfoRowValues').append(htmlValues);
+	$("#coinInfo").dataTable({
+		"order": [[1, "asc"]],
+		"paging":   false,
+        "ordering": true,
+        "info":     false,
+		"searching": false
+	});
+
     }
+	$(document).ready(function(){
 
-    $('#coinGlowTrigger').click(function(event){
+
+
+  $('.poolOption').trigger('click');
+});
+
+	    $('.poolOption').click(function(event){
         event.preventDefault();
-        $('.menuList').addClass('glow');
-        setTimeout(function(){
-            $('.menuList').removeClass('glow');
-        }, 200);
+		showCoinConfig($(this).data('info'));
+        var ci = document.getElementById("coinInfoHide");
+		if(ci.style.display === "none"){
+			ci.style.display = "block";
+		} else {
+			ci.style.display = "none"
+		}
         return false;
     });
 
-    $('.poolOption').click(function(event){
-        event.preventDefault();
-        showCoinConfig($(this).data('info'));
-        $('#coinInfoBackground,#coinInfo').removeClass('hidden');
-        $('#coinInfoBackground').css('opacity', 0.7);
-        return false;
-    });
 
-    $('#coinInfoBackground,#coinInfoClose').click(function(event){
-        event.preventDefault();
-        $('#coinInfoBackground,#coinInfo').addClass('hidden');
-        $('#coinInfoBackground').css('opacity', 0.0);
-        return false;
-    });
 
-    $('#nompAppDownload').click(function(event){
-        event.preventDefault();
-        alert('NOMP App development still in progress...');
-        return false;
-    });
 </script>

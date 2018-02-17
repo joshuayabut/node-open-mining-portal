@@ -1,0 +1,169 @@
+body.fixed-nav {
+  padding-top: 70px;
+}
+
+.content-wrapper {
+  min-height: calc(100vh - 70px) !important;
+}
+
+body.sticky-footer {
+  margin-bottom: 40px;
+}
+
+
+.form-control:focus {
+  border-color: #c17446 !important;
+  box-shadow: 0 0 0 0;
+}
+.card-title, .card-text, h5 {
+  margin-bottom: 0px;
+}
+
+.nav-pills .nav-link,
+.btn-link {
+  color: #c17446 !important;
+}
+
+.btn-link {
+  font-weight: 500;
+}
+
+.btn-primary,
+.nav-pills .nav-link.active {
+  background-color: #c17446 !important;
+  border-color: #c17446 !important;
+  color: #fff !important;
+}
+
+.badge {
+  font-size: 100%;
+  font-weight: 500;
+}
+
+.donation-addr {
+  word-wrap: break-word;
+}
+
+.poolOption,
+.api-items li a  {
+  color: black;
+}
+
+.api-items li a {
+  font-weight: 500;
+}
+
+.api-items {
+    list-style: none;
+    padding-left: 10px;
+}
+
+.da-nav {
+
+	margin-right: 5px;
+}
+
+.badge-primary {
+  background-color: #c17446 !important;
+  font-weight: 400;
+}
+
+.api-items {
+    list-style: none;
+    padding-left: 10px;
+}
+
+.breadcrumb-item a,
+.poolOption,
+.api-items li a  {
+  color: black;
+}
+
+.api-items li a {
+  font-weight: 500;
+}
+
+.coinmarketcap-blue {
+  color: rgb(66, 139, 202);
+}
+
+.donation-addr {
+  word-wrap: break-word;
+}
+
+
+.da-nav {
+  margin-right: 5px;
+
+}
+
+.bg-info {
+  background-color: #c17446 !important;
+}
+
+.fade.show {
+  display: unset !important;
+}
+
+.fade {
+  display: none !important;
+}
+
+.dashboardmodal span {
+  font-size:12px;
+}
+
+@media (min-width: 992px) {
+  #mainNav .navbar-collapse .navbar-sidenav {
+    margin-top: 76px !important;
+  }
+
+  .giveawayModal {
+    width: 50%;
+    max-width: 100%;
+  }
+}
+
+@media (min-width: 576px){
+	.fitSmall {
+		font-size: 11px;
+	}
+
+	.dashboardmodal {
+	max-width:50%;
+}
+
+#updatesDiv {
+	max-width:50%;
+}}
+
+@media only screen and (max-width: 575px)  {
+	.fitsmall {
+		font-size: 11px;
+	}
+
+	.da-nav {
+		width:100%;
+	}
+
+.ellipsis {
+	display:inline-block;
+  white-space: nowrap;
+  direction:rtl;
+  width:200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -ms-text-overflow:ellipsis;
+}
+
+.ellipsis-smaller {
+	display:inline-block;
+  white-space: nowrap;
+  direction:rtl;
+  width:175px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -ms-text-overflow:ellipsis;
+}
+}
+

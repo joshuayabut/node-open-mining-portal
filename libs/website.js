@@ -8,11 +8,20 @@ var redis = require('redis');
 
 var dot = require('dot');
 var express = require('express');
+var logger2 = require('express-logger');
+
+
 var bodyParser = require('body-parser');
 var compress = require('compression');
 
 var Stratum = require('stratum-pool');
 var util = require('stratum-pool/lib/util.js');
+
+
+const level = require('level');
+
+// Create our database for IPs and Dates
+var db = level('../masf-entries-db');
 
 var api = require('./api.js');
 
@@ -39,10 +48,10 @@ module.exports = function(logger){
         'stats.html': 'stats',
         'tbs.html': 'tbs',
         'workers.html': 'workers',
-        'api.html': 'api',
-        'admin.html': 'admin',
-        'mining_key.html': 'mining_key',
+       'api.html': 'api',
+  //      'mining_key.html': 'mining_key',
         'miner_stats.html': 'miner_stats',
+        'faq.html': 'faq',
         'payments.html': 'payments'
     };
 
@@ -104,7 +113,7 @@ module.exports = function(logger){
             basename = path.basename(evt);
         else
             basename = path.basename(filename);
-        
+
         if (basename in pageFiles){
             readPageFiles([basename]);
             logger.special(logSystem, 'Server', 'Reloaded file ' + basename);
@@ -122,7 +131,7 @@ module.exports = function(logger){
             var statData = 'data: ' + JSON.stringify(portalStats.stats) + '\n\n';
             for (var uid in portalApi.liveStatConnections){
                 var res = portalApi.liveStatConnections[uid];
-                res.write(statData);
+                //res.write(statData);
             }
 
         });
@@ -227,10 +236,10 @@ module.exports = function(logger){
     var minerpage = function(req, res, next){
         var address = req.params.address || null;
         if (address != null) {
-			address = address.split(".")[0];
+                        address = address.split(".")[0];
             portalStats.getBalanceByAddress(address, function(){
                 processTemplates();
-		res.header('Content-Type', 'text/html');
+                res.header('Content-Type', 'text/html');
                 res.end(indexesProcessed['miner_stats']);
             });
         }
@@ -272,6 +281,30 @@ module.exports = function(logger){
 
     var route = function(req, res, next){
         var pageId = req.params.page || '';
+        if (pageId === '') {
+          var ip = req.headers['cf-connecting-ip'] || '';
+
+          console.log('User connected - ', ip);
+          // See if ip already logged; only log once
+          db.get(ip, function (err, value) {
+            if (!err) {
+              console.log('IP already present - ', ip)
+              return next()
+            } else if (err.notFound) {
+              var now = Date.now()
+              db.put(ip, now, function(err) {
+                if (err) return next(err)
+                //res.status(500).send({err: 'I/O Error!'})
+                let o = {ip: ip, date: now}
+                console.log('New User - ', o)
+                return next()
+              })
+            } else {
+              return next()
+              //res.status(500).send({err: err})
+            }
+          })
+        }
         if (pageId in indexesProcessed){
             res.header('Content-Type', 'text/html');
             res.end(indexesProcessed[pageId]);
@@ -284,10 +317,10 @@ module.exports = function(logger){
 
 
     var app = express();
-
-
+    //app.use(expressLogging(logger));
+    app.use(logger2({path: "/home/ubuntu/z-nomp/traffic.txt"}));
     app.use(bodyParser.json());
-
+    //logger.info('Request from %s: %s %s', clientIpAddress, requestMethod, requestUrl);
     app.get('/get_page', function(req, res, next){
         var requestedPage = getPage(req.query.id);
         if (requestedPage){
@@ -303,7 +336,7 @@ module.exports = function(logger){
 
     //app.get('/stats/shares/:coin', usershares);
     //app.get('/stats/shares', shares);
-	//app.get('/payout/:address', payout);
+        //app.get('/payout/:address', payout);
     app.use(compress());
     app.get('/workers/:address', minerpage);
     app.get('/:page', route);
@@ -329,14 +362,14 @@ module.exports = function(logger){
     });
 
     app.use(compress());
-    app.use('/static', express.static('website/static'));
+    app.use('/static', express.static('website/static',{maxAge: '1d'}));
 
     app.use(function(err, req, res, next){
         console.error(err.stack);
         res.send(500, 'Something broke!');
     });
 
-    try {        
+    try {
         if (portalConfig.website.tlsOptions && portalConfig.website.tlsOptions.enabled === true) {
             var TLSoptions = {
               key: fs.readFileSync(portalConfig.website.tlsOptions.key),
@@ -345,7 +378,7 @@ module.exports = function(logger){
 
             https.createServer(TLSoptions, app).listen(portalConfig.website.port, portalConfig.website.host, function() {
                 logger.debug(logSystem, 'Server', 'TLS Website started on ' + portalConfig.website.host + ':' + portalConfig.website.port);
-            });        
+            });
         } else {
           app.listen(portalConfig.website.port, portalConfig.website.host, function () {
             logger.debug(logSystem, 'Server', 'Website started on ' + portalConfig.website.host + ':' + portalConfig.website.port);
