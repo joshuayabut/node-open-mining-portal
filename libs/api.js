@@ -1,5 +1,6 @@
 var redis = require('redis');
 var async = require('async');
+var onFinished = require('on-finished');
 
 var stats = require('./stats.js');
 
@@ -112,9 +113,12 @@ module.exports = function(logger, portalConfig, poolConfigs){
                 var uid = Math.random().toString();
                 _this.liveStatConnections[uid] = res;
 			res.flush();
-                req.on("close", function() {
-                    delete _this.liveStatConnections[uid];
-                });
+                // req.on("close", function() {
+                //     delete _this.liveStatConnections[uid];
+				// });
+				onFinished(res, function (err, res) {
+					delete _this.liveStatConnections[uid];
+				})
                 return;
             default:
                 next();
