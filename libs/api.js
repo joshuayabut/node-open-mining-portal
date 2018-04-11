@@ -26,7 +26,7 @@ module.exports = function(logger, portalConfig, poolConfigs){
             case 'getblocksstats':
                 portalStats.getBlocks(function(data){
                     res.header('Content-Type', 'application/json');
-                    res.end(JSON.stringify(data));                                        
+                    res.end(JSON.stringify(data));
                 });
                 break;
             case 'payments':
@@ -52,7 +52,7 @@ module.exports = function(logger, portalConfig, poolConfigs){
 						// get miners balance along with worker balances
 						portalStats.getBalanceByAddress(address, function(balances) {
 							// get current round share total
-							portalStats.getTotalSharesByAddress(address, function(shares) {								
+							portalStats.getTotalSharesByAddress(address, function(shares) {
 								var totalHash = parseFloat(0.0);
 								var totalShares = shares;
 								var networkSols = 0;
@@ -103,6 +103,7 @@ module.exports = function(logger, portalConfig, poolConfigs){
 				}
                 return;
             case 'live_stats':
+            /*
                 res.writeHead(200, {
                     'Content-Type': 'text/event-stream',
                     'Cache-Control': 'no-cache',
@@ -115,6 +116,7 @@ module.exports = function(logger, portalConfig, poolConfigs){
                 req.on("close", function() {
                     delete _this.liveStatConnections[uid];
                 });
+                */
                 return;
             default:
                 next();

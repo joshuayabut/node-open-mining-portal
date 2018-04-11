@@ -318,7 +318,9 @@ legend.append('text')
 
 
 <script>
-	window.statsSource = new EventSource("/api/live_stats");
+  /* This will prevent client to listen live_stats */
+	//window.statsSource = new EventSource("/api/live_stats");
+  /*
     $(function() {
         statsSource.addEventListener('message', function (e) {
             var stats = JSON.parse(e.data);
@@ -337,7 +339,7 @@ legend.append('text')
             }
         });
     });
-
+  */
 	function getReadableNetworkHashRateString(hashrate){
 		hashrate = (hashrate * 1000000);
 		if (hashrate < 1000000)

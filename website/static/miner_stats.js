@@ -53,7 +53,7 @@ function buildChartData(){
 			workerHistoryMax = a.hashrate.length;
 		}
 	}
-	
+
 	var i=0;
     workerHashrateData = [];
     for (var worker in workers){
@@ -213,11 +213,12 @@ $.getJSON('/api/worker_stats?'+_miner, function(data){
 	for (var w in statData.workers) { _workerCount++; }
 	buildChartData();
 	displayCharts();
-	rebuildWorkerDisplay();	
+	rebuildWorkerDisplay();
     updateStats();
 });
 
 // live stat updates
+/*NO OPEN CHANNELS
 statsSource.addEventListener('message', function(e){
 	// TODO, create miner_live_stats...
 	// miner_live_stats will return the same josn except without the worker history
@@ -244,3 +245,4 @@ statsSource.addEventListener('message', function(e){
 		}
 	});
 });
+*/
