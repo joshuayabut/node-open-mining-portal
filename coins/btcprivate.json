@@ -1,0 +1,8 @@
+{
+    "name": "btcprivate",
+    "symbol": "btcp",
+    "algorithm": "equihash",
+    "requireShielding": true,
+    "peerMagic": "",
+    "txfee": 0.0004
+}

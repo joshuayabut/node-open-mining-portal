@@ -1,6 +1,6 @@
-# Zcash® and Zclassic - Node Open Mining Portal
+# BTCPrivate - Node Open Mining Portal
 
-**[Click here for the official - Zcash® and Zclassic Stratum Mining Pool Installation Guide](https://zdeveloper.org/wiki:z-nomp_install)**
+**[Click here for the official - z-nomp Stratum Mining Pool Installation Guide](https://zdeveloper.org/wiki:z-nomp_install)**
 
 This is a Equihash mining pool based off of Node Open Mining Portal.
 
@@ -21,19 +21,11 @@ IRC
 
 If your pool uses Z-NOMP let us know and we will list your website here.
 
-### Some pools using Z-NOMP or node-stratum-module:
+### Some BTCPrivate Pools:
 
-https://pool.cryptobroker.io/zcl Running MPOS and 0.5% of the fee goes to the Zclassic donation fund! 200+ blocks have been found as well! 
+https://btcp.ragnarpool.ovh/stats
 
-http://luckpool.org Zcash Pool with Custom Frontend w/Miner's Jackpot
-
-http://zclmine.com/ Custom frontend
-
-http://zclassic.miningspeed.com Custom frontend and 0% fee
-
-https://zpool.it 0.5% fee
-
-http://miningpool.io/
+https://btcp.coinblockers.com/
 
 https://lucky-mining.com.ua/ Running MPOS and no fee, [vot][zcl][zen][hush][btg].lucky-mining.com.ua <-- Ukraine
 
@@ -59,9 +51,9 @@ you are using - a good place to start with redis is [data persistence](http://re
 Follow the build/install instructions for your coin daemon. Your coin.conf file should end up looking something like this:
 ```
 daemon=1
-rpcuser=zclassicrpc
+rpcuser=btcprivaterpc
 rpcpassword=securepassword
-rpcport=8232
+rpcport=7933
 ```
 For redundancy, its recommended to have at least two daemon instances running in case one drops out-of-sync or offline,
 all instances will be polled for block/transaction updates and be used for submitting blocks. Creating a backup daemon
@@ -82,14 +74,14 @@ Clone the repository and run `npm update` for all the dependencies to be install
 sudo apt-get install build-essential libsodium-dev npm
 sudo npm install n -g
 sudo n stable
-git clone https://github.com/joshuayabut/node-open-mining-portal.git z-nomp
+git clone https://github.com/BTCPrivate/z-nomp.git z-nomp
 cd z-nomp
 npm update
 npm install
 ```
 
 ##### Pool config
-Take a look at the example json file inside the `pool_configs` directory. Rename it to `zclassic.json` and change the
+Take a look at the example json file inside the `pool_configs` directory. Rename it to `BTCPrivate.json` and change the
 example fields to fit your setup.
 
 ```
@@ -107,9 +99,9 @@ ie: Miner 1 mines at 0.1 difficulty and finds 10 shares, the pool sees it as 1 s
 ```
 node [path to cli.js] [coin name in config] [block hash symbol]
 ```
-Example: inside `zclassic.conf` add the line
+Example: inside `btcprivate.conf` add the line
 ```
-blocknotify=node /home/user/z-nomp/scripts/cli.js blocknotify zclassic %s
+blocknotify=node /home/user/z-nomp/scripts/cli.js blocknotify btcprivate %s
 ```
 
 Alternatively, you can use a more efficient block notify script written in pure C. Build and usage instructions
