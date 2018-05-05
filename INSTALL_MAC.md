@@ -74,7 +74,7 @@ zend --daemon
 redis-server&
 ```
 
-also check out `.json` cofig files before start the server: 
+also check out `.json` cofig files before starting the server: 
 ```shell
 coins/
 pool_configs/
