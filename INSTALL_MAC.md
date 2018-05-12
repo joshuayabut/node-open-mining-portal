@@ -4,7 +4,7 @@
 
 First of all you need Apple's Xcode and the Xcode Command Line Tools to be installed:
 
-[https://itunes.apple.com/us/app/xcode] (https://itunes.apple.com/us/app/xcode/id497799835?mt=12)
+[https://itunes.apple.com/us/app/xcode](https://itunes.apple.com/us/app/xcode/id497799835?mt=12)
 
 And Homebrew:
 
