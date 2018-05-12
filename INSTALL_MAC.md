@@ -1,6 +1,4 @@
 ### Mac OS X Installation instructions
-##### May 05, 2018
-
 
 First of all you need Apple's Xcode and the Xcode Command Line Tools to be installed:
 
