@@ -8,7 +8,7 @@ First of all you need Apple's Xcode and the Xcode Command Line Tools to be insta
 
 And Homebrew:
 
-[http://brew.sh/](http://brew.sh/)
+[http://brew.sh](http://brew.sh)
 
 
 Than we need to install all the dependencies via brew:
