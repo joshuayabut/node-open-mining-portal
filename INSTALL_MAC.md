@@ -59,7 +59,7 @@ cd z-nomp
 git checkout master
 npm update
 npm install
-npm install node-stratum-pool
+npm install stratum-pool
 ```
 
 and optionally
