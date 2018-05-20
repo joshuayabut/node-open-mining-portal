@@ -22,6 +22,7 @@ brew install wget
 brew install git
 brew install redis
 brew install nvm
+brew install libsodium
 ```
 
 Note nvm installation instructions which `brew install nvm` gives you. 
