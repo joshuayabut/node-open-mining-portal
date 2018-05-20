@@ -40,7 +40,7 @@ nvm install v8.11.1
 
 To be able to to build Z-NOMP we also need BSD/Linux-like `endian.h` to be in our Mac's `/usr/local/include/` directory
 ```shell
-sudo curl https://gist.githubusercontent.com/igorvoltaic/a22e2052a2a3ce9746289c4ee7cb2706/raw/6b3e394dc6a37817410d66d6ba4d7cd6b8d5d03d/endian.h > /usr/local/include/endian.h
+sudo curl https://raw.githubusercontent.com/igorvoltaic/z-nomp/master/endian-for-mac.h > /usr/local/include/endian.h
 ```
 
 And we need our compiler to catch the exceptions as Linux does it. To do that edit `~/.node-gyp/8.11.1/include/node/common.gypi`. Find following and change it like this:
@@ -60,6 +60,7 @@ git checkout master
 npm update
 npm install
 npm install stratum-pool
+npm install bignum
 ```
 
 and optionally
