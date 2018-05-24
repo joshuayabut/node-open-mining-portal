@@ -22,6 +22,7 @@ brew install wget
 brew install git
 brew install redis
 brew install nvm
+brew install libsodium
 ```
 
 Note nvm installation instructions which `brew install nvm` gives you. 
@@ -39,7 +40,7 @@ nvm install v8.11.1
 
 To be able to to build Z-NOMP we also need BSD/Linux-like `endian.h` to be in our Mac's `/usr/local/include/` directory
 ```shell
-sudo curl https://github.com/igorvoltaic/z-nomp/blob/master/endian-for-mac.h > /usr/local/include/endian.h
+sudo curl https://raw.githubusercontent.com/igorvoltaic/z-nomp/master/endian-for-mac.h > /usr/local/include/endian.h
 ```
 
 And we need our compiler to catch the exceptions as Linux does it. To do that edit `~/.node-gyp/8.11.1/include/node/common.gypi`. Find following and change it like this:
@@ -58,7 +59,8 @@ cd z-nomp
 git checkout master
 npm update
 npm install
-npm install node-stratum-pool
+npm install stratum-pool
+npm install bignum
 ```
 
 and optionally
