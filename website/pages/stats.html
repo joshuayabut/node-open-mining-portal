@@ -149,6 +149,10 @@
 						<a href="https://classic.zcha.in/blocks/{{=block[0]}}" target="_blank">{{=block[2]}}</a>
 					{{ } else if (String(it.stats.pools[pool].name).startsWith("hush")) { }}
 						<a href="https://explorer.myhush.org/block/{{=block[0]}}" target="_blank">{{=block[2]}}</a>
+					{{ } else if (String(it.stats.pools[pool].name).startsWith("komodo")) { }}
+						<a href="https://kmd.explorer.supernet.org/block/{{=block[0]}}" target="_blank">{{=block[2]}}</a>
+					{{ } else if (String(it.stats.pools[pool].name).startsWith("zen")) { }}
+						<a href="https://explorer.zen-solutions.io/block/{{=block[0]}}" target="_blank">{{=block[2]}}</a>
 					{{ } else { }}
                                             {{=block[2]}}
                                         {{ } }}
@@ -177,7 +181,11 @@
 						<a href="https://explorer.zcha.in/blocks/{{=block[0]}}" target="_blank">{{=block[2]}}</a>
 					{{ } else if (String(it.stats.pools[pool].name).startsWith("zclassic")) { }}
 						<a href="https://classic.zcha.in/blocks/{{=block[0]}}" target="_blank">{{=block[2]}}</a>
-					{{ } else { }}
+		  			{{ } else if (String(it.stats.pools[pool].name).startsWith("komodo")) { }}
+						<a href="https://kmd.explorer.supernet.org/block/{{=block[0]}}" target="_blank">{{=block[2]}}</a>
+		  			{{ } else if (String(it.stats.pools[pool].name).startsWith("zen")) { }}
+						<a href="https://explorer.zen-solutions.io/block/{{=block[0]}}" target="_blank">{{=block[2]}}</a>
+		    			{{ } else { }}
 						{{=block[2]}}
 					{{ } }}
 					{{if (block[4] != null) { }}
