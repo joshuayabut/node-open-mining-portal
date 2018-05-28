@@ -33,10 +33,10 @@ http {
     #
     server {
         listen       443 ssl;
-        server_name  kickpool.ru www.kickpool.ru;
+        server_name  example.ru www.example.ru;
 
-        ssl_certificate      /etc/letsencrypt/live/kickpool.ru/fullchain.pem;
-        ssl_certificate_key  /etc/letsencrypt/live/kickpool.ru/privkey.pem;
+        ssl_certificate      /etc/letsencrypt/live/example.ru/fullchain.pem;
+        ssl_certificate_key  /etc/letsencrypt/live/example.ru/privkey.pem;
 
         ssl_session_cache    shared:SSL:1m;
         ssl_session_timeout  5m;
@@ -74,8 +74,8 @@ stream {
 	ssl_protocols SSLv2 SSLv3 TLSv1 TLSv1.1 TLSv1.2;
         ssl_ciphers   HIGH:!aNULL:!MD5;
 
-       	ssl_certificate      /etc/letsencrypt/live/kickpool.ru/fullchain.pem;
-        ssl_certificate_key  /etc/letsencrypt/live/kickpool.ru/privkey.pem;
+       	ssl_certificate      /etc/letsencrypt/live/example.ru/fullchain.pem;
+        ssl_certificate_key  /etc/letsencrypt/live/example.ru/privkey.pem;
     }
 }
 
