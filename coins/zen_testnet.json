@@ -27,5 +27,28 @@
     "vTreasuryRewardAddress": [
         "zrRBQ5heytPMN5nY3ssPf3cG4jocXeD8fm1", "zrRBQ5heytPMN5nY3ssPf3cG4jocXeD8fm1", "zrRBQ5heytPMN5nY3ssPf3cG4jocXeD8fm1", "zrRBQ5heytPMN5nY3ssPf3cG4jocXeD8fm1"
     ],
+    "percentTreasuryUpdateReward": 10.0,
+    "treasuryRewardUpdateStartBlockHeight": TBD,
+    "treasuryRewardUpdateAddressChangeInterval": 10000,
+    "vTreasuryRewardUpdateAddress": [
+        "zrFzxutppvxEdjyu4QNjogBMjtC1py9Hp1S",
+        "zrFzxutppvxEdjyu4QNjogBMjtC1py9Hp1S",
+        "zrFzxutppvxEdjyu4QNjogBMjtC1py9Hp1S",
+        "zrFzxutppvxEdjyu4QNjogBMjtC1py9Hp1S"
+    ],
+    "percentSecureNodesReward": 10.0,
+    "vSecureNodesRewardAddress": [
+        "zrS7QUB2eDbbKvyP43VJys3t7RpojW8GdxH",
+        "zrS7QUB2eDbbKvyP43VJys3t7RpojW8GdxH",
+        "zrS7QUB2eDbbKvyP43VJys3t7RpojW8GdxH",
+        "zrS7QUB2eDbbKvyP43VJys3t7RpojW8GdxH"
+    ],
+    "percentSuperNodesReward": 10.0,
+    "vSuperNodesRewardAddress": [
+        "zrFr5HVm7woVq3oFzkMEdJdbfBchfPAPDsP",
+        "zrFr5HVm7woVq3oFzkMEdJdbfBchfPAPDsP",
+        "zrFr5HVm7woVq3oFzkMEdJdbfBchfPAPDsP",
+        "zrFr5HVm7woVq3oFzkMEdJdbfBchfPAPDsP"
+    ],
     "txfee": 0.0004
 }
