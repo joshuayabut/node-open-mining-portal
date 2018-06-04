@@ -1,7 +1,7 @@
 {
     "name": "zen",
     "symbol": "zen",
-    "algorithm": "equihash",
+    "algorithm": "equihash200_9",
     "requireShielding": true,
     "payFoundersReward": true,
     "percentFoundersReward": 8.5,
