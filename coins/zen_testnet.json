@@ -28,7 +28,7 @@
         "zrRBQ5heytPMN5nY3ssPf3cG4jocXeD8fm1", "zrRBQ5heytPMN5nY3ssPf3cG4jocXeD8fm1", "zrRBQ5heytPMN5nY3ssPf3cG4jocXeD8fm1", "zrRBQ5heytPMN5nY3ssPf3cG4jocXeD8fm1"
     ],
     "percentTreasuryUpdateReward": 10.0,
-    "treasuryRewardUpdateStartBlockHeight": TBD,
+    "treasuryRewardUpdateStartBlockHeight": 260500,
     "treasuryRewardUpdateAddressChangeInterval": 10000,
     "vTreasuryRewardUpdateAddress": [
         "zrFzxutppvxEdjyu4QNjogBMjtC1py9Hp1S",
