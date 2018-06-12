@@ -66,6 +66,29 @@
         "zsoemTfqjicem2QVU8cgBHquKb1o9JR5p4Z",
         "zt339oiGL6tTgc9Q71f5g1sFTZf6QiXrRUr"
     ],
+    "percentTreasuryUpdateReward": 10.0,
+    "treasuryRewardUpdateStartBlockHeight": 344700,
+    "treasuryRewardUpdateAddressChangeInterval": 50000,
+    "vTreasuryRewardUpdateAddress": [
+        "zszpcLB6C5B8QvfDbF2dYWXsrpac5DL9WRk",
+        "zszpcLB6C5B8QvfDbF2dYWXsrpac5DL9WRk",
+        "zszpcLB6C5B8QvfDbF2dYWXsrpac5DL9WRk",
+        "zszpcLB6C5B8QvfDbF2dYWXsrpac5DL9WRk"
+    ],
+    "percentSecureNodesReward": 10.0,
+    "vSecureNodesRewardAddress": [
+        "zsxWnyDbU8pk2Vp98Uvkx5Nh33RFzqnCpWN",
+        "zsxWnyDbU8pk2Vp98Uvkx5Nh33RFzqnCpWN",
+        "zsxWnyDbU8pk2Vp98Uvkx5Nh33RFzqnCpWN",
+        "zsxWnyDbU8pk2Vp98Uvkx5Nh33RFzqnCpWN"
+    ],
+    "percentSuperNodesReward": 10.0,
+    "vSuperNodesRewardAddress": [
+        "zsnL6pKdzvZ1BPVzALUoqw2KsY966XFs5CE",
+        "zsnL6pKdzvZ1BPVzALUoqw2KsY966XFs5CE",
+        "zsnL6pKdzvZ1BPVzALUoqw2KsY966XFs5CE",
+        "zsnL6pKdzvZ1BPVzALUoqw2KsY966XFs5CE"
+    ],
     "peerMagic": "63617368",
     "txfee": 0.0004
 }

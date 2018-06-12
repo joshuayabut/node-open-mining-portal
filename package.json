@@ -1,6 +1,6 @@
 {
     "name": "z-nomp",
-    "version": "0.0.4",
+    "version": "0.0.5",
     "description": "ZenCash (Equihash) stratum mining pool based on NOMP",
     "keywords": [
         "stratum",
@@ -12,9 +12,9 @@
         "zcash",
         "equihash"
     ],
-    "homepage": "https://github.com/zencashio/z-nomp",
+    "homepage": "https://github.com/ZencashOfficial/z-nomp",
     "bugs": {
-        "url": "https://github.com/zencashio/z-nomp/issues"
+        "url": "https://github.com/ZencashOfficial/z-nomp/issues"
     },
     "license": "MIT",
     "author": "Joshua Yabut",
@@ -31,7 +31,7 @@
     },
     "repository": {
         "type": "git",
-        "url": "https://github.com/zencashio/z-nomp.git"
+        "url": "https://github.com/ZencashOfficial//z-nomp.git"
     },
     "dependencies": {
         "async": "2.3.0",
@@ -49,7 +49,7 @@
         "nonce": "1.0.4",
         "redis": "2.7.1",
         "request": "2.81.0",
-        "stratum-pool": "git+https://github.com/z-classic/node-stratum-pool.git"
+        "stratum-pool": "git+https://github.com/ZencashOfficial/node-stratum-pool.git"
     },
     "engines": {
         "node": ">=0.10"
