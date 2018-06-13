@@ -1,7 +1,7 @@
 {
     "name": "LitecoinZ_Testnet",
     "symbol": "TLZ",
-    "algorithm": "equihash192_7",
+    "algorithm": "equihash144_5",
     "requireShielding": true,
     "peerMagic": "fe90865d",
     "txfee": 0.0004
