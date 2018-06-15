@@ -1,0 +1,8 @@
+{
+    "name": "LitecoinZ",
+    "symbol": "LTZ",
+    "algorithm": "equihash144_5",
+    "requireShielding": true,
+    "peerMagic": "d8cfcd93",
+    "txfee": 0.0004
+}
