@@ -1,0 +1,89 @@
+{
+    "enabled": false,
+    "coin": "votecoin.json",
+
+    "address": "t1NBkZ3R43HvmaasHeNzmGDLGe2cg4vH3tT",
+    "_comment_address": "pools address",
+
+    "zAddress": "zcSPWitFfQrtzsVtEWXBCpGSRfAEqr3JSRRN5aWzohQPnYvsrSnuggxPp13Q1vxAyLp6NhUVRa1PGq",
+    "_comment_zAddress": "shielding address",
+
+    "tAddress": "t1NBkZ3R43HvmaasHeNzmGDLGe2cg4vH3tT",
+    "_comment_tAddress": "set to same as pools address",
+
+    "walletInterval": 2.5,
+    "_comment_walletInterval": "Used to cache coin stats, shielding not performed.",
+
+    "invalidAddress": "t1NBkZ3R43HvmaasHeNzmGDLGe2cg4vH3tT",
+    "_comment_invalidAddress": "Invalid addresses will be converted to the above",
+
+    "rewardRecipients": {
+        "t1NBkZ3R43HvmaasHeNzmGDLGe2cg4vH3tT": 1.0
+    },
+
+    "tlsOptions": {
+        "enabled": false,
+        "serverKey":"",
+        "serverCert":"",
+        "ca":""
+    },
+
+    "paymentProcessing": {
+	"minConf": 10,
+        "enabled": true,
+        "paymentMode": "prop",
+        "_comment_paymentMode":"prop, pplnt",
+        "paymentInterval": 57,
+        "_comment_paymentInterval": "Interval in seconds to check and perform payments.",
+        "minimumPayment": 1,
+        "maxBlocksPerPayment": 3,
+        "daemon": {
+            "host": "127.0.0.1",
+            "port": 5550,
+            "user": "rpcuser",
+            "password": "rpcpassword"
+        }
+    },
+
+    "ports": {
+        "5555": {
+            "tls":false,
+            "diff": 0.8,
+            "varDiff": {
+                "minDiff": 0.8,
+                "maxDiff": 0.8,
+                "targetTime": 15,
+                "retargetTime": 60,
+                "variancePercent": 30
+            }
+        }
+    },
+
+    "daemons": [
+        {
+            "host": "127.0.0.1",
+            "port": 5550,
+            "user": "rpcuser",
+            "password": "rpcpassword"
+        }
+    ],
+
+    "p2p": {
+        "enabled": false,
+        "host": "127.0.0.1",
+        "port": 19333,
+        "disableTransactions": true
+    },
+
+    "mposMode": {
+        "enabled": false,
+        "host": "127.0.0.1",
+        "port": 3306,
+        "user": "me",
+        "password": "mypass",
+        "database": "vot",
+        "checkPassword": true,
+        "autoCreateWorker": false
+    }
+
+}

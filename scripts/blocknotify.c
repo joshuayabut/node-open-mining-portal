@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <errno.h>
+#include <arpa/inet.h>
 
 /*
 
@@ -23,7 +24,7 @@ Build with:
 
 
 Example usage in daemon coin.conf using default NOMP CLI port of 17117
-    blocknotify="/bin/blocknotify 127.0.0.1:17117 dogecoin %s"
+    blocknotify=sh -c "/bin/blocknotify 127.0.0.1:17117 dogecoin %s"
 
 
 
