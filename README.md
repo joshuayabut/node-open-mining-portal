@@ -33,6 +33,8 @@ http://miningpool.io/
 
 https://lucky-mining.com.ua/ Running MPOS and no fee, [vot][zcl][zen][hush][btg].lucky-mining.com.ua <-- Ukraine
 
+http://zcash.deltapool.net 1% fee
+
 Usage
 =====
 
