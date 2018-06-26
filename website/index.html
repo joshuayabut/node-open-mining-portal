@@ -14,6 +14,8 @@
 
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
 
+    <script src="/static/jquery.i18n.properties.min.js"></script>
+
     <script src="//cdnjs.cloudflare.com/ajax/libs/d3/3.4.5/d3.min.js"></script>
     <script src="/static/nvd3.js"></script>
     <link rel="stylesheet" href="/static/nvd3.css">
@@ -36,31 +38,31 @@
             <li class="{{? it.selected === 'getting_started' }}pure-menu-selected{{?}}">
                 <a class="hot-swapper" href="/getting_started">
                     <i class="fa fa-rocket"></i>&nbsp;
-                    Getting Started
+                    <span id="start"></span>
                 </a>
             </li>
             <li class="{{? it.selected === 'stats' }}pure-menu-selected{{?}}">
                 <a class="hot-swapper" href="/stats">
                     <i class="fa fa-bar-chart-o"></i>&nbsp;
-                    Graph Stats
+                    <span id="stats_graph"></span>
                 </a>
             </li>
             <li class="{{? it.selected === 'tbs' }}pure-menu-selected{{?}}">
                 <a class="hot-swapper" href="/tbs">
                     <i class="fa fa-table"></i>&nbsp;
-                    Tab Stats
+                    <span id="stats_tab"></span>
                 </a>
             </li>
             <li class="{{? it.selected === 'workers' }}pure-menu-selected{{?}}">
                 <a class="hot-swapper" href="/workers">
                     <i class="fa fa-cogs"></i>&nbsp;
-                    Workers Stats
+                    <span id="stats_workers"></span>
                 </a>
             </li>
             <li class="{{? it.selected === 'api' }}pure-menu-selected{{?}}">
                 <a class="hot-swapper" href="/api">
                     <i class="fa fa-code"></i>&nbsp;
-                    API
+                    <span id="api"></span>
                 </a>
             </li>
         </ul>
@@ -90,6 +92,25 @@
     </div>
 
 </footer>
+
+<script type="text/javascript">
+    $(function(){
+        console.info("ready");
+        jQuery.i18n.properties({
+            name : 'string',
+            path : '/static/i18n/',
+            mode : 'map',
+            //language : 'zh',
+            callback : function() {
+                $('#start').html($.i18n.prop('start'));
+                $('#stats_graph').html($.i18n.prop('stats_graph'));
+                $('#stats_tab').html($.i18n.prop('stats_tab'));
+                $('#stats_workers').html($.i18n.prop('stats_workers'));
+                $('#api').html($.i18n.prop('api'));
+            }
+        });
+    });
+</script>
 
 </body>
 </html>
