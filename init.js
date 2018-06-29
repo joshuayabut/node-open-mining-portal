@@ -203,6 +203,9 @@ var spawnPoolWorkers = function(){
         } else if (!connection) {
             redisConfig = pcfg.redis;
             connection = redis.createClient(redisConfig.port, redisConfig.host);
+            if (portalConfig.redis.password) { 
+                connection.auth(portalConfig.redis.password);  
+            } 
             connection.on('ready', function(){
                 logger.debug('PPLNT', coin, 'TimeShare processing setup with redis (' + redisConfig.host +
                     ':' + redisConfig.port  + ')');
